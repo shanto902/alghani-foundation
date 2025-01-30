@@ -11,6 +11,13 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        primary: "#045857",
+        primaryDark: "#045857",
+        primaryLight: "#0EC9C5",
+        textSecondary: "#27262C",
+      },
+      backgroundImage: {
+        "footer-bg": "url('/assets/bg/footerBG.png')",
       },
     },
   },
