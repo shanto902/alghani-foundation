@@ -50,7 +50,9 @@ const DonationSlider = () => {
             <div className="flex flex-col md:flex-row gap-6 md:gap-10 justify-center max-w-6xl mx-auto items-center px-6">
               {/* Left: Title & Description */}
               <div className="md:w-2/3 text-start">
-                <h2 className="text-xl md:text-2xl font-bold">{slide.title}</h2>
+                <h2 className="text-xl md:text-2xl tracking-[2.40px] font-bold">
+                  {slide.title}
+                </h2>
                 <p className="mt-2 text-sm md:text-base">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 </p>
