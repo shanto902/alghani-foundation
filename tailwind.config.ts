@@ -16,9 +16,6 @@ export default {
         primaryLight: "#0EC9C5",
         textSecondary: "#27262C",
       },
-      backgroundImage: {
-        "footer-bg": "url('/assets/bg/footerBG.png')",
-      },
     },
   },
   plugins: [],

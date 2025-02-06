@@ -1,8 +1,6 @@
 "use client";
 import Image from "next/image";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import Marquee from "react-fast-marquee";
 
 const PartnerSection = () => {
   const partners = [
@@ -38,72 +36,24 @@ const PartnerSection = () => {
     },
   ];
 
-  // Settings for the slider (mobile only)
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    responsive: [
-      {
-        breakpoint: 640,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
-
   return (
     <section className="bg-white py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto text-center">
-        <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-          Our Partners
-        </h2>
-        <div className="mt-10">
-          {/* Desktop: Grid Layout */}
-          <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-6 gap-8">
-            {partners.map((partner) => (
-              <div
-                key={partner.id}
-                className="flex items-center justify-center p-4 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow"
-              >
-                <div className="relative w-32 h-16">
-                  <Image
-                    src={partner.logo}
-                    alt={partner.name}
-                    layout="fill"
-                    objectFit="contain"
-                  />
-                </div>
+      <div className=" mx-auto text-center">
+        <Marquee speed={50} pauseOnHover={true} gradient={true} autoFill={true}>
+          {partners.map((partner) => (
+            <div key={partner.id} className="mx-8 cursor-pointer">
+              <div className="relative w-24 h-24">
+                <Image
+                  className="object-cover aspect-square opacity-60 hover:opacity-100 transition-opacity duration-300"
+                  src={partner.logo}
+                  alt={partner.name}
+                  height={96}
+                  width={96}
+                />
               </div>
-            ))}
-          </div>
-
-          {/* Mobile: Slider */}
-          <div className="md:hidden">
-            <Slider {...sliderSettings}>
-              {partners.map((partner) => (
-                <div key={partner.id} className="px-2">
-                  <div className="flex items-center justify-center p-4 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                    <div className="relative w-32 h-16">
-                      <Image
-                        src={partner.logo}
-                        alt={partner.name}
-                        layout="fill"
-                        objectFit="contain"
-                      />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </Slider>
-          </div>
-        </div>
+            </div>
+          ))}
+        </Marquee>
       </div>
     </section>
   );

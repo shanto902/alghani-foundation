@@ -4,43 +4,44 @@ const RecognitionSection = () => {
   const recognitions = [
     {
       id: 1,
-      image: "/assets/recognition/recognition_1.png", // Replace with your image paths
+      image:
+        "https://images.pexels.com/photos/3184298/pexels-photo-3184298.jpeg",
       title: "Recognition Title 1",
     },
     {
       id: 2,
-      image: "/assets/recognition/recognition_2.png",
+      image:
+        "https://images.pexels.com/photos/3184297/pexels-photo-3184297.jpeg",
       title: "Recognition Title 2",
     },
     {
       id: 3,
-      image: "/assets/recognition/recognition_3.png",
+      image:
+        "https://images.pexels.com/photos/3184296/pexels-photo-3184296.jpeg",
       title: "Recognition Title 3",
     },
   ];
 
   return (
-    <section className=" py-12 px-4 sm:px-6 lg:px-8">
+    <section className=" py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto text-center">
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {recognitions.map((recognition) => (
             <div
               key={recognition.id}
-              className="bg-white rounded-lg shadow-lg overflow-hidden transform transition-all hover:scale-105 hover:shadow-xl"
+              className=" overflow-hidden cursor-pointer  hover:bg-primary bg-primaryLight hover:text-white"
             >
               <div className="relative h-48">
                 <Image
                   src={recognition.image}
                   alt={recognition.title}
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-t-lg"
+                  height={192}
+                  width={420}
+                  className="object-cover w-[420px] h-[192px]"
                 />
               </div>
               <div className="p-6">
-                <p className="text-lg font-semibold text-gray-900">
-                  {recognition.title}
-                </p>
+                <p className="text-lg font-semibold ">{recognition.title}</p>
               </div>
             </div>
           ))}

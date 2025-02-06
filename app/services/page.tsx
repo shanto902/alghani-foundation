@@ -1,8 +1,10 @@
+import Breadcrumb from "@/components/common/Breadcrumb";
 import React from "react";
 
-const WhatWeDoPage: React.FC = () => {
+const ServicesPage: React.FC = () => {
   return (
     <div>
+      <Breadcrumb text="What We Do" />
       <h1>What We Do</h1>
       <p>Welcome to the Alghani Foundation. Here is what we do:</p>
       <ul>
@@ -16,4 +18,4 @@ const WhatWeDoPage: React.FC = () => {
   );
 };
 
-export default WhatWeDoPage;
+export default ServicesPage;

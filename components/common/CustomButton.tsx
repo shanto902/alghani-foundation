@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-const MainBtn = ({
+const CustomButton = ({
   children,
   href,
   className,
@@ -15,7 +15,7 @@ const MainBtn = ({
     <Link
       href={href}
       className={twMerge(
-        `relative inline-block px-6 py-2 border-2 border-teal-600 text-teal-600 font-bold text-md uppercase transition-all duration-300 hover:bg-teal-600 hover:text-white`,
+        `relative inline-block px-6 py-2 border-2 border-primary text-primary font-bold text-md uppercase transition-all duration-300 hover:bg-primary hover:text-white`,
         className
       )}
     >
@@ -24,4 +24,4 @@ const MainBtn = ({
   );
 };
 
-export default MainBtn;
+export default CustomButton;

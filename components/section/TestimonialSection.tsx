@@ -39,10 +39,10 @@ const TestimonialSection = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 5000,
+    autoplaySpeed: 8000,
     responsive: [
       {
         breakpoint: 1024,
@@ -62,28 +62,34 @@ const TestimonialSection = () => {
   };
 
   return (
-    <section className=" py-12 px-4 sm:px-6 lg:px-8">
+    <section className=" bg-primary py-5 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto text-center">
-        <div className="mt-10">
+        <div>
           <Slider {...settings}>
             {testimonials.map((testimonial) => (
               <div key={testimonial.id} className="px-4">
-                <div className="bg-white rounded-lg shadow-lg p-6 h-full flex flex-col items-center text-center">
-                  <div className="relative w-24 h-24 rounded-full overflow-hidden mb-4">
-                    <Image
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      layout="fill"
-                      objectFit="cover"
-                    />
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    {testimonial.name}
-                  </h3>
-                  <p className="text-sm text-gray-500 mb-4">
-                    {testimonial.role}
+                <div className=" p-6 relative h-full flex flex-col items-center text-center">
+                  <p className="text-white tracking-wide w-[959px] pb-5 italic">
+                    {testimonial.quote}
                   </p>
-                  <p className="text-gray-600 italic">{testimonial.quote}</p>
+                  <div className="flex gap-5 justify-center items-center">
+                    <div className=" w-14 h-14  overflow-hidden ">
+                      <Image
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        height={96}
+                        width={96}
+                      />
+                    </div>
+                    <div className=" text-left">
+                      <h3 className="text-xl pt-2 font-semibold text-white">
+                        {testimonial.name}
+                      </h3>
+                      <p className=" text-left text-sm text-gray-200 mb-4">
+                        {testimonial.role}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}

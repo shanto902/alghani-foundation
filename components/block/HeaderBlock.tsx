@@ -17,16 +17,13 @@ const HeaderBlock = ({
       <div className="relative mt-2 flex items-center justify-center">
         <div className="w-[41px] h-px bg-primary" />
         <div className="w-3.5 h-[22px] mx-3 relative">
-          <Image
-            src={donationIcon}
-            alt="Donation Icon"
-            layout="fill"
-            objectFit="contain"
-          />
+          <Image src={donationIcon} alt="Donation Icon" fill />
         </div>
         <div className="w-[41px] h-px bg-primary" />
       </div>
-      {description && <p>{description}</p>}
+      {description && (
+        <p className="text-[#74727f] tracking-wide py-5">{description}</p>
+      )}
     </div>
   );
 };

@@ -4,12 +4,16 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/svg/logo-new.svg";
-import MainBtn from "../common/MainBtn";
+import CustomButton from "../common/CustomButton";
 import TopBar from "./TopBar";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [hideTopBar, setHideTopBar] = useState(false);
+
+  const pathName = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,6 +27,29 @@ const NavBar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const navLinks = [
+    {
+      name: "Home",
+      href: "/",
+    },
+    {
+      name: "About Us",
+      href: "/about",
+    },
+    {
+      name: "Where We Work",
+      href: "/work",
+    },
+    {
+      name: "What We Do",
+      href: "/services",
+    },
+    {
+      name: "Contact Us",
+      href: "/contact",
+    },
+  ];
 
   return (
     <>
@@ -49,25 +76,22 @@ const NavBar = () => {
           <div className="hidden md:flex flex-1 justify-end items-center">
             <div className="flex items-center gap-5">
               <ul className="text-sm uppercase font-bold flex space-x-5">
-                {[
-                  "Home",
-                  "About Us",
-                  "Where We Work",
-                  "What We Do",
-                  "Contact Us",
-                ].map((item, index) => (
-                  <li
+                {navLinks.map((item, index) => (
+                  <Link
+                    href={item.href}
                     key={index}
-                    className="relative group cursor-pointer transition-all duration-300 ease-in-out"
+                    className={`relative group cursor-pointer transition-all duration-300 ease-in-out ${
+                      pathName === item.href ? "text-primary" : "text-black"
+                    }`}
                   >
-                    {item}
-                    <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-teal-600 transition-all duration-300 group-hover:w-full"></span>
-                  </li>
+                    {item.name}
+                    <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                  </Link>
                 ))}
               </ul>
-              <MainBtn href="#" className="hidden lg:block">
+              <CustomButton href="#" className="hidden lg:block">
                 Donate
-              </MainBtn>
+              </CustomButton>
             </div>
           </div>
 
@@ -109,7 +133,7 @@ const NavBar = () => {
               </li>
             ))}
           </ul>
-          <MainBtn href="#">Donate</MainBtn>
+          <CustomButton href="#">Donate</CustomButton>
         </div>
       </nav>
     </>

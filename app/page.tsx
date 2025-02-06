@@ -1,11 +1,13 @@
 import HeaderBlock from "@/components/block/HeaderBlock";
-import HoverCard from "@/components/common/HoverCard";
 import PaddingContainer from "@/components/layout/PaddingContainer";
 import PartnerSection from "@/components/section/PartnerSection";
 import RecognitionSection from "@/components/section/RecognitionSection";
 import StatisticsSection from "@/components/section/StatisticsSection";
+import SustainabilitySection from "@/components/section/SustainabilitySection";
 import TestimonialSection from "@/components/section/TestimonialSection";
 import DonationSlider from "@/components/slider/DonationSlider";
+import LocationSection from "@/components/section/LocationSection";
+import CTASection from "@/components/section/CTASection";
 
 export default function Home() {
   return (
@@ -18,16 +20,19 @@ taciti sociosqu ad litora torquent per conubia nostra"
           title="Statistics"
         />
         <StatisticsSection />
-        <HeaderBlock title="Testimonial" />
-        <TestimonialSection />
+
         <HeaderBlock title="Recognitions" />
         <RecognitionSection />
 
         <HeaderBlock title="Partners" />
         <PartnerSection />
-        <HoverCard />
-        <div className="h-96">Working</div>
+
+        <LocationSection />
+        <SustainabilitySection />
       </PaddingContainer>
+
+      <TestimonialSection />
+      <CTASection />
     </>
   );
 }

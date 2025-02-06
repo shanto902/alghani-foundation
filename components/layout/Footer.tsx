@@ -1,9 +1,17 @@
+"use client";
 import bgImage from "@/assets/bg/footerBG.png";
 import Image from "next/image";
+import Link from "next/link";
+import { FormEvent } from "react";
 const Footer = () => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevent page reload
+    const email = (e.target as HTMLFormElement).email.value; // Access email input
+    console.log("Email Submitted:", email); // Replace this with actual form handling logic
+  };
   return (
     <>
-      <footer className=" bg-cover bg-center relative  bg-footer-bg bg-[#27262C] text-white p-8">
+      <footer className=" bg-cover bg-center relative mix-blend-multiply bg-[#27262C] text-white p-8">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
             {/* About Section */}
@@ -24,9 +32,9 @@ const Footer = () => {
               <h2 className="text-xl font-bold mb-4">QUICK LINKS</h2>
               <ul className="text-sm text-gray-400">
                 <li className="mb-2">
-                  <a href="#" className="hover:text-white">
+                  <Link href="#" className="hover:text-white">
                     CAUSES
-                  </a>
+                  </Link>
                 </li>
                 <li className="mb-2">
                   <a href="#" className="hover:text-white">
@@ -75,15 +83,15 @@ const Footer = () => {
                 Phasellus vitae diam pulvinar, tempus dia aliquam tellus.
                 Quisque mattis odio eu placerat luctus. Vivamus magna elit,
               </p>
-              <form className="flex">
+              <form className="flex" onSubmit={handleSubmit}>
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="p-2 rounded-l text-black flex-grow"
+                  className="p-2  text-black flex-grow"
                 />
                 <button
                   type="submit"
-                  className="bg-primary px-4 rounded-r hover:bg-primaryLight"
+                  className="bg-primary px-4  hover:bg-primaryLight"
                 >
                   Go
                 </button>
@@ -105,11 +113,11 @@ const Footer = () => {
           </div>
         </div>
         <Image
-          className="opacity-30"
+          className="opacity-30 -z-10"
           src={bgImage}
           alt="footer-bg"
-          layout="fill"
-          objectFit="cover"
+          fill
+          style={{ objectFit: "cover" }}
         />
       </footer>
       <div>

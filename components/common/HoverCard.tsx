@@ -9,8 +9,8 @@ const HoverCard = () => {
             <Image
               src="https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg"
               alt="Descriptive Alt Text"
-              layout="fill"
-              objectFit="cover"
+              fill
+              style={{ objectFit: "cover" }}
               className="transition-transform duration-300 ease-in-out transform group-hover:translate-x-0 -translate-x-full"
             />
           </div>

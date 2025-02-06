@@ -1,3 +1,120 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.slick-dots {
+  position: absolute;
+  bottom: -10px !important;
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-align: center;
+}
+
+.slick-dots li button:before {
+  font-family: "slick";
+  font-size: 6px;
+  line-height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  content: "•";
+  text-align: center;
+  opacity: 0.25;
+  color: white !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
+
+BROWSER SCROLLBAR KITS
+
+*/
+
+/* CHROME & SAFARI */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #0ec9c5;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #045857;
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background: #045857;
+}
+
+/* MOZILLA FIREFOX */
+*::-moz-scrollbar {
+  width: 8px;
+}
+
+*::-moz-scrollbar-track {
+  background-color: transparent;
+}
+
+*::-moz-scrollbar-thumb {
+  background: #0ec9c5;
+}
+
+*::-moz-scrollbar-thumb:hover {
+  background: #045857;
+}
+
+*::-moz-scrollbar-thumb:active {
+  background: #045857;
+}
+
+/* MICROSOFT INTERNET EXPLORER */
+*::-ms-scrollbar {
+  width: 8px;
+}
+
+*::-ms-scrollbar-track {
+  background-color: transparent;
+}
+
+*::-ms-scrollbar-thumb {
+  background: #0ec9c5;
+}
+
+*::-ms-scrollbar-thumb:hover {
+  background: #045857;
+}
+
+*::-ms-scrollbar-thumb:active {
+  background: #045857;
+}
+
+/* OPERA */
+*::-o-scrollbar {
+  width: 8px;
+}
+
+*::-o-scrollbar-track {
+  background-color: brown;
+}
+
+*::-o-scrollbar-thumb {
+  background: #0ec9c5;
+}
+
+*::-o-scrollbar-thumb:hover {
+  background: #045857;
+}
+
+*::-o-scrollbar-thumb:active {
+  background: #045857;
+}
