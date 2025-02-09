@@ -58,7 +58,7 @@ const ExecutiveTeam = () => {
         {teamMembers.map((member, index) => (
           <div
             key={index}
-            className={` flex-glow flex ${
+            className={` group flex-glow flex ${
               Math.floor(index / 2) % 2 === 0 ? "flex-row" : "flex-row-reverse"
             } `}
           >
@@ -69,7 +69,7 @@ const ExecutiveTeam = () => {
               width={250}
               height={250}
             />
-            <div className=" max-w-[250px] h-[250px] flex justify-center items-center flex-col p-4 hover:bg-primary group hover:text-white transition-all duration-300">
+            <div className=" max-w-[250px] h-[250px] flex justify-center items-center flex-col p-4 group-hover:bg-primary group-hover:text-white transition-all duration-300">
               <h3 className="font-bold font-lg">{member.name}</h3>
               <p className="text-sm">{member.role}</p>
               <p className="text-sm mt-2 text-center">{member.description}</p>

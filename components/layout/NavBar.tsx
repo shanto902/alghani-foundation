@@ -2,16 +2,23 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronUp } from "lucide-react";
 import logo from "@/assets/svg/logo-new.svg";
 import CustomButton from "../common/CustomButton";
 import TopBar from "./TopBar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+interface NavLink {
+  name: string;
+  href: string;
+  submenu?: { name: string; href: string }[];
+}
+
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [hideTopBar, setHideTopBar] = useState(false);
+  const [openSubmenuIndex, setOpenSubmenuIndex] = useState<number | null>(null); // Track which submenu is open
 
   const pathName = usePathname();
 
@@ -28,7 +35,7 @@ const NavBar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
+  const navLinks: NavLink[] = [
     {
       name: "Home",
       href: "/",
@@ -36,20 +43,52 @@ const NavBar = () => {
     {
       name: "About Us",
       href: "/about",
+      submenu: [
+        { name: "Our Mission", href: "/about/mission" },
+        { name: "Our Team", href: "/about/team" },
+        { name: "Our History", href: "/about/history" },
+      ],
     },
     {
       name: "Where We Work",
       href: "/work",
+      submenu: [
+        { name: "Regions", href: "/work/regions" },
+        { name: "Countries", href: "/work/countries" },
+      ],
     },
     {
       name: "What We Do",
       href: "/services",
+      submenu: [
+        { name: "Education", href: "/services/education" },
+        { name: "Health", href: "/services/health" },
+        { name: "Environment", href: "/services/environment" },
+      ],
+    },
+    {
+      name: "Our Projects",
+      href: "/projects",
     },
     {
       name: "Contact Us",
       href: "/contact",
     },
+
+    {
+      name: "Reports",
+      href: "/reports",
+    },
   ];
+
+  // Toggle submenu visibility for mobile
+  const toggleSubmenu = (index: number) => {
+    if (openSubmenuIndex === index) {
+      setOpenSubmenuIndex(null); // Close the submenu if it's already open
+    } else {
+      setOpenSubmenuIndex(index); // Open the submenu
+    }
+  };
 
   return (
     <>
@@ -73,20 +112,44 @@ const NavBar = () => {
           <Image className="h-16 w-fit" src={logo} alt="logo" />
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex flex-1 justify-end items-center">
+          <div className="  hidden md:flex flex-1 justify-end items-center">
             <div className="flex items-center gap-5">
-              <ul className="text-sm uppercase font-bold flex space-x-5">
+              <ul className=" text-white rounded-lg bg-primary p-4 text-sm uppercase font-bold flex space-x-5">
                 {navLinks.map((item, index) => (
-                  <Link
-                    href={item.href}
-                    key={index}
-                    className={`relative group cursor-pointer transition-all duration-300 ease-in-out ${
-                      pathName === item.href ? "text-primary" : "text-black"
-                    }`}
-                  >
-                    {item.name}
-                    <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                  </Link>
+                  <li key={index} className="relative group">
+                    <Link
+                      href={item.href}
+                      className={`flex items-center gap-1 cursor-pointer transition-all duration-300 ease-in-out ${
+                        pathName === item.href
+                          ? "underline underline-offset-4"
+                          : ""
+                      }`}
+                    >
+                      {item.name}
+                      {item.submenu && <ChevronDown size={16} />}
+                    </Link>
+                    {item.submenu && (
+                      <ul
+                        className="absolute left-0 mt-2 w-48 bg-primary shadow-lg rounded-lg py-2 opacity-0 invisible 
+                      text-white group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out transform translate-y-2 group-hover:translate-y-0"
+                      >
+                        {item.submenu.map((subItem, subIndex) => (
+                          <li key={subIndex}>
+                            <Link
+                              href={subItem.href}
+                              className={`block px-4 py-2 text-sm text-white-700 hover:text-primary hover:bg-gray-100 ${
+                                pathName === subItem.href
+                                  ? "underline underline-offset-4"
+                                  : ""
+                              }`}
+                            >
+                              {subItem.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
                 ))}
               </ul>
               <CustomButton href="#" className="hidden lg:block">
@@ -117,19 +180,47 @@ const NavBar = () => {
             <X size={28} />
           </button>
           <ul className="text-lg uppercase font-bold flex flex-col gap-5">
-            {[
-              "Home",
-              "About Us",
-              "Where We Work",
-              "What We Do",
-              "Contact Us",
-            ].map((item, index) => (
+            {navLinks.map((item, index) => (
               <li
                 key={index}
                 className="cursor-pointer transition-all duration-300 ease-in-out hover:text-teal-600"
-                onClick={() => setIsOpen(false)}
               >
-                {item}
+                <div
+                  className="flex items-center gap-2"
+                  onClick={() => {
+                    if (item.submenu) {
+                      toggleSubmenu(index); // Toggle submenu on click
+                    } else {
+                      setIsOpen(false); // Close mobile menu if no submenu
+                    }
+                  }}
+                >
+                  <Link href={item.href}>{item.name}</Link>
+                  {item.submenu && (
+                    <button onClick={() => toggleSubmenu(index)}>
+                      {openSubmenuIndex === index ? (
+                        <ChevronUp size={16} />
+                      ) : (
+                        <ChevronDown size={16} />
+                      )}
+                    </button>
+                  )}
+                </div>
+                {item.submenu && openSubmenuIndex === index && (
+                  <ul className="pl-4 mt-2">
+                    {item.submenu.map((subItem, subIndex) => (
+                      <li key={subIndex}>
+                        <Link
+                          href={subItem.href}
+                          className="block py-2 text-sm text-gray-700 hover:text-teal-600"
+                          onClick={() => setIsOpen(false)} // Close mobile menu when submenu item is clicked
+                        >
+                          {subItem.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))}
           </ul>

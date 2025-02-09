@@ -17,7 +17,7 @@ export default function Home() {
         <HeaderBlock
           description="Integer sit amet augue iaculis, ultricies justo nec, commodo nisi. Class aptent
 taciti sociosqu ad litora torquent per conubia nostra"
-          title="Statistics"
+          title="Total Served Numbers"
         />
         <StatisticsSection />
 
@@ -26,11 +26,23 @@ taciti sociosqu ad litora torquent per conubia nostra"
 
         <HeaderBlock title="Partners" />
         <PartnerSection />
-
+        <HeaderBlock
+          description="Integer sit amet augue iaculis, ultricies justo nec, commodo nisi. Class aptent taciti sociosqu ad litora torquent per conubia nostra"
+          title="Location"
+        />
         <LocationSection />
-        <SustainabilitySection />
+        <HeaderBlock
+          description="Integer sit amet augue iaculis, ultricies justo nec, commodo nisi. Class aptent taciti sociosqu ad litora torquent per conubia nostra"
+          title="Sustainable Development "
+        />
       </PaddingContainer>
-
+      <SustainabilitySection />
+      <PaddingContainer>
+        <HeaderBlock
+          description="Integer sit amet augue iaculis, ultricies justo nec, commodo nisi. Class aptent taciti sociosqu ad litora torquent per conubia nostra"
+          title="WHAT People SAYS ABOUT US"
+        />
+      </PaddingContainer>
       <TestimonialSection />
       <CTASection />
     </>

@@ -76,7 +76,7 @@ const LocationSection = () => {
       </div>
 
       {selectedProject && (
-        <div className="mt-4 p-4 bg-primaryDark flex">
+        <div className="mt-4 p-4 bg-primary flex">
           <Image
             className="aspect-square object-cover border-r-2 pr-5 border-primaryLight"
             height={400}
