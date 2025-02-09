@@ -43,11 +43,6 @@ const NavBar = () => {
     {
       name: "About Us",
       href: "/about",
-      submenu: [
-        { name: "Our Mission", href: "/about/mission" },
-        { name: "Our Team", href: "/about/team" },
-        { name: "Our History", href: "/about/history" },
-      ],
     },
     {
       name: "Where We Work",
