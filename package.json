@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@directus/sdk": "^19.0.1",
+    "@headlessui/react": "^2.2.0",
     "@types/react-leaflet": "^2.8.3",
     "framer-motion": "^12.4.0",
     "leaflet": "^1.9.4",
@@ -20,6 +22,7 @@
     "react-fast-marquee": "^1.6.5",
     "react-icons": "^5.4.0",
     "react-leaflet": "^5.0.0",
+    "react-medium-image-zoom": "^5.2.13",
     "react-slick": "^0.30.3",
     "react-sticky": "^6.0.3",
     "react-vertical-timeline-component": "^3.5.3",

@@ -8,6 +8,7 @@ import CustomButton from "../common/CustomButton";
 import TopBar from "./TopBar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { TSetting } from "@/interfaces";
 
 interface NavLink {
   name: string;
@@ -15,7 +16,11 @@ interface NavLink {
   submenu?: { name: string; href: string }[];
 }
 
-const NavBar = () => {
+type TNavbarProps = {
+  settings: TSetting;
+};
+
+const NavBar = ({ settings }: TNavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hideTopBar, setHideTopBar] = useState(false);
   const [openSubmenuIndex, setOpenSubmenuIndex] = useState<number | null>(null); // Track which submenu is open
@@ -34,47 +39,6 @@ const NavBar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const navLinks: NavLink[] = [
-    {
-      name: "Home",
-      href: "/",
-    },
-    {
-      name: "About Us",
-      href: "/about",
-    },
-    {
-      name: "Where We Work",
-      href: "/work",
-      submenu: [
-        { name: "Regions", href: "/work/regions" },
-        { name: "Countries", href: "/work/countries" },
-      ],
-    },
-    {
-      name: "What We Do",
-      href: "/services",
-      submenu: [
-        { name: "Education", href: "/services/education" },
-        { name: "Health", href: "/services/health" },
-        { name: "Environment", href: "/services/environment" },
-      ],
-    },
-    {
-      name: "Our Projects",
-      href: "/projects",
-    },
-    {
-      name: "Contact Us",
-      href: "/contact",
-    },
-
-    {
-      name: "Reports",
-      href: "/reports",
-    },
-  ];
 
   // Toggle submenu visibility for mobile
   const toggleSubmenu = (index: number) => {
@@ -110,17 +74,17 @@ const NavBar = () => {
           <div className="  hidden md:flex flex-1 justify-end items-center">
             <div className="flex items-center gap-5">
               <ul className=" text-white rounded-lg bg-primary p-4 text-sm uppercase font-bold flex space-x-5">
-                {navLinks.map((item, index) => (
+                {settings.menu.map((item, index) => (
                   <li key={index} className="relative group">
                     <Link
-                      href={item.href}
+                      href={item.link as string}
                       className={`flex items-center gap-1 cursor-pointer transition-all duration-300 ease-in-out ${
-                        pathName === item.href
+                        pathName === item.link
                           ? "underline underline-offset-4"
                           : ""
                       }`}
                     >
-                      {item.name}
+                      {item.label}
                       {item.submenu && <ChevronDown size={16} />}
                     </Link>
                     {item.submenu && (
@@ -131,14 +95,14 @@ const NavBar = () => {
                         {item.submenu.map((subItem, subIndex) => (
                           <li key={subIndex}>
                             <Link
-                              href={subItem.href}
+                              href={subItem.link}
                               className={`block px-4 py-2 text-sm text-white-700 hover:text-primary hover:bg-gray-100 ${
-                                pathName === subItem.href
+                                pathName === subItem.link
                                   ? "underline underline-offset-4"
                                   : ""
                               }`}
                             >
-                              {subItem.name}
+                              {subItem.label}
                             </Link>
                           </li>
                         ))}
@@ -147,7 +111,7 @@ const NavBar = () => {
                   </li>
                 ))}
               </ul>
-              <CustomButton href="#" className="hidden lg:block">
+              <CustomButton href="/donate" className="hidden lg:block">
                 Donate
               </CustomButton>
             </div>
@@ -175,7 +139,7 @@ const NavBar = () => {
             <X size={28} />
           </button>
           <ul className="text-lg uppercase font-bold flex flex-col gap-5">
-            {navLinks.map((item, index) => (
+            {settings.menu.map((item, index) => (
               <li
                 key={index}
                 className="cursor-pointer transition-all duration-300 ease-in-out hover:text-teal-600"
@@ -190,7 +154,7 @@ const NavBar = () => {
                     }
                   }}
                 >
-                  <Link href={item.href}>{item.name}</Link>
+                  <Link href={item.link as string}>{item.label}</Link>
                   {item.submenu && (
                     <button onClick={() => toggleSubmenu(index)}>
                       {openSubmenuIndex === index ? (
@@ -206,11 +170,11 @@ const NavBar = () => {
                     {item.submenu.map((subItem, subIndex) => (
                       <li key={subIndex}>
                         <Link
-                          href={subItem.href}
+                          href={subItem.link}
                           className="block py-2 text-sm text-gray-700 hover:text-teal-600"
                           onClick={() => setIsOpen(false)} // Close mobile menu when submenu item is clicked
                         >
-                          {subItem.name}
+                          {subItem.label}
                         </Link>
                       </li>
                     ))}

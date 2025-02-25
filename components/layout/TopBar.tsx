@@ -13,12 +13,13 @@ const TopBar = () => {
             <span className="font-normal ">Call Us :</span>{" "}
             <span className="font-bold ">+8801720015780</span>
           </p>
-          <div className="flex ">
-            <SvgGenerator src={facebookBtb} alt="facebook" />
-            <SvgGenerator src={instagramBtb} alt="facebook" />
-            <SvgGenerator src={linkedinBtb} alt="facebook" />
-            <SvgGenerator src={youtubeBtb} alt="facebook" />
-            <SvgGenerator src={twitterBtn} alt="facebook" />
+          <div className="flex">
+            <button className="bg-transparent text-black border border-primary px-4 py-1 rounded-tl-lg rounded-bl-lg hover:bg-primary hover:text-white transition-colors duration-300">
+              Press
+            </button>
+            <button className="bg-transparent text-black border border-primary px-4 py-1 rounded-br-lg rounded-tr-lg hover:bg-primary hover:text-white transition-colors duration-300">
+              Career
+            </button>
           </div>
         </div>
       </div>

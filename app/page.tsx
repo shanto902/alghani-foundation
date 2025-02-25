@@ -8,12 +8,14 @@ import TestimonialSection from "@/components/section/TestimonialSection";
 import DonationSlider from "@/components/slider/DonationSlider";
 import LocationSection from "@/components/section/LocationSection";
 import CTASection from "@/components/section/CTASection";
+import SponsorSection from "@/components/section/SponsorSection";
 
 export default function Home() {
   return (
     <>
       <DonationSlider />
       <PaddingContainer>
+        <SponsorSection />
         <HeaderBlock
           description="Integer sit amet augue iaculis, ultricies justo nec, commodo nisi. Class aptent
 taciti sociosqu ad litora torquent per conubia nostra"
