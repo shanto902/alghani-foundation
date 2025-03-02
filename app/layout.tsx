@@ -26,7 +26,7 @@ export default async function RootLayout({
 }>) {
   const settings = await directus.request(readSingleton("settings"));
 
-  console.log(settings);
+  // console.log(settings);
   return (
     <html lang="en">
       <body
@@ -35,7 +35,7 @@ export default async function RootLayout({
       >
         <NavBar settings={settings as TSetting} />
         {children}
-        <Footer />
+        <Footer settings={settings as TSetting} />
       </body>
     </html>
   );

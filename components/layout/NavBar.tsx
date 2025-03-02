@@ -10,12 +10,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { TSetting } from "@/interfaces";
 
-interface NavLink {
-  name: string;
-  href: string;
-  submenu?: { name: string; href: string }[];
-}
-
 type TNavbarProps = {
   settings: TSetting;
 };

@@ -34,7 +34,7 @@ const ReportSection = () => {
 
         <section>
           <h2 className="text-2xl font-semibold text-teal-600 mb-4">
-            Auditor's Reports
+            Auditor&apos;s Reports
           </h2>
           <div className="space-y-4">
             {auditorReports.map((report, index) => (

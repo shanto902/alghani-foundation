@@ -3,6 +3,7 @@ import Image from "next/image";
 import Slider, { Settings } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { TTestimonialBlock } from "@/interfaces";
 
 interface Testimonial {
   id: number;
@@ -98,33 +99,34 @@ const settings: Settings = {
   ],
 };
 
-const TestimonialSection = () => {
+const TestimonialBlock = ({ block }: { block: TTestimonialBlock }) => {
+  //   console.log(block);
   return (
     <section className="overflow-hidden bg-primary py-5 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto text-center relative">
         <div>
           <Slider {...settings}>
-            {testimonials.map((testimonial) => (
-              <div key={testimonial.id} className="px-4">
+            {block.item.testimonials.map((testimonial) => (
+              <div key={testimonial.testimonial_id.id} className="px-4">
                 <div className="p-6 relative h-full flex flex-col items-center text-center">
                   <p className="text-white tracking-wide max-w-[959px] pb-5 italic">
-                    {testimonial.quote}
+                    {testimonial.testimonial_id.quote}
                   </p>
                   <div className="flex gap-5 justify-center items-center">
                     <div className="w-14 h-14 overflow-hidden">
                       <Image
-                        src={testimonial.image}
-                        alt={testimonial.name}
+                        src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${testimonial.testimonial_id.image}`}
+                        alt={testimonial.testimonial_id.name}
                         height={96}
                         width={96}
                       />
                     </div>
                     <div className="text-left">
                       <h3 className="text-xl pt-2 font-semibold text-white">
-                        {testimonial.name}
+                        {testimonial.testimonial_id.name}
                       </h3>
                       <p className="text-left text-sm text-gray-200 mb-4">
-                        {testimonial.role}
+                        {testimonial.testimonial_id.role}
                       </p>
                     </div>
                   </div>
@@ -138,4 +140,4 @@ const TestimonialSection = () => {
   );
 };
 
-export default TestimonialSection;
+export default TestimonialBlock;

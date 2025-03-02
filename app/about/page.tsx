@@ -13,9 +13,9 @@ const AboutPage = () => {
       <Breadcrumb text="About Us" />
       <PaddingContainer className="mx-auto">
         <OurMissionSection />
-        <HeaderBlock title="Executives" />
+        {/* <HeaderBlock title="Executives" /> */}
         <ExecutiveTeam />
-        <HeaderBlock title="History" />
+        {/* <HeaderBlock title="History" /> */}
         <HistorySection />
       </PaddingContainer>
     </div>

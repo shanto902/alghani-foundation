@@ -1,13 +1,15 @@
 "use client";
 import bgImage from "@/assets/bg/footerBG.png";
+import { TSetting } from "@/interfaces";
 import Image from "next/image";
 import Link from "next/link";
 import { FormEvent } from "react";
-const Footer = () => {
+import parser from "html-react-parser";
+const Footer = ({ settings }: { settings: TSetting }) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent page reload
     const email = (e.target as HTMLFormElement).email.value; // Access email input
-    console.log("Email Submitted:", email); // Replace this with actual form handling logic
+    // console.log("Email Submitted:", email); // Replace this with actual form handling logic
   };
   return (
     <>
@@ -19,38 +21,24 @@ const Footer = () => {
               <h2 className="text-xl font-bold mb-4">
                 ABOUT AL GHANI FOUNDATION
               </h2>
-              <p className="text-sm text-gray-400">
-                Phasellus vitae diam pulvinar, tempus dia aliquam tellus.
-                Quisque mattis odio eu placerat luctus. Vivamus magna elit,
-                ultrices non lacinia vel, tempor vitae tell Fusce sit amet sem
-                sit amet.
-              </p>
+              <p className="text-sm text-gray-400">{settings.description}</p>
             </div>
 
             {/* Quick Links Section */}
             <div>
               <h2 className="text-xl font-bold mb-4">QUICK LINKS</h2>
+
               <ul className="text-sm text-gray-400">
-                <li className="mb-2">
-                  <Link href="#" className="hover:text-white">
-                    CAUSES
-                  </Link>
-                </li>
-                <li className="mb-2">
-                  <a href="#" className="hover:text-white">
-                    PROJECTS
-                  </a>
-                </li>
-                <li className="mb-2">
-                  <a href="#" className="hover:text-white">
-                    GALLERY
-                  </a>
-                </li>
-                <li className="mb-2">
-                  <a href="#" className="hover:text-white">
-                    EVENTS
-                  </a>
-                </li>
+                {settings.quick_links.map((item, index) => (
+                  <li key={index} className="mb-2">
+                    <Link
+                      href={item.link}
+                      className="hover:text-white uppercase"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -58,21 +46,13 @@ const Footer = () => {
             <div>
               <h2 className="text-xl font-bold mb-4">LEGAL</h2>
               <ul className="text-sm text-gray-400">
-                <li className="mb-2">
-                  <a href="#" className="hover:text-white">
-                    TERMS OF USE
-                  </a>
-                </li>
-                <li className="mb-2">
-                  <a href="#" className="hover:text-white">
-                    LEGAL DISCLAIMER
-                  </a>
-                </li>
-                <li className="mb-2">
-                  <a href="#" className="hover:text-white">
-                    PRIVACY POLICY
-                  </a>
-                </li>
+                {settings.legal_links.map((item, index) => (
+                  <li key={index} className="mb-2">
+                    <a href={item.link} className="hover:text-white">
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -101,14 +81,7 @@ const Footer = () => {
             {/* Contact Section */}
             <div>
               <h2 className="text-xl font-bold mb-4">CONTACT US</h2>
-              <p className="text-sm text-gray-400">
-                Phasellus vitae diam pulvinar, tempus dia aliquam tellus.
-                Quisque mattis odio eu placerat luctus. Vivamus magna elit,
-              </p>
-              <p className="text-sm text-gray-400 mt-2">Phone: +215 369 1234</p>
-              <p className="text-sm text-gray-400">
-                Email Address: info@alghanifoundation.com
-              </p>
+              <div>{parser(settings.contact_details)}</div>
             </div>
           </div>
         </div>
