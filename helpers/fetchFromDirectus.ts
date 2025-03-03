@@ -1,4 +1,4 @@
-import { TPageBlock } from "@/interfaces";
+import { TPageBlock, TProject } from "@/interfaces";
 import directus from "@/lib/directus";
 
 import { readItems } from "@directus/sdk";
@@ -25,7 +25,7 @@ export const fetchPage = cache(
                       {
                         sliders: [
                           {
-                            slides_id: ["*"],
+                            sliders_id: ["*"],
                           },
                         ],
                       },
@@ -64,6 +64,13 @@ export const fetchPage = cache(
                       "*",
                       { testimonials: [{ testimonial_id: ["*"] }] },
                     ],
+                    block_breadcrumb: ["*"],
+                    page_project: [
+                      "*",
+                      {
+                        foundation: ["*"],
+                      },
+                    ],
                   },
                 },
               ],
@@ -93,3 +100,52 @@ export const fetchPages = async (): Promise<TPageBlock[]> => {
     throw new Error("Failed to fetch all pages for sitemaps.");
   }
 };
+
+export const getProjectData = cache(async (slug: string): Promise<TProject> => {
+  try {
+    const result = await directus.request(
+      readItems("projects", {
+        filter: {
+          slug: {
+            _eq: slug,
+          },
+        },
+        fields: ["*", { foundation: ["*"] }],
+      })
+    );
+
+    return result[0] as TProject;
+  } catch (error) {
+    console.error("Error fetching member data:", error);
+    throw new Error("Error fetching post");
+  }
+});
+
+export const getAllProjects = cache(
+  async (
+    projectStatus: string,
+    foundationName: string
+  ): Promise<TProject[]> => {
+    try {
+      const results = await directus.request(
+        readItems("projects", {
+          filter: {
+            project_status: {
+              _eq: projectStatus,
+            },
+            foundation: {
+              name: {
+                _eq: foundationName,
+              },
+            },
+          },
+          fields: ["*", "foundation.*"],
+        })
+      );
+      return results as TProject[];
+    } catch (error) {
+      console.error("Error fetching member data:", error);
+      throw new Error("Error fetching post");
+    }
+  }
+);

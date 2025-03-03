@@ -20,14 +20,13 @@ export type TSetting = {
 };
 
 export type TSlider = {
-  slides_id: {
+  sliders_id: {
     id: string;
     image: string;
-    title: string;
-    description: string;
-    total_funds: number;
-    earned_funds: number;
-    type: "urgent" | "normal";
+    text: string;
+    position: string;
+    button_text: number;
+    button_link: number;
   };
 };
 
@@ -160,6 +159,8 @@ export type TTestimonial = {
     role: string;
     quote: string;
     image: string;
+
+    ratings: number;
   };
 };
 
@@ -173,6 +174,42 @@ export type TSector = {
   };
 };
 
+export type TProject = {
+  id: string;
+  project_status: "on-going" | "completed" | "up-coming";
+  tags: string[];
+  body: string;
+  image: string;
+  slug: string;
+  title: string;
+  date_updated: string;
+  date_created: string;
+};
+
+export type TBreadCrumbBlock = {
+  id: number;
+  collection: string;
+
+  item: { id: number; page_name: string; section_name: string };
+};
+
+export type TProjectPageBlock = {
+  id: string;
+  collection: string;
+  item: {
+    id: string;
+    project_status:
+      | "on-going-project"
+      | "upcoming-project"
+      | "completed-project";
+    foundation: {
+      id: string;
+      name: string;
+      color: string;
+    };
+  };
+};
+
 export type TBlock =
   | THeroSliderBlock
   | TSponsorProgramBlock
@@ -182,7 +219,9 @@ export type TBlock =
   | TPartnerBlock
   | TLocationBlock
   | TDevelopmentBlock
-  | TTestimonialBlock;
+  | TTestimonialBlock
+  | TProjectPageBlock
+  | TBreadCrumbBlock;
 
 export type TPageBlock = {
   last_updated: string;

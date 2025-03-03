@@ -29,6 +29,54 @@
   -webkit-font-smoothing: antialiased;
 }
 
+.slider-text {
+  @apply text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)];
+}
+
+.slider-text h2 {
+  @apply text-5xl   font-bold leading-normal    drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)];
+}
+
+.slider-text p {
+  @apply text-4xl leading-none m-0 my-5;
+}
+
+.footer-text p {
+  @apply text-sm text-gray-400 mb-4;
+}
+
+.richtext p {
+  @apply mb-4;
+}
+
+.richtext h3 {
+  @apply text-xl;
+}
+
+.richtext h2 {
+  @apply my-3 text-3xl;
+}
+
+.richtext colgroup {
+  @apply md:table-column-group flex;
+}
+
+.richtext tbody {
+  @apply md:table-header-group flex flex-col;
+}
+
+.richtext tr {
+  @apply md:table-row flex flex-col gap-4;
+}
+
+.richtext ol {
+  @apply list-decimal list-outside pl-4;
+}
+
+.richtext td {
+  @apply md:p-5 p-0;
+}
+
 /*
 
 BROWSER SCROLLBAR KITS

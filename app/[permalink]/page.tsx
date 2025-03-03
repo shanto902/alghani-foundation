@@ -1,8 +1,10 @@
+import BreadCrumbBlock from "@/components/block/BreadCrumbBlock";
 import DevelopmentBlock from "@/components/block/DevelopmentBlock";
 import HeaderBlock from "@/components/block/HeaderBlock";
 import HeroSliderBlock from "@/components/block/HeroSliderBlock";
 import LocationBlock from "@/components/block/LocationBlock";
 import PartnerBlock from "@/components/block/PartnerBlock";
+import ProjectBlock from "@/components/block/ProjectBlock";
 import RecognitionBlock from "@/components/block/RecognitionBlock";
 import ServedNumbers from "@/components/block/ServedNumbers";
 import SponsorProgram from "@/components/block/SponsorProgram";
@@ -10,12 +12,14 @@ import TestimonialBlock from "@/components/block/TestimonialBlock";
 import { fetchPage, fetchPages } from "@/helpers/fetchFromDirectus";
 import {
   TBlock,
+  TBreadCrumbBlock,
   TDevelopmentBlock,
   THeaderBlock,
   THeroSliderBlock,
   TLocationBlock,
   TPartner,
   TPartnerBlock,
+  TProjectPageBlock,
   TRecognitionBlock,
   TServedNumbersBlock,
   TSponsorProgramBlock,
@@ -122,6 +126,12 @@ const renderBlock = (block: TBlock) => {
       return (
         <TestimonialBlock key={block.id} block={block as TTestimonialBlock} />
       );
+    case "page_project":
+      return <ProjectBlock key={block.id} block={block as TProjectPageBlock} />;
+    case "block_breadcrumb":
+      return (
+        <BreadCrumbBlock key={block.id} block={block as TBreadCrumbBlock} />
+      );
     default:
       return <h2 key={block.id}>Unknown Block Type</h2>;
   }
@@ -129,12 +139,16 @@ const renderBlock = (block: TBlock) => {
 const Page = async ({ params }: PageProps) => {
   const { permalink } = await params;
   const page = await fetchPage(permalink);
-  // console.log(page);
+  // console.log(page?.blocks);
   if (!page) {
     notFound();
   }
 
-  return <div>{page.blocks?.map((block) => renderBlock(block))}</div>;
+  return (
+    <div className="min-h-[80vh]">
+      {page.blocks?.map((block) => renderBlock(block))}
+    </div>
+  );
 };
 
 export default Page;

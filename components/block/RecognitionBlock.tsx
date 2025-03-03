@@ -45,7 +45,7 @@ const RecognitionBlock = ({ block }: { block: TRecognitionBlock }) => {
       {/* Fullscreen Modal */}
       {selectedRecognition && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-black bg-opacity-90  flex items-center h-full justify-center z-50 p-4"
           onClick={() => setSelectedRecognition(null)}
         >
           <div className="relative max-w-5xl w-full flex flex-col items-center">
@@ -59,7 +59,7 @@ const RecognitionBlock = ({ block }: { block: TRecognitionBlock }) => {
               />
             </Zoom>
             {/* Black Overlay for Description */}
-            <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-80 text-white text-center p-4">
+            <div className="absolute bottom-0 left-0 w-full bg-black hover:bg-opacity-100 bg-opacity-70 text-white text-center p-4">
               <h2 className="text-xl font-semibold">
                 {selectedRecognition.recognition_id.title}
               </h2>

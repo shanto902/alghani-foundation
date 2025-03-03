@@ -60,8 +60,8 @@ const Footer = ({ settings }: { settings: TSetting }) => {
             <div>
               <h2 className="text-xl font-bold mb-4">NEWSLETTER SIGNUP</h2>
               <p className="text-sm text-gray-400 mb-4">
-                Phasellus vitae diam pulvinar, tempus dia aliquam tellus.
-                Quisque mattis odio eu placerat luctus. Vivamus magna elit,
+                Join our newsletter for exclusive updates, insider insights, and
+                special offers delivered straight to your inbox.
               </p>
               <form className="flex" onSubmit={handleSubmit}>
                 <input
@@ -81,7 +81,9 @@ const Footer = ({ settings }: { settings: TSetting }) => {
             {/* Contact Section */}
             <div>
               <h2 className="text-xl font-bold mb-4">CONTACT US</h2>
-              <div>{parser(settings.contact_details)}</div>
+              <div className="footer-text">
+                {parser(settings.contact_details)}
+              </div>
             </div>
           </div>
         </div>

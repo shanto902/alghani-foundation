@@ -16,7 +16,6 @@ const MapWrapper = dynamic(() => import("../map/MapWrapper"), {
 });
 
 const LocationBlock = ({ block }: { block: TLocationBlock }) => {
-  // console.log(block);
   const [selectedProject, setSelectedProject] = useState<TLocation | null>(
     null
   );
@@ -36,11 +35,11 @@ const LocationBlock = ({ block }: { block: TLocationBlock }) => {
       </div>
 
       {selectedProject && (
-        <div className="mt-4 p-4 bg-primary flex">
+        <div className="mt-4 p-4 bg-primary flex md:flex-row flex-col gap-10  ">
           <Image
-            className="aspect-square object-cover border-r-2 pr-5 border-primaryLight"
-            height={400}
-            width={400}
+            className="self-center aspect-square object-cover border-b-2 md:border-b-0 md:pb-0 md:border-r-2 md:pr-5 pb-5 border-primaryLight"
+            height={200}
+            width={200}
             src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${selectedProject.locations_id.image}`}
             alt={selectedProject.locations_id.title}
           />

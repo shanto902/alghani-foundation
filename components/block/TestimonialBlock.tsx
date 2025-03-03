@@ -4,6 +4,7 @@ import Slider, { Settings } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { TTestimonialBlock } from "@/interfaces";
+import { FaRegStar, FaStar } from "react-icons/fa";
 
 interface Testimonial {
   id: number;
@@ -12,34 +13,17 @@ interface Testimonial {
   image: string;
   quote: string;
 }
-
-const testimonials: Testimonial[] = [
-  {
-    id: 1,
-    name: "John Doe",
-    role: "CEO, Company A",
-    image:
-      "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    quote: "This is the best service I've ever used. Highly recommended!",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    role: "Marketing Manager, Company B",
-    image:
-      "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    quote: "Amazing experience! The team is very professional and responsive.",
-  },
-  {
-    id: 3,
-    name: "Alex Johnson",
-    role: "Founder, Company C",
-    image:
-      "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    quote:
-      "Great results and excellent customer support. Will definitely work with them again.",
-  },
-];
+const StarRating = ({ rating }: { rating: number }) => {
+  return (
+    <div className="flex">
+      {Array.from({ length: 5 }).map((_, index) => (
+        <span key={index} className="text-yellow-400">
+          {index < rating ? <FaStar /> : <FaRegStar />}
+        </span>
+      ))}
+    </div>
+  );
+};
 
 // Define the type for custom arrow props
 interface ArrowProps {
@@ -73,9 +57,9 @@ const PrevArrow = ({ onClick }: ArrowProps) => {
 // Settings for the slider
 const settings: Settings = {
   dots: true,
-  infinite: true,
+  infinite: false,
   speed: 500,
-  slidesToShow: 1,
+  slidesToShow: 3,
   slidesToScroll: 1,
   autoplay: true,
   autoplaySpeed: 8000,
@@ -100,32 +84,34 @@ const settings: Settings = {
 };
 
 const TestimonialBlock = ({ block }: { block: TTestimonialBlock }) => {
-  //   console.log(block);
   return (
     <section className="overflow-hidden bg-primary py-5 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto text-center relative">
         <div>
           <Slider {...settings}>
             {block.item.testimonials.map((testimonial) => (
-              <div key={testimonial.testimonial_id.id} className="px-4">
-                <div className="p-6 relative h-full flex flex-col items-center text-center">
-                  <p className="text-white tracking-wide max-w-[959px] pb-5 italic">
-                    {testimonial.testimonial_id.quote}
-                  </p>
-                  <div className="flex gap-5 justify-center items-center">
-                    <div className="w-14 h-14 overflow-hidden">
-                      <Image
-                        src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${testimonial.testimonial_id.image}`}
-                        alt={testimonial.testimonial_id.name}
-                        height={96}
-                        width={96}
-                      />
-                    </div>
+              <div key={testimonial.testimonial_id.id} className="px-4 ">
+                <div className="   bg-white relative rounded-3xl h-full flex flex-col items-start text-left px-5">
+                  <div className="mt-5">
+                    <StarRating rating={testimonial.testimonial_id.ratings} />
+                    <p className=" my-2 tracking-wide  italic">
+                      {testimonial.testimonial_id.quote}
+                    </p>
+                  </div>
+                  <div className="flex gap-5 items-center pb-4 justify-start w-full">
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${testimonial.testimonial_id.image}`}
+                      alt={testimonial.testimonial_id.name}
+                      height={96}
+                      width={96}
+                      className="w-14  h-14 object-cover rounded-full overflow-hidden"
+                    />
+
                     <div className="text-left">
-                      <h3 className="text-xl pt-2 font-semibold text-white">
+                      <h3 className="text-xl pt-2 font-semibold ">
                         {testimonial.testimonial_id.name}
                       </h3>
-                      <p className="text-left text-sm text-gray-200 mb-4">
+                      <p className="text-left text-sm  mb-4">
                         {testimonial.testimonial_id.role}
                       </p>
                     </div>

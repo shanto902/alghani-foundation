@@ -5,7 +5,7 @@ import parser from "html-react-parser";
 const SponsorProgram = ({ block }: { block: TSponsorProgramBlock }) => {
   // console.log(block);
   return (
-    <section className="my-10 flex flex-col md:flex-row items-center  overflow-hidden p-6">
+    <section className="my-10 flex  gap-10 flex-col md:flex-row items-center  overflow-hidden p-6">
       {/* Left side - Image */}
       <div className="md:w-1/2  w-full relative">
         <Image
@@ -13,7 +13,7 @@ const SponsorProgram = ({ block }: { block: TSponsorProgramBlock }) => {
           alt={block.item.headline}
           width={600}
           height={400}
-          className="w-full object-top h-[500px] object-cover rounded-xl"
+          className="w-full object-top object-cover rounded-xl aspect-[4/3]"
         />
       </div>
 

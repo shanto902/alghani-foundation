@@ -72,14 +72,19 @@ const NavBar = ({ settings }: TNavbarProps) => {
                   <li key={index} className="relative group">
                     <Link
                       href={item.link as string}
-                      className={`flex items-center gap-1 cursor-pointer transition-all duration-300 ease-in-out ${
+                      className={`flex items-center gap-1 cursor-pointer transition-all duration-300 ease-in-out group: ${
                         pathName === item.link
                           ? "underline underline-offset-4"
                           : ""
                       }`}
                     >
                       {item.label}
-                      {item.submenu && <ChevronDown size={16} />}
+                      {item.submenu && (
+                        <ChevronDown
+                          className="group-hover:rotate-180 transition-transform duration-300"
+                          size={16}
+                        />
+                      )}
                     </Link>
                     {item.submenu && (
                       <ul
