@@ -3,38 +3,36 @@ import React from "react";
 import PaddingContainer from "../layout/PaddingContainer";
 import { getAllProjects } from "@/helpers/fetchFromDirectus";
 import Card from "../common/Card";
+import PostBody from "../post-body/PostBody";
+import Image from "next/image";
 
-export const formatStatus = (status: string): string => {
-  const statusMap: Record<string, string> = {
-    "on-going-project": "Ongoing",
-    "completed-project": "Completed",
-    "upcoming-project": "Up Coming",
-  };
-
-  return statusMap[status] || "Unknown"; // Fallback for unexpected values
-};
 const ProjectBlock = async ({ block }: { block: TProjectPageBlock }) => {
-  const projects = await getAllProjects(
-    block.item.project_status,
-    block.item.foundation.name
-  );
-
-  console.log(block.item.project_status);
+  const projects = await getAllProjects(block.item.foundation.slug);
 
   return (
     <PaddingContainer className="my-10">
-      <div>
-        <h3 className="text-xl font-bold">{block.item.foundation.name}</h3>
+      <div className="max-w-screen-xl mx-auto flex justify-between items-center">
+        <h1 className="text-4xl  px-5 font-bold ">
+          {block.item.foundation.name}
+        </h1>
+        {block.item.foundation.logo && (
+          <Image
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${block.item.foundation.logo}`}
+            alt={block.item.foundation.name}
+            height={96}
+            width={96}
+            className="w-32  h-32 object-contain  overflow-hidden"
+          />
+        )}
       </div>
-      <div className="grid gap-5 grid-cols-2 w-full">
+      {block.item.foundation.body && (
+        <article className="max-w-screen-xl mx-auto  py-10">
+          <PostBody body={block.item.foundation.body} />
+        </article>
+      )}
+      <div className="grid gap-5 px-5 max-w-screen-xl mx-auto grid-cols-1 md:grid-cols-2 w-full">
         {projects.length > 0 ? (
-          projects.map((project) => (
-            <Card
-              key={project.id}
-              project={project}
-              projectStatus={block.item.project_status}
-            />
-          ))
+          projects.map((project) => <Card key={project.id} project={project} />)
         ) : (
           <p>Nothing to Show</p>
         )}

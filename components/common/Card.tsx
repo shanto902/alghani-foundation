@@ -4,35 +4,35 @@ import Image from "next/image";
 import React from "react";
 import parser from "html-react-parser";
 import moment from "moment";
-import { formatStatus } from "../block/ProjectBlock";
-import Link from "next/link";
-const Card = ({
-  project,
-  projectStatus,
-}: {
-  project: TProject;
-  projectStatus: string;
-}) => {
-  return (
-    <Link
-      href={`/${projectStatus}/${project.slug}`}
-      className="border w-full gap-2 rounded-2xl  flex overflow-hidden shadow-lg my-5 "
-    >
-      <Image
-        src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${project.image}`}
-        width={300}
-        height={200}
-        alt={project.title}
-        className="  object-cover p-2 rounded-2xl
-          aspect-[4/3]  "
-      />
 
-      <div className="px-3 flex flex-col gap-2 justify-center">
+import Link from "next/link";
+import { formatStatus } from "@/lib/format";
+const Card = ({ project }: { project: TProject }) => {
+  return (
+    <div className="border w-full gap-2 p-3 rounded-2xl flex-col md:flex-row flex overflow-hidden shadow-lg my-5 ">
+      <Link
+        className="h-full w-full  "
+        href={`/${project.foundation.slug}/${project.project_status}/${project.slug}`}
+      >
+        <Image
+          src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${project.image}`}
+          width={300}
+          height={300}
+          alt={project.title}
+          className=" w-full h-full aspect-square object-cover p-2 rounded-2xl
+           "
+        />
+      </Link>
+
+      <div className="  p-4 flex flex-col gap-2 justify-center">
         <h2 className="text-xl font-bold">{project.title}</h2>
         <div className="py-2  gap-2 text-sm items-center flex flex-wrap">
-          <div className="bg-primary  w-fit font-bold px-3 text-white  rounded-full py-1">
+          <Link
+            href={`/${project.foundation.slug}/${project.project_status}`}
+            className="bg-primary  w-fit text-sm font-bold px-3 text-white  rounded-full py-2"
+          >
             {formatStatus(project.project_status)} Project
-          </div>
+          </Link>
           {project.tags.map((tag, i) => (
             <div
               className="bg-primary  w-fit font-bold px-3 text-white  rounded-full py-1"
@@ -46,7 +46,7 @@ const Card = ({
           project.date_created
         ).format("MMM DD, YYYY")}`}</p>
       </div>
-    </Link>
+    </div>
   );
 };
 

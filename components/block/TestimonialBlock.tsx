@@ -85,12 +85,15 @@ const settings: Settings = {
 
 const TestimonialBlock = ({ block }: { block: TTestimonialBlock }) => {
   return (
-    <section className="overflow-hidden bg-primary py-5 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto text-center relative">
+    <section className="overflow-hidden h-[500px] flex items-center bg-primary py-5 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl w-full mx-auto text-center relative">
         <div>
           <Slider {...settings}>
             {block.item.testimonials.map((testimonial) => (
-              <div key={testimonial.testimonial_id.id} className="px-4 ">
+              <div
+                key={testimonial.testimonial_id.id}
+                className="px-4 h-full pb-5 md:pb-10 "
+              >
                 <div className="   bg-white relative rounded-3xl h-full flex flex-col items-start text-left px-5">
                   <div className="mt-5">
                     <StarRating rating={testimonial.testimonial_id.ratings} />

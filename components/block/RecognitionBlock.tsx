@@ -2,42 +2,56 @@
 
 import { TRecognition, TRecognitionBlock } from "@/interfaces";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 
 const RecognitionBlock = ({ block }: { block: TRecognitionBlock }) => {
   const [selectedRecognition, setSelectedRecognition] =
     useState<TRecognition | null>(null);
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, dragFree: true },
+    [Autoplay()]
+  );
+
+  useEffect(() => {
+    if (emblaApi) {
+      emblaApi.reInit();
+    }
+  }, [emblaApi, block]);
 
   return (
     <>
       {/* Main Section */}
       <section className="py-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {block.item.recognitions.map((recognition) => (
-              <div
-                key={recognition.recognition_id.id}
-                className="overflow-hidden cursor-pointer hover:bg-primary bg-white hover:text-white p-4  transition-all duration-300"
-                onClick={() => setSelectedRecognition(recognition)}
-              >
-                <div className="relative h-48">
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${recognition.recognition_id?.image}`}
-                    alt={recognition.recognition_id.title}
-                    height={192}
-                    width={420}
-                    className="object-cover w-[420px] h-[192px] rounded-sm"
-                  />
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex space-x-4">
+              {block.item.recognitions.map((recognition) => (
+                <div
+                  key={recognition.recognition_id.id}
+                  className="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 p-4 cursor-pointer hover:bg-primary bg-white hover:text-white transition-all duration-300"
+                  onClick={() => setSelectedRecognition(recognition)}
+                >
+                  <div className="relative h-48">
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${recognition.recognition_id?.image}`}
+                      alt={recognition.recognition_id.title}
+                      height={192}
+                      width={420}
+                      className="object-cover w-full h-full rounded-sm"
+                    />
+                  </div>
+                  <div className="p-4">
+                    <p className="text-lg font-semibold">
+                      {recognition.recognition_id.title}
+                    </p>
+                  </div>
                 </div>
-                <div className="p-4">
-                  <p className="text-lg font-semibold">
-                    {recognition.recognition_id.title}
-                  </p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -45,7 +59,7 @@ const RecognitionBlock = ({ block }: { block: TRecognitionBlock }) => {
       {/* Fullscreen Modal */}
       {selectedRecognition && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-90  flex items-center h-full justify-center z-50 p-4"
+          className="fixed inset-0 bg-black bg-opacity-90 flex items-center h-full justify-center z-50 p-4"
           onClick={() => setSelectedRecognition(null)}
         >
           <div className="relative max-w-5xl w-full flex flex-col items-center">

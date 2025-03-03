@@ -184,6 +184,11 @@ export type TProject = {
   title: string;
   date_updated: string;
   date_created: string;
+  foundation: {
+    slug: string;
+    name: string;
+    logo: string;
+  };
 };
 
 export type TBreadCrumbBlock = {
@@ -201,11 +206,14 @@ export type TProjectPageBlock = {
     project_status:
       | "on-going-project"
       | "upcoming-project"
-      | "completed-project";
+      | "completed-project"
+      | "all-projects";
     foundation: {
       id: string;
       name: string;
-      color: string;
+      logo?: string;
+      body?: string;
+      slug: string;
     };
   };
 };

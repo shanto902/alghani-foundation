@@ -6,7 +6,7 @@ import React from "react";
 import PostBody from "@/components/post-body/PostBody";
 import PaddingContainer from "@/components/layout/PaddingContainer";
 import moment from "moment";
-import { FaFacebook, FaFacebookF } from "react-icons/fa";
+import { FaFacebookF } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { getProjectData } from "@/helpers/fetchFromDirectus";
 interface PageProps {
@@ -24,14 +24,23 @@ export const generateStaticParams = async () => {
             _eq: "published",
           },
         },
-        fields: ["slug", "project_status"],
+        fields: ["slug", "foundation.slug", "project_status"],
       })
     );
 
+    // console.log(result);
+
     const allParams =
-      (result as { slug: string; project_status: string }[]).map((item) => ({
+      (
+        result as {
+          slug: string;
+          foundation: {
+            slug: string;
+          };
+        }[]
+      ).map((item) => ({
         slug: item.slug,
-        permalink: item.project_status,
+        permalink: item.foundation.slug,
       })) || [];
     return allParams;
   } catch (error) {
@@ -49,9 +58,10 @@ const page = async ({ params }: PageProps) => {
         <Image
           src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${projectsData.image}`}
           alt={projectsData.title}
-          width={600}
-          height={400}
-          className=" w-full object-cover absolute"
+          width={1920}
+          height={1800}
+          style={{ objectPosition: "50% 50%" }}
+          className=" w-full h-full object-cover absolute object-bottom"
         />
         <div className=" bg-gradient-to-b from-transparent via-transparent to-black/80 absolute w-full h-full indent-0 z-10"></div>
         <PaddingContainer className="relative  h-full w-full">
@@ -87,7 +97,7 @@ const page = async ({ params }: PageProps) => {
         </PaddingContainer>
       </div>
 
-      <article className="max-w-screen-xl mx-auto px-5 py-10">
+      <article className="relative max-w-screen-xl mx-auto px-5 py-10">
         <PostBody body={projectsData.body} />
       </article>
     </main>

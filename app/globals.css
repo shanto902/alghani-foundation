@@ -49,12 +49,26 @@
   @apply mb-4;
 }
 
-.richtext h3 {
-  @apply text-xl;
+.richtext h2 {
+  @apply text-3xl font-bold mb-3;
+}
+.richtext h4 {
+  @apply text-xl font-bold mb-2;
+}
+.richtext h5 {
+  @apply text-lg font-bold mb-1;
 }
 
-.richtext h2 {
-  @apply my-3 text-3xl;
+.richtext h6 {
+  @apply text-base font-bold mb-1;
+}
+
+.richtext h3 {
+  @apply text-2xl font-bold mb-2;
+}
+
+.richtext h1 {
+  @apply my-3 text-4xl font-bold;
 }
 
 .richtext colgroup {

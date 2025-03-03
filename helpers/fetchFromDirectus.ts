@@ -121,31 +121,73 @@ export const getProjectData = cache(async (slug: string): Promise<TProject> => {
   }
 });
 
-export const getAllProjects = cache(
+export const getAllProjectsBasedOnFoundation = cache(
   async (
     projectStatus: string,
-    foundationName: string
+    foundationSlug: string
   ): Promise<TProject[]> => {
+    try {
+      const filter: any = {
+        foundation: {
+          slug: {
+            _eq: foundationSlug,
+          },
+        },
+      };
+
+      if (projectStatus !== "all-projects") {
+        filter.project_status = {
+          _eq: projectStatus,
+        };
+      }
+
+      const results = await directus.request(
+        readItems("projects", {
+          filter,
+          fields: ["*", "foundation.*"],
+        })
+      );
+
+      return results as TProject[];
+    } catch (error) {
+      console.error("Error fetching project data:", error);
+      throw new Error("Error fetching projects");
+    }
+  }
+);
+
+export const getAllProjects = cache(
+  async (foundationSlug: string): Promise<TProject[]> => {
     try {
       const results = await directus.request(
         readItems("projects", {
           filter: {
-            project_status: {
-              _eq: projectStatus,
+            status: {
+              _eq: "published",
             },
             foundation: {
-              name: {
-                _eq: foundationName,
+              slug: {
+                _eq: foundationSlug,
               },
             },
           },
-          fields: ["*", "foundation.*"],
+          fields: [
+            "image",
+            "id",
+            "title",
+            "foundation.slug",
+            "date_created",
+            "tags",
+            "slug",
+            "project_status",
+          ],
         })
       );
+
       return results as TProject[];
     } catch (error) {
-      console.error("Error fetching member data:", error);
-      throw new Error("Error fetching post");
+      console.error("Error fetching project data:", error);
+      throw new Error("Error fetching projects");
     }
   }
 );

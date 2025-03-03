@@ -18,33 +18,48 @@ const ServedNumbers = ({ block }: { block: TServedNumbersBlock }) => {
   }, [block]);
 
   return (
-    <section className="py-5">
+    <section className="md:px-10  py-10 px-5 max-w-5xl mx-auto bg-primary md:rounded-xl ">
       <motion.div
-        className="container mx-auto text-center"
+        className=" mx-auto"
         onViewportEnter={() => setIsVisible(true)} // Start animation when section comes into view
       >
-        {/* Rising Bar Graph */}
-        <div className="w-full h-96 flex items-end justify-between space-x-2 md:space-x-4 px-4">
+        <h2 className="text-3xl font-bold text-center pb-5  text-white">
+          Total Served Numbers
+        </h2>
+        {/* Horizontal Bar Graph */}
+        <div className="w-full flex flex-col space-y-4 ">
           {block.item.numbers.map((item, index) => {
             const { number, prefix, suffix } = parseStat(item.value.toString());
 
-            // Scale height dynamically relative to maxNumber
-            const heightPercentage =
+            const widthPercentage =
               maxNumber > 0 ? (number / maxNumber) * 100 : 0;
 
             return (
-              <motion.div
+              <div
                 key={index}
-                className="bg-primary relative"
-                style={{ width: `${100 / block.item.numbers.length}%` }} // Adjust bar width dynamically
-                initial={{ height: 0 }}
-                animate={{
-                  height: isVisible ? `${heightPercentage}%` : 0, // Dynamically adjust height
-                }}
-                transition={{ duration: 2, delay: index * 0.2 }}
+                className="flex justify-start items-center p-2 space-x-2"
               >
-                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 text-center">
-                  <span className="text-2xl font-semibold text-primary">
+                {/* Year Label */}
+                <span className="text-white font-extrabold text-2xl flex-1/2 text-right">
+                  {item.year}
+                </span>
+
+                {/* Bar and Number */}
+                <motion.div
+                  className="bg-white h-10 rounded-xl relative flex-1/2 flex items-center "
+                  style={{ minWidth: "50px" }}
+                  initial={{ width: 0 }}
+                  animate={{ width: isVisible ? `${widthPercentage}%` : 0 }}
+                  transition={{ duration: 2, delay: index * 0.2 }}
+                >
+                  <motion.span
+                    className="absolute right-2 text-xl text-black font-semibold"
+                    initial={{ opacity: 0 }}
+                    animate={{
+                      opacity: isVisible ? 100 : 0,
+                    }}
+                    transition={{ duration: 2, delay: index * 0.2 }}
+                  >
                     {isVisible ? (
                       <CountUp
                         start={0}
@@ -56,24 +71,11 @@ const ServedNumbers = ({ block }: { block: TServedNumbersBlock }) => {
                     ) : (
                       `${prefix}0${suffix}`
                     )}
-                  </span>
-                </div>
-              </motion.div>
+                  </motion.span>
+                </motion.div>
+              </div>
             );
           })}
-        </div>
-
-        {/* Year Labels */}
-        <div className="w-full flex justify-between space-x-2 md:space-x-4 px-4 mt-4">
-          {block.item.numbers.map((item, index) => (
-            <div
-              key={index}
-              className="text-gray-600"
-              style={{ width: `${100 / block.item.numbers.length}%` }}
-            >
-              {item.year}
-            </div>
-          ))}
         </div>
       </motion.div>
     </section>
