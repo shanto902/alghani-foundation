@@ -95,6 +95,11 @@ const NavBar = ({ settings }: TNavbarProps) => {
                       >
                         {item.submenu.map((subItem, subIndex) => (
                           <li key={subIndex}>
+                            {subItem.header_text && (
+                              <p className="bg-[#27262C] px-1 text-white">
+                                {subItem.header_text}
+                              </p>
+                            )}
                             <Link
                               href={`/${subItem.link}`}
                               className={`block px-4 py-2 text-sm text-white-700 hover:text-primary hover:bg-gray-100 ${
@@ -129,9 +134,9 @@ const NavBar = ({ settings }: TNavbarProps) => {
 
         {/* Mobile Menu */}
         <div
-          className={`fixed inset-0 bg-white z-30 flex flex-col items-center justify-center gap-6 transition-transform duration-300 md:hidden ${
+          className={`fixed inset-0 bg-white z-30 flex flex-col items-center justify-start pt-16 gap-6 transition-transform duration-300 md:hidden ${
             isOpen ? "translate-x-0" : "translate-x-full"
-          }`}
+          } h-screen overflow-y-auto`}
         >
           <button
             className="absolute top-6 right-6 focus:outline-none"
@@ -140,41 +145,34 @@ const NavBar = ({ settings }: TNavbarProps) => {
             <X size={28} />
           </button>
 
-          <ul className="text-lg uppercase font-bold flex flex-col gap-5">
+          {/* Ensure scrolling works */}
+          <ul className="text-lg uppercase font-bold flex flex-col gap-5 w-full px-6">
+            <Link href={"/"}>
+              <Image className="h-10  w-fit" src={logo} alt="logo" />
+            </Link>
+            <hr className="border-2 border-primary" />
             {settings.menu.map((item, index) => (
               <li
                 key={index}
-                className="cursor-pointer transition-all duration-300 ease-in-out hover:text-teal-600"
+                className="cursor-pointer transition-all duration-300 ease-in-out hover:text-primary"
               >
-                <div
-                  className="flex items-center gap-2"
-                  onClick={() => {
-                    if (item.submenu) {
-                      toggleSubmenu(index); // Toggle submenu on click
-                    } else {
-                      setIsOpen(false); // Close mobile menu if no submenu
-                    }
-                  }}
-                >
+                <div className="flex items-center gap-2">
                   <Link href={`/${item.link}`}>{item.label}</Link>
-                  {item.submenu && (
-                    <button onClick={() => toggleSubmenu(index)}>
-                      {openSubmenuIndex === index ? (
-                        <ChevronUp size={16} />
-                      ) : (
-                        <ChevronDown size={16} />
-                      )}
-                    </button>
-                  )}
+                  {item.submenu && <ChevronDown size={16} />}
                 </div>
-                {item.submenu && openSubmenuIndex === index && (
+
+                {item.submenu && (
                   <ul className="pl-4 mt-2">
                     {item.submenu.map((subItem, subIndex) => (
                       <li key={subIndex}>
+                        {subItem.header_text && (
+                          <p className="bg-primary w-fit text-xs text-white flex items-center">
+                            {subItem.header_text} <ChevronDown size={16} />
+                          </p>
+                        )}
                         <Link
                           href={`/${subItem.link}`}
                           className="block py-2 text-sm text-gray-700 hover:text-teal-600"
-                          onClick={() => setIsOpen(false)} // Close mobile menu when submenu item is clicked
                         >
                           {subItem.label}
                         </Link>
@@ -185,7 +183,7 @@ const NavBar = ({ settings }: TNavbarProps) => {
               </li>
             ))}
             <Link
-              className="text-primary  underline-offset-4 hover:underline"
+              className="text-primary underline-offset-4 hover:underline mb-20"
               href="#"
             >
               Donate

@@ -35,12 +35,12 @@ const HeroSliderBlock = ({ block }: { block: THeroSliderBlock }) => {
             <div className="grid grid-cols-2 w-full">
               {slide.sliders_id.position === "left" ? (
                 <>
-                  <div className="flex flex-col slider-text  col-span-2 md:col-span-1 justify-center items-center">
-                    <div className="pt-10 md:pt-20 w-auto ">
+                  <div className="flex flex-col   col-span-2 md:col-span-1 justify-center items-center">
+                    <div className="pt-10 md:pt-20 w-auto slider-text">
                       {parser(slide.sliders_id.text)}
                     </div>
                     <CustomButton
-                      className={`bg-primary mb-10 md:mb-20 mt-4 md:mx-20 !text-sm hover:bg-white text-white hover:text-primary self-${slide.sliders_id.button_position}`}
+                      className={`bg-primary mb-10 md:mb-20 mt-4 !text-sm hover:bg-white text-white hover:text-primary self-${slide.sliders_id.button_position}`}
                       href={slide.sliders_id.button_link}
                     >
                       {slide.sliders_id.button_text}
@@ -54,8 +54,8 @@ const HeroSliderBlock = ({ block }: { block: THeroSliderBlock }) => {
                   {/* Empty Left Side */}
                   <div className="none md:static"></div>
                   {/* Content on the Right */}
-                  <div className="flex flex-col slider-text col-span-2 md:col-span-1 justify-center items-center">
-                    <div className="pt-10 md:pt-20 w-auto">
+                  <div className="flex flex-col col-span-2 md:col-span-1 justify-center items-center">
+                    <div className="pt-10 md:pt-20 w-auto slider-text ">
                       {parser(slide.sliders_id.text)}
                     </div>
                     <CustomButton

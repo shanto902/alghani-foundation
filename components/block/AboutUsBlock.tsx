@@ -13,11 +13,13 @@ const AboutUsBlock = ({ block }: { block: TAboutUsBlock }) => {
         className={` flex flex-col ${
           block.item.image_position === "left"
             ? "md:flex-row"
-            : "md:flex-row-reverse"
+            : block.item.image_position === "right"
+            ? "md:flex-row-reverse"
+            : ""
         } items-center justify-center gap-10`}
       >
         {/* Left - Image */}
-        {block.item.image && (
+        {block.item.image && block.item.image_position !== "none" && (
           <div className="md:w-1/2">
             <Image
               src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${block.item.image}`}
@@ -26,20 +28,40 @@ const AboutUsBlock = ({ block }: { block: TAboutUsBlock }) => {
               width={600}
               height={400}
             />
+
+            {block.item.button && (
+              <div className=" flex justify-center mt-10">
+                <CustomButton href={block.item.button_link as string}>
+                  {block.item.button_text}
+                </CustomButton>
+              </div>
+            )}
           </div>
         )}
 
         {/* Right - Text */}
         <div
           className={`${
-            block.item.image ? "md:w-1/2" : ""
-          }  mt-5 text-secondary self-start`}
+            block.item.image && block.item.image_position !== "none"
+              ? "md:w-1/2 self-start"
+              : "self-center md:w-[1280px]"
+          }  mt-5 text-secondary `}
         >
-          <PostBody body={block.item.body} />
+          <article className="flex justify-center items-center">
+            <PostBody body={block.item.body} />
+          </article>
 
           {/* Call to Action */}
-          <div className="mt-6">
-            {block.item.button && (
+          <div
+            className={`mt-6 flex w-full ${
+              block.item.button_position === "left"
+                ? "justify-start"
+                : block.item.button_position === "right"
+                ? "justify-end"
+                : "justify-center"
+            }`}
+          >
+            {block.item.image_position === "none" && block.item.button && (
               <CustomButton href={block.item.button_link as string}>
                 {block.item.button_text}
               </CustomButton>

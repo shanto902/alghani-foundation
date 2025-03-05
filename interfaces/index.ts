@@ -1,6 +1,7 @@
 type TSubmenu = {
   label: string;
   link: string;
+  header_text?: string;
 };
 type TMenu = {
   label: string;
@@ -237,7 +238,8 @@ export type TAboutUsBlock = {
     body: string;
     button_text?: string;
     button_link?: string;
-    image_position: "left" | "right";
+    image_position: "left" | "right" | "none";
+    button_position: "left" | "right" | "center";
     button: boolean;
   };
 };
