@@ -10,9 +10,11 @@ import L, { LatLngExpression } from "leaflet";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { TLocation, TLocationBlock } from "@/interfaces";
+import Spinner from "../common/Spinner";
+import Link from "next/link";
 const MapWrapper = dynamic(() => import("../map/MapWrapper"), {
   ssr: false,
-  loading: () => <p>Loading...</p>,
+  loading: () => <Spinner />,
 });
 
 const LocationBlock = ({ block }: { block: TLocationBlock }) => {
@@ -25,7 +27,7 @@ const LocationBlock = ({ block }: { block: TLocationBlock }) => {
   const mapCenter: LatLngExpression = [lat, lng];
 
   return (
-    <div className="container mx-auto px-6 py-12">
+    <div className="container mx-auto px-6 py-12  overflow-hidden">
       <div className="w-full h-96  overflow-hidden">
         <MapWrapper
           mapCenter={mapCenter}
@@ -35,18 +37,24 @@ const LocationBlock = ({ block }: { block: TLocationBlock }) => {
       </div>
 
       {selectedProject && (
-        <div className="mt-4 p-4 bg-primary flex md:flex-row flex-col gap-10  ">
-          <Image
-            className="self-center aspect-square object-cover border-b-2 md:border-b-0 md:pb-0 md:border-r-2 md:pr-5 pb-5 border-primaryLight"
-            height={200}
-            width={200}
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${selectedProject.locations_id.image}`}
-            alt={selectedProject.locations_id.title}
-          />
-          <div className="px-5">
-            <h3 className="text-3xl pb-5 font-semibold text-white">
+        <div className="mt-4 rounded-lg p-4 bg-primary flex md:flex-row flex-col gap-5  ">
+          <div className="self-center  border-b-2 md:border-b-0 md:pb-0 md:border-r-2 md:pr-5 pb-5 border-white">
+            <Image
+              className=" rounded-lg aspect-square object-cover "
+              height={300}
+              width={300}
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${selectedProject.locations_id.image}`}
+              alt={selectedProject.locations_id.title}
+            />
+          </div>
+          <div className="">
+            <Link
+              target="_blank"
+              href={selectedProject.locations_id.google_map_link}
+              className="text-3xl pb-5 font-semibold text-white hover:underline "
+            >
               {selectedProject.locations_id.title}
-            </h3>
+            </Link>
             <div className="text-gray-200">
               {parser(selectedProject.locations_id.description)}
             </div>

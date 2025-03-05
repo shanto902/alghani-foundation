@@ -18,7 +18,7 @@ const ServedNumbers = ({ block }: { block: TServedNumbersBlock }) => {
   }, [block]);
 
   return (
-    <section className="md:px-10  py-10 px-5 max-w-5xl mx-auto bg-primary md:rounded-xl ">
+    <section className="md:px-10  py-10 px-5 max-w-5xl mx-auto bg-primary md:rounded-lg ">
       <motion.div
         className=" mx-auto"
         onViewportEnter={() => setIsVisible(true)} // Start animation when section comes into view
@@ -46,7 +46,7 @@ const ServedNumbers = ({ block }: { block: TServedNumbersBlock }) => {
 
                 {/* Bar and Number */}
                 <motion.div
-                  className="bg-white h-10 rounded-xl relative flex-1/2 flex items-center "
+                  className="bg-white h-10 rounded-lg relative flex-1/2 flex items-center "
                   style={{ minWidth: "50px" }}
                   initial={{ width: 0 }}
                   animate={{ width: isVisible ? `${widthPercentage}%` : 0 }}
@@ -62,6 +62,7 @@ const ServedNumbers = ({ block }: { block: TServedNumbersBlock }) => {
                   >
                     {isVisible ? (
                       <CountUp
+                        className="text-lg md:text-xl"
                         start={0}
                         end={number}
                         duration={5}

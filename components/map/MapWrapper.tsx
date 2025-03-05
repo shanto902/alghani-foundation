@@ -3,6 +3,7 @@ import React from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
 import { TLocation } from "@/interfaces";
+import Link from "next/link";
 
 const MapWrapper = ({
   projectLocations,
@@ -18,7 +19,7 @@ const MapWrapper = ({
       center={mapCenter}
       zoom={7}
       scrollWheelZoom={false}
-      className="w-full z-0 h-full"
+      className="w-full z-0 h-full rounded-lg"
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -39,7 +40,13 @@ const MapWrapper = ({
             })}
           >
             <Popup>
-              <strong>{project.locations_id.title}</strong>
+              <Link
+                target="_blank"
+                className="hover:underline font-bold !text-primary"
+                href={project.locations_id.google_map_link}
+              >
+                {project.locations_id.title}
+              </Link>
               <p className="!mt-1">{project.locations_id.subtitle}</p>
             </Popup>
           </Marker>

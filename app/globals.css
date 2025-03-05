@@ -30,15 +30,36 @@
 }
 
 .slider-text {
-  @apply text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)];
+  @apply text-white;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  @apply !text-primary !text-3xl;
 }
 
 .slider-text h2 {
-  @apply text-5xl   font-bold leading-normal    drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)];
+  @apply lg:text-5xl mb-2 md:text-4xl text-3xl   font-bold leading-normal text-shadow-xl;
+}
+.slider-text h3 {
+  @apply lg:text-4xl mb-2 md:text-3xl text-2xl font-bold leading-normal text-shadow-lg;
+}
+.slider-text h4 {
+  @apply lg:text-3xl mb-2 md:text-2xl text-xl   font-bold leading-normal text-shadow-lg;
+}
+.slider-text h5 {
+  @apply lg:text-2xl mb-2 text-xl   font-bold leading-normal text-shadow-lg;
+}
+.slider-text h6 {
+  @apply lg:text-xl mb-2 text-lg   font-bold leading-normal text-shadow-lg;
+}
+
+.milestone > div {
+  @apply shadow-lg;
 }
 
 .slider-text p {
-  @apply text-4xl leading-none m-0 my-5;
+  @apply text-xl md:text-2xl leading-none m-0 my-5 text-shadow-xl;
 }
 
 .footer-text p {
@@ -46,7 +67,11 @@
 }
 
 .richtext p {
-  @apply mb-4;
+  @apply mb-5 leading-normal;
+}
+
+.richtext ul {
+  @apply mb-5 list-disc ml-5 space-y-2;
 }
 
 .richtext h2 {
@@ -179,4 +204,17 @@ BROWSER SCROLLBAR KITS
 
 *::-o-scrollbar-thumb:active {
   background: #045857;
+}
+
+::-moz-selection {
+  background: #045857;
+  color: white;
+}
+::-webkit-selection {
+  background: #045857;
+  color: white;
+}
+::selection {
+  background: #045857;
+  color: white;
 }

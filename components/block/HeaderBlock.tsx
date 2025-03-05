@@ -6,7 +6,7 @@ import { THeaderBlock } from "@/interfaces";
 const HeaderBlock = ({ block }: { block: THeaderBlock }) => {
   return (
     <section className="  flex pt-10 flex-col items-center relative">
-      <h2 className=" uppercase text-center text-[#27252b] text-[23px] font-black  tracking-wider">
+      <h2 className=" uppercase text-center text-[#27252b] text-3xl font-black  tracking-wider">
         {block.item.title}
       </h2>
 
@@ -18,7 +18,7 @@ const HeaderBlock = ({ block }: { block: THeaderBlock }) => {
         <div className="w-[41px] h-px bg-primary" />
       </div>
       {block.item.subtitle && (
-        <p className="text-textSecondary text-sm tracking-wide pt-2 pb-5 max-w-3xl text-center">
+        <p className="text-textSecondary text-base tracking-wide pt-2 pb-5 max-w-3xl text-center">
           {block.item.subtitle}
         </p>
       )}

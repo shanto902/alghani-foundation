@@ -17,7 +17,7 @@ const PostBody = ({ body, id }: { body: string; id?: string }) => {
     return parse(body, options);
   };
 
-  return <div className=" richtext h-full">{getParsedHtml(body)}</div>;
+  return <div className="richtext h-full">{getParsedHtml(body)}</div>;
 };
 
 export default PostBody;

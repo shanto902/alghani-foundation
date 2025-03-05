@@ -11,8 +11,8 @@ type TMenu = {
 export type TSetting = {
   menu: TMenu[];
   contact_no: string;
-  press_link: "#";
-  careers_link: "#";
+  press_link: string;
+  career_link: string;
   description: string;
   quick_links: { label: string; link: string }[];
   legal_links: { label: string; link: string }[];
@@ -25,8 +25,9 @@ export type TSlider = {
     image: string;
     text: string;
     position: string;
-    button_text: number;
-    button_link: number;
+    button_text: string;
+    button_link: string;
+    button_position: "start" | "center" | "end";
   };
 };
 
@@ -87,6 +88,7 @@ export type TLocation = {
     location: {
       coordinates: [number, number];
     };
+    google_map_link: string;
   };
 };
 
@@ -191,11 +193,81 @@ export type TProject = {
   };
 };
 
+export type TCareer = {
+  id: string;
+  position: string;
+  job_type: string;
+  deadline: string;
+  vacancy: number;
+  experience: string;
+  date_updated: string;
+  date_created: string;
+  edu_qualification: string;
+  gender: "male" | "female" | "both";
+  working_days: string;
+  office_hour: string;
+  salary: string;
+  benefits: string;
+  location: string;
+  body: string;
+  company_name: string;
+};
+
 export type TBreadCrumbBlock = {
   id: number;
   collection: string;
 
   item: { id: number; page_name: string; section_name: string };
+};
+
+export type TReportBlock = {
+  id: number;
+  collection: string;
+
+  item: { id: number; section_name: string; reports: TReport[] };
+};
+
+export type TAboutUsBlock = {
+  id: number;
+  collection: string;
+
+  item: {
+    id: number;
+    image?: string;
+    body: string;
+    button_text?: string;
+    button_link?: string;
+    image_position: "left" | "right";
+    button: boolean;
+  };
+};
+
+export type TTeamBlock = {
+  id: number;
+  collection: string;
+  item: {
+    id: number;
+    team: TTeam[];
+  };
+};
+
+export type TTeam = {
+  team_id: {
+    id: string;
+    name: string;
+    designation: string;
+    image: string;
+    quote: string;
+  };
+};
+
+export type TReport = {
+  reports_id: {
+    id: string;
+    pdf: string;
+    title: string;
+    year: string;
+  };
 };
 
 export type TProjectPageBlock = {
@@ -218,6 +290,21 @@ export type TProjectPageBlock = {
   };
 };
 
+export type TTimelineBlock = {
+  id: number;
+  collection: string;
+  item: {
+    id: number;
+    milestones: TMilestone[];
+  };
+};
+
+export type TMilestone = {
+  step: string;
+  story: string;
+  year: string;
+};
+
 export type TBlock =
   | THeroSliderBlock
   | TSponsorProgramBlock
@@ -229,12 +316,17 @@ export type TBlock =
   | TDevelopmentBlock
   | TTestimonialBlock
   | TProjectPageBlock
-  | TBreadCrumbBlock;
+  | TBreadCrumbBlock
+  | TReportBlock
+  | TAboutUsBlock
+  | TTeamBlock
+  | TTimelineBlock;
 
 export type TPageBlock = {
   last_updated: string;
   id: string;
   name: string;
   permalink: string;
+  date_updated: string;
   blocks: TBlock[];
 };

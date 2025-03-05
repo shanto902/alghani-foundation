@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { parseStat } from "@/lib/parseStat";
 import { TDevelopmentBlock } from "@/interfaces";
 import { DynamicIcon } from "../common/DynamicIcon";
+import { g } from "framer-motion/client";
 
 const DevelopmentBlock = ({ block }: { block: TDevelopmentBlock }) => {
   const [visibleSectors, setVisibleSectors] = useState<{
@@ -12,28 +13,30 @@ const DevelopmentBlock = ({ block }: { block: TDevelopmentBlock }) => {
   }>({});
 
   return (
-    <div className="grid max-w-4xl mx-auto md:grid-cols-2 lg:grid-cols-2 justify-center my-10">
-      {block.item.sectors.map((goal) => {
+    <div className="grid md:max-w-4xl mx-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-2 justify-center my-10">
+      {block.item.sectors.map((goal, index) => {
+        console.log(index + 1);
         const { number, prefix, suffix } = goal.sector_id.value
           ? parseStat(goal.sector_id.value.toString())
           : { number: 0, prefix: "", suffix: "" };
 
+        console.log(block);
         return (
           <motion.div
-            key={goal.sector_id.id}
+            key={index + 1}
             className={`p-6 container flex flex-row items-center justify-between text-center ${
-              Math.floor(goal.sector_id.id / 2) % 2 === 0
+              Math.floor(index + 1 / 2) % 2 === 0
                 ? "md:bg-primary md:text-white"
                 : "md:bg-white md:text-black"
             } ${
-              goal.sector_id.id % 2 === 0
+              (index + 1) % 2 === 0
                 ? "bg-primary text-white"
                 : "bg-white text-black"
             }`}
             onViewportEnter={() =>
               setVisibleSectors((prev) => ({
                 ...prev,
-                [goal.sector_id.id]: true,
+                [index + 1]: true,
               }))
             }
           >
@@ -47,7 +50,7 @@ const DevelopmentBlock = ({ block }: { block: TDevelopmentBlock }) => {
             </div>
             {goal.sector_id.value && (
               <div className="text-3xl font-bold">
-                {visibleSectors[goal.sector_id.id] ? (
+                {visibleSectors[index + 1] ? (
                   <CountUp
                     start={0}
                     end={number}

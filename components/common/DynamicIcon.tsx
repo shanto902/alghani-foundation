@@ -9,7 +9,8 @@ export const DynamicIcon = ({
   size?: number;
   color?: string;
 }) => {
+  const sanitizedIconName = iconName.replace(/[<>/]/g, "").trim();
   const IconComponent =
-    (LucideIcons as any)[iconName] || LucideIcons.HelpCircle;
+    (LucideIcons as any)[sanitizedIconName] || LucideIcons.HelpCircle;
   return <IconComponent size={size} color={color} />;
 };

@@ -5,11 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { FormEvent } from "react";
 import parser from "html-react-parser";
+import { FaPaperPlane } from "react-icons/fa";
 const Footer = ({ settings }: { settings: TSetting }) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent page reload
     const email = (e.target as HTMLFormElement).email.value; // Access email input
-    // console.log("Email Submitted:", email); // Replace this with actual form handling logic
   };
   return (
     <>
@@ -71,9 +71,9 @@ const Footer = ({ settings }: { settings: TSetting }) => {
                 />
                 <button
                   type="submit"
-                  className="bg-primary px-4  hover:bg-primaryLight"
+                  className="bg-primary px-4  hover:bg-white hover:text-primary transition-all duration-300 border border-primary font-bold"
                 >
-                  Go
+                  <FaPaperPlane />
                 </button>
               </form>
             </div>
@@ -97,7 +97,15 @@ const Footer = ({ settings }: { settings: TSetting }) => {
       </footer>
       <div>
         <p className="text-center text-sm bg-textSecondary text-gray-400 py-4">
-          © 2021 Al Ghani Foundation. All Rights Reserved.
+          © 2025 Al Ghani Foundation. All Rights Reserved. Developed by{" "}
+          <a
+            className="hover:text-white hover:underline"
+            href="https://www.linkedin.com/in/shanto902/"
+            target="_blank"
+          >
+            Ashik Ali Shanto
+          </a>
+          .
         </p>
       </div>
     </>

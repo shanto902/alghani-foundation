@@ -53,7 +53,7 @@ const NavBar = ({ settings }: TNavbarProps) => {
             : "translate-y-0 opacity-100"
         }`}
       >
-        <TopBar />
+        <TopBar settings={settings} />
       </div>
 
       {/* Sticky Navbar */}
@@ -62,7 +62,9 @@ const NavBar = ({ settings }: TNavbarProps) => {
       >
         <div className="flex px-8 max-w-screen-2xl justify-between w-full items-center">
           {/* Logo */}
-          <Image className="h-16 w-fit" src={logo} alt="logo" />
+          <Link href={"/"}>
+            <Image className="h-16 w-fit" src={logo} alt="logo" />
+          </Link>
 
           {/* Desktop Menu */}
           <div className="  hidden md:flex flex-1 justify-end items-center">
@@ -71,7 +73,7 @@ const NavBar = ({ settings }: TNavbarProps) => {
                 {settings.menu.map((item, index) => (
                   <li key={index} className="relative group">
                     <Link
-                      href={item.link as string}
+                      href={`/${item.link}`}
                       className={`flex items-center gap-1 cursor-pointer transition-all duration-300 ease-in-out group: ${
                         pathName === item.link
                           ? "underline underline-offset-4"
@@ -94,7 +96,7 @@ const NavBar = ({ settings }: TNavbarProps) => {
                         {item.submenu.map((subItem, subIndex) => (
                           <li key={subIndex}>
                             <Link
-                              href={subItem.link}
+                              href={`/${subItem.link}`}
                               className={`block px-4 py-2 text-sm text-white-700 hover:text-primary hover:bg-gray-100 ${
                                 pathName === subItem.link
                                   ? "underline underline-offset-4"
@@ -137,6 +139,7 @@ const NavBar = ({ settings }: TNavbarProps) => {
           >
             <X size={28} />
           </button>
+
           <ul className="text-lg uppercase font-bold flex flex-col gap-5">
             {settings.menu.map((item, index) => (
               <li
@@ -153,7 +156,7 @@ const NavBar = ({ settings }: TNavbarProps) => {
                     }
                   }}
                 >
-                  <Link href={item.link as string}>{item.label}</Link>
+                  <Link href={`/${item.link}`}>{item.label}</Link>
                   {item.submenu && (
                     <button onClick={() => toggleSubmenu(index)}>
                       {openSubmenuIndex === index ? (
@@ -169,7 +172,7 @@ const NavBar = ({ settings }: TNavbarProps) => {
                     {item.submenu.map((subItem, subIndex) => (
                       <li key={subIndex}>
                         <Link
-                          href={subItem.link}
+                          href={`/${subItem.link}`}
                           className="block py-2 text-sm text-gray-700 hover:text-teal-600"
                           onClick={() => setIsOpen(false)} // Close mobile menu when submenu item is clicked
                         >
@@ -181,8 +184,13 @@ const NavBar = ({ settings }: TNavbarProps) => {
                 )}
               </li>
             ))}
+            <Link
+              className="text-primary  underline-offset-4 hover:underline"
+              href="#"
+            >
+              Donate
+            </Link>
           </ul>
-          <CustomButton href="#">Donate</CustomButton>
         </div>
       </nav>
     </>

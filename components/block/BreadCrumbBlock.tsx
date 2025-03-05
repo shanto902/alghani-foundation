@@ -4,7 +4,6 @@ import Link from "next/link";
 import { TBreadCrumbBlock } from "@/interfaces";
 
 const BreadCrumbBlock = ({ block }: { block: TBreadCrumbBlock }) => {
-  // console.log(block);
   return (
     <div className="w-full h-40 bg-primary flex flex-col justify-center">
       <PaddingContainer>

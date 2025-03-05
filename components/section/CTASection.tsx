@@ -13,8 +13,6 @@ const CTASection: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    // console.log("Name:", name);
-    // console.log("Email:", email);
     setName("");
     setEmail("");
     setShowForm(false);

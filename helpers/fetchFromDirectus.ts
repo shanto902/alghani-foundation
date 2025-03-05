@@ -1,4 +1,4 @@
-import { TPageBlock, TProject } from "@/interfaces";
+import { TCareer, TPageBlock, TProject } from "@/interfaces";
 import directus from "@/lib/directus";
 
 import { readItems } from "@directus/sdk";
@@ -71,6 +71,15 @@ export const fetchPage = cache(
                         foundation: ["*"],
                       },
                     ],
+                    block_reports: [
+                      "*",
+                      {
+                        reports: [{ reports_id: ["*"] }],
+                      },
+                    ],
+                    block_about_us: ["*"],
+                    block_team: ["*", { team: [{ team_id: ["*"] }] }],
+                    block_timeline: ["*"],
                   },
                 },
               ],
@@ -110,6 +119,7 @@ export const getProjectData = cache(async (slug: string): Promise<TProject> => {
             _eq: slug,
           },
         },
+        sort: ["sort"],
         fields: ["*", { foundation: ["*"] }],
       })
     );
@@ -144,6 +154,7 @@ export const getAllProjectsBasedOnFoundation = cache(
       const results = await directus.request(
         readItems("projects", {
           filter,
+          sort: ["sort"],
           fields: ["*", "foundation.*"],
         })
       );
@@ -165,15 +176,18 @@ export const getAllProjects = cache(
             status: {
               _eq: "published",
             },
+
             foundation: {
               slug: {
                 _eq: foundationSlug,
               },
             },
           },
+          sort: ["sort"],
           fields: [
             "image",
             "id",
+            "sort",
             "title",
             "foundation.slug",
             "date_created",
@@ -191,3 +205,46 @@ export const getAllProjects = cache(
     }
   }
 );
+
+export const getCareerData = cache(async (slug: string): Promise<TCareer> => {
+  try {
+    const results = await directus.request(
+      readItems("careers", {
+        filter: {
+          status: {
+            _eq: "published",
+          },
+          slug,
+        },
+        sort: ["sort"],
+        fields: ["*"],
+      })
+    );
+
+    return results[0] as TCareer;
+  } catch (error) {
+    console.error("Error fetching career data:", error);
+    throw new Error("Error fetching careers");
+  }
+});
+
+export const getPartialCareersData = cache(async (): Promise<TCareer[]> => {
+  try {
+    const results = await directus.request(
+      readItems("careers", {
+        filter: {
+          status: {
+            _eq: "published",
+          },
+        },
+        sort: ["sort"],
+        fields: ["id", "position", "company_name", "job_type", "location"],
+      })
+    );
+
+    return results as TCareer[];
+  } catch (error) {
+    console.error("Error fetching career data:", error);
+    throw new Error("Error fetching careers");
+  }
+});

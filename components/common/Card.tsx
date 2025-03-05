@@ -9,9 +9,9 @@ import Link from "next/link";
 import { formatStatus } from "@/lib/format";
 const Card = ({ project }: { project: TProject }) => {
   return (
-    <div className="border w-full gap-2 p-3 rounded-2xl flex-col md:flex-row flex overflow-hidden shadow-lg my-5 ">
+    <div className="mb-0 border w-full p-3 rounded-lg flex-col md:flex-row flex overflow-hidden shadow-none my-5 hover:shadow-2xl transition-all duration-300">
       <Link
-        className="h-full w-full  "
+        className="h-full w-full p-2"
         href={`/${project.foundation.slug}/${project.project_status}/${project.slug}`}
       >
         <Image
@@ -19,30 +19,34 @@ const Card = ({ project }: { project: TProject }) => {
           width={300}
           height={300}
           alt={project.title}
-          className=" w-full h-full aspect-square object-cover p-2 rounded-2xl
-           "
+          className="w-full h-full aspect-square object-cover rounded-lg"
         />
       </Link>
 
-      <div className="  p-4 flex flex-col gap-2 justify-center">
-        <h2 className="text-xl font-bold">{project.title}</h2>
-        <div className="py-2  gap-2 text-sm items-center flex flex-wrap">
+      <div className="p-4 flex flex-col gap-2 justify-center">
+        <Link
+          href={`/${project.foundation.slug}/${project.project_status}/${project.slug}`}
+          className="text-xl font-bold  transition-all duration-300"
+        >
+          {project.title}
+        </Link>
+        <div className="py-2 gap-2 text-sm items-center flex flex-wrap">
           <Link
             href={`/${project.foundation.slug}/${project.project_status}`}
-            className="bg-primary  w-fit text-sm font-bold px-3 text-white  rounded-full py-2"
+            className="bg-primary hover:bg-white border border-primary w-fit text-xs font-bold px-3 text-white rounded-full py-2 hover:text-primary transition-all duration-300"
           >
             {formatStatus(project.project_status)} Project
           </Link>
           {project.tags.map((tag, i) => (
             <div
-              className="bg-primary  w-fit font-bold px-3 text-white  rounded-full py-1"
+              className="bg-primary text-xs w-fit border border-primary  font-bold px-3 text-white rounded-full py-2"
               key={i}
             >
               {tag}
             </div>
           ))}
         </div>
-        <p className=" text-sm">{`Updated: ${moment(
+        <p className="text-sm font-semibold">{`Published on: ${moment(
           project.date_created
         ).format("MMM DD, YYYY")}`}</p>
       </div>

@@ -1,10 +1,15 @@
 import Card from "@/components/common/Card";
+import CustomButton from "@/components/common/CustomButton";
 import PaddingContainer from "@/components/layout/PaddingContainer";
 import PostBody from "@/components/post-body/PostBody";
+import { projectsDropdown } from "@/const";
 import { getAllProjectsBasedOnFoundation } from "@/helpers/fetchFromDirectus";
 import directus from "@/lib/directus";
+import { formatStatus } from "@/lib/format";
 import { readItems } from "@directus/sdk";
+import { ChevronDown } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 interface PageProps {
@@ -13,69 +18,123 @@ interface PageProps {
     projects: string;
   }>;
 }
+
 export const generateStaticParams = async () => {
   try {
-    // Fetch data and assert the correct type
-    const result = (await directus.request(
-      readItems("foundations", {
-        fields: ["slug"],
+    const result = await directus.request(
+      readItems("projects", {
+        filter: {
+          status: {
+            _eq: "published",
+          },
+        },
+        fields: ["project_status", "foundation.slug"],
       })
-    )) as { slug: string }[]; // Type assertion here
-
-    // console.log(result);
-
-    const projects_status = [
-      "on-going-projects",
-      "upcoming-project",
-      "completed-projects",
-      "all-projects",
-    ];
-
-    // Generate params for each foundation combined with all project statuses
-    const allParams = result.flatMap((item) =>
-      projects_status.map((status) => ({
-        permalink: item.slug, // Assigning foundation slug correctly
-        projects: status, // Assigning project status dynamically
-      }))
     );
 
-    return allParams;
+    const allParams =
+      (
+        result as {
+          project_status: string;
+          foundation: {
+            slug: string;
+          };
+        }[]
+      ).map((item) => ({
+        projects: item.project_status,
+        permalink: item.foundation.slug,
+      })) || [];
+
+    // Add 'all-projects' to static params
+    const allProjectsParams = result.map((item) => ({
+      projects: "all-projects",
+      permalink: item.foundation.slug, // Ensure correct foundation reference
+    }));
+
+    return [...allParams, ...allProjectsParams];
   } catch (error) {
     console.error("Error fetching posts:", error);
     throw new Error("Error fetching posts");
   }
 };
+
 const page = async ({ params }: PageProps) => {
   const { permalink, projects: projectData } = await params;
 
-  const project = await getAllProjectsBasedOnFoundation(projectData, permalink);
-  console.log(project);
+  const project =
+    projectData === "all-projects"
+      ? await getAllProjectsBasedOnFoundation("all-projects", permalink)
+      : await getAllProjectsBasedOnFoundation(projectData, permalink);
+
   return (
-    <PaddingContainer className="my-10">
-      <div className="max-w-screen-xl mx-auto flex justify-between items-center">
-        <h1 className="text-4xl  px-5 font-bold ">
-          {project[0]?.foundation.name}
-        </h1>
-        {project[0]?.foundation.logo && (
-          <Image
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${project[0].foundation.logo}`}
-            alt={project[0].foundation.name}
-            height={96}
-            width={96}
-            className="w-32  h-32 object-contain  overflow-hidden"
-          />
+    <PaddingContainer className="py-10">
+      <div className="max-w-screen-xl mx-auto ">
+        <div className=" mx-auto  flex justify-between items-center">
+          <div>
+            <Link href={`/${project[0]?.foundation.slug}`}>
+              <h1 className="text-4xl px-0 md:px-5 font-bold ">
+                {project[0]?.foundation.name}
+              </h1>
+            </Link>
+          </div>
+          {project[0]?.foundation.logo && (
+            <Link href={`/${project[0]?.foundation.slug}`}>
+              <Image
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${project[0].foundation.logo}`}
+                alt={project[0].foundation.name}
+                height={96}
+                width={96}
+                className="w-28  h-28 object-contain  overflow-hidden"
+              />
+            </Link>
+          )}
+        </div>
+        {project[0]?.foundation && (
+          <div className=" md:px-5">
+            <div className="relative">
+              <input
+                type="checkbox"
+                id="dropdown-toggle"
+                className="peer hidden"
+              />
+              <label
+                htmlFor="dropdown-toggle"
+                className=" font-bold text-lg flex  items-center gap-2 cursor-pointer"
+              >
+                {projectData === "all-projects"
+                  ? "All Published Projects"
+                  : projectData.length > 0 &&
+                    formatStatus(project[0]?.project_status) + " Projects"}
+                <ChevronDown
+                  size={16}
+                  className="text-primary transition-transform peer-checked:rotate-180"
+                />
+              </label>
+
+              <ul className="absolute left-0 mt-2 transition-all duration-300 hidden peer-checked:block bg-primary shadow-lg rounded-lg w-48 py-2 text-white">
+                {projectsDropdown.map((item, index) => (
+                  <li
+                    key={index}
+                    className="px-4 py-2 hover:bg-gray-100 hover:text-primary transition"
+                  >
+                    <Link className="flex " href={item.link}>
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         )}
       </div>
-      {/* {project.foundation.body && (
-      <article className="max-w-screen-xl mx-auto  py-10">
-        <PostBody body={block.item.foundation.body} />
-      </article>
-    )} */}
-      <div className="grid gap-5 px-5 max-w-screen-xl mx-auto grid-cols-2 w-full">
+
+      <div className="grid gap-5 md:px-5 grid-cols-1 pb-10 max-w-screen-xl mx-auto md:grid-cols-2 w-full">
         {project.length > 0 ? (
           project.map((project) => <Card key={project.id} project={project} />)
         ) : (
-          <p>Nothing to Show</p>
+          <p className="text-center col-span-2 my-32 text-2xl font-bold flex flex-col gap-20 justify-center items-center">
+            Nothing to Show
+          </p>
         )}
       </div>
     </PaddingContainer>

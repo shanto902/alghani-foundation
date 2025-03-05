@@ -86,31 +86,31 @@ const settings: Settings = {
 const TestimonialBlock = ({ block }: { block: TTestimonialBlock }) => {
   return (
     <section className="overflow-hidden h-[500px] flex items-center bg-primary py-5 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl w-full mx-auto text-center relative">
+      <div className="max-w-7xl w-full  mx-auto text-center relative">
         <div>
-          <Slider {...settings}>
+          <Slider className="px-4 h-full" {...settings}>
             {block.item.testimonials.map((testimonial) => (
               <div
                 key={testimonial.testimonial_id.id}
-                className="px-4 h-full pb-5 md:pb-10 "
+                className="px-4 h-[400px]  pb-5 md:pb-10 "
               >
-                <div className="   bg-white relative rounded-3xl h-full flex flex-col items-start text-left px-5">
+                <div className="   bg-white relative rounded-lg h-full flex flex-col items-start justify-around text-left px-5">
                   <div className="mt-5">
                     <StarRating rating={testimonial.testimonial_id.ratings} />
                     <p className=" my-2 tracking-wide  italic">
                       {testimonial.testimonial_id.quote}
                     </p>
                   </div>
-                  <div className="flex gap-5 items-center pb-4 justify-start w-full">
+                  <div className="grid gap-5 grid-cols-5 pb-4 content-center w-full">
                     <Image
                       src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${testimonial.testimonial_id.image}`}
                       alt={testimonial.testimonial_id.name}
                       height={96}
                       width={96}
-                      className="w-14  h-14 object-cover rounded-full overflow-hidden"
+                      className="w-14  h-14 object-cover place-self-center aspect rounded-full overflow-hidden"
                     />
 
-                    <div className="text-left">
+                    <div className="text-left col-span-4  ">
                       <h3 className="text-xl pt-2 font-semibold ">
                         {testimonial.testimonial_id.name}
                       </h3>

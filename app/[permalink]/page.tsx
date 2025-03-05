@@ -1,3 +1,4 @@
+import AboutUsBlock from "@/components/block/AboutUsBlock";
 import BreadCrumbBlock from "@/components/block/BreadCrumbBlock";
 import DevelopmentBlock from "@/components/block/DevelopmentBlock";
 import HeaderBlock from "@/components/block/HeaderBlock";
@@ -6,11 +7,15 @@ import LocationBlock from "@/components/block/LocationBlock";
 import PartnerBlock from "@/components/block/PartnerBlock";
 import ProjectBlock from "@/components/block/ProjectBlock";
 import RecognitionBlock from "@/components/block/RecognitionBlock";
+import ReportBlock from "@/components/block/ReportBlock";
 import ServedNumbers from "@/components/block/ServedNumbers";
 import SponsorProgram from "@/components/block/SponsorProgram";
+import TeamBlock from "@/components/block/TeamBlock";
 import TestimonialBlock from "@/components/block/TestimonialBlock";
+import TimelineBlock from "@/components/block/TimelineBlock";
 import { fetchPage, fetchPages } from "@/helpers/fetchFromDirectus";
 import {
+  TAboutUsBlock,
   TBlock,
   TBreadCrumbBlock,
   TDevelopmentBlock,
@@ -21,10 +26,13 @@ import {
   TPartnerBlock,
   TProjectPageBlock,
   TRecognitionBlock,
+  TReportBlock,
   TServedNumbersBlock,
   TSponsorProgramBlock,
+  TTeamBlock,
   TTestimonial,
   TTestimonialBlock,
+  TTimelineBlock,
 } from "@/interfaces";
 import directus from "@/lib/directus";
 import { readItems } from "@directus/sdk";
@@ -132,6 +140,15 @@ const renderBlock = (block: TBlock) => {
       return (
         <BreadCrumbBlock key={block.id} block={block as TBreadCrumbBlock} />
       );
+
+    case "block_reports":
+      return <ReportBlock key={block.id} block={block as TReportBlock} />;
+    case "block_about_us":
+      return <AboutUsBlock key={block.id} block={block as TAboutUsBlock} />;
+    case "block_team":
+      return <TeamBlock key={block.id} block={block as TTeamBlock} />;
+    case "block_timeline":
+      return <TimelineBlock key={block.id} block={block as TTimelineBlock} />;
     default:
       return <h2 key={block.id}>Unknown Block Type</h2>;
   }
@@ -139,7 +156,7 @@ const renderBlock = (block: TBlock) => {
 const Page = async ({ params }: PageProps) => {
   const { permalink } = await params;
   const page = await fetchPage(permalink);
-  // console.log(page?.blocks);
+
   if (!page) {
     notFound();
   }

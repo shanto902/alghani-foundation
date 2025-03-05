@@ -36,24 +36,24 @@ const ContactSection = () => {
             <input
               type="text"
               placeholder="Name"
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded-lg"
               required
             />
             <input
               type="email"
               placeholder="Email"
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded-lg"
               required
             />
             <input
               type="tel"
               placeholder="Phone"
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded-lg"
               required
             />
             <textarea
               placeholder="Your message"
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded-lg"
               rows={4}
               required
             ></textarea>
@@ -62,7 +62,7 @@ const ContactSection = () => {
             </div> */}
             <button
               type="submit"
-              className="w-full bg-primary text-white hover:text-primary font-bold py-2 rounded hover:bg-white"
+              className="w-full bg-primary text-white hover:text-primary font-bold py-2 rounded-lg hover:bg-white transition-all duration-300 border border-primary"
             >
               Submit
             </button>
