@@ -28,7 +28,10 @@ export async function GET(req: NextRequest) {
     }
 
     return NextResponse.json(result[0]); // Return the first matching career
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json(
+      { error: (error as Error).message },
+      { status: 500 }
+    );
   }
 }
