@@ -3,10 +3,8 @@ import PaddingContainer from "@/components/layout/PaddingContainer";
 import PostBody from "@/components/post-body/PostBody";
 import { getCareerData } from "@/helpers/fetchFromDirectus";
 import directus from "@/lib/directus";
-
 import { readItems } from "@directus/sdk";
 import moment from "moment";
-import Link from "next/link";
 import React from "react";
 import {
   FaBriefcase,
@@ -138,7 +136,10 @@ const page = async ({ params }: PageProps) => {
               ${moment(careerData.deadline).format("MMM DD, YYYY")}`}
               </h2>
 
-              <CustomButton href="#" className="my-2">
+              <CustomButton
+                href={`/career/form?slug=${careerData.slug}`}
+                className="my-2"
+              >
                 Apply Now
               </CustomButton>
             </div>

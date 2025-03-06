@@ -198,6 +198,7 @@ export type TCareer = {
   id: string;
   position: string;
   job_type: string;
+  slug: string;
   deadline: string;
   vacancy: number;
   experience: string;

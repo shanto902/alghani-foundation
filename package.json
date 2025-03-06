@@ -12,6 +12,7 @@
     "@directus/sdk": "^19.0.1",
     "@headlessui/react": "^2.2.0",
     "@types/react-leaflet": "^2.8.3",
+    "axios": "^1.8.1",
     "framer-motion": "^12.4.0",
     "html-react-parser": "^5.2.2",
     "leaflet": "^1.9.4",

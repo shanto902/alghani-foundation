@@ -14,7 +14,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 const PrevArrow = ({ onClick }: { onClick?: () => void }) => (
   <button
     onClick={onClick}
-    className="absolute left-[-40px] top-1/2 transform -translate-y-1/2 z-10 bg-primary/80 text-white hover:text-primary p-3 rounded-full shadow-md hover:bg-white border-2 border-primary transition-all"
+    className="absolute left-[-40px] top-1/2 transform -translate-y-1/2 z-10 hover:animate-pulse text-primary p-3 transition-all"
   >
     <FaChevronLeft size={20} />
   </button>
@@ -24,7 +24,7 @@ const PrevArrow = ({ onClick }: { onClick?: () => void }) => (
 const NextArrow = ({ onClick }: { onClick?: () => void }) => (
   <button
     onClick={onClick}
-    className="absolute right-[-40px] top-1/2 transform -translate-y-1/2 z-10 bg-primary/80 text-white hover:text-primary p-3 rounded-full shadow-md hover:bg-white border-2 border-primary transition-all"
+    className="absolute right-[-40px] top-1/2 transform -translate-y-1/2 z-10  hover:animate-pulse text-primary p-3 transition-all"
   >
     <FaChevronRight size={20} />
   </button>
@@ -56,7 +56,7 @@ const RecognitionBlock = ({ block }: { block: TRecognitionBlock }) => {
       {/* Main Section */}
       <section className="md:py-5 px-12 sm:px-12 lg:px-20 relative">
         <div className="max-w-7xl  mx-auto text-center relative">
-          <Slider className="px-5 " {...settings}>
+          <Slider {...settings}>
             {block.item.recognitions.map((recognition) => (
               <div
                 key={recognition.recognition_id.id}
