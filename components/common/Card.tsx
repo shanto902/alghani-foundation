@@ -9,9 +9,9 @@ import Link from "next/link";
 import { formatStatus } from "@/lib/format";
 const Card = ({ project }: { project: TProject }) => {
   return (
-    <div className="mb-0 border w-full p-3 rounded-lg grid grid-cols-3 overflow-hidden shadow-none my-5 hover:shadow-2xl transition-all duration-300">
+    <div className="mb-0 border w-full p-3 rounded-lg flex flex-col lg:grid grid-cols-3 overflow-hidden shadow-none my-5 hover:shadow-2xl transition-all duration-300">
       <Link
-        className="h-full w-full p-2 flex-1/3 "
+        className="h-full w-full p-2  "
         href={`/${project.foundation.slug}/${project.project_status}/${project.slug}`}
       >
         <Image
@@ -19,7 +19,7 @@ const Card = ({ project }: { project: TProject }) => {
           width={300}
           height={400}
           alt={project.title}
-          className="w-full h-full aspect-[3/4] object-cover rounded-lg"
+          className="w-full h-full aspect-video lg:aspect-[3/4] object-cover rounded-lg"
         />
       </Link>
 

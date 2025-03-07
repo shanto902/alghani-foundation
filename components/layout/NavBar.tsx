@@ -67,7 +67,7 @@ const NavBar = ({ settings }: TNavbarProps) => {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="  hidden md:flex flex-1 justify-end items-center">
+          <div className="  hidden lg:flex flex-1 justify-end items-center">
             <div className="flex items-center gap-5">
               <ul className=" text-white rounded-lg bg-primary p-4 text-sm uppercase font-bold flex space-x-5">
                 {settings.menu.map((item, index) => (
@@ -125,7 +125,7 @@ const NavBar = ({ settings }: TNavbarProps) => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden focus:outline-none"
+            className="lg:hidden focus:outline-none"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <X size={28} /> : <Menu size={28} />}
@@ -134,20 +134,20 @@ const NavBar = ({ settings }: TNavbarProps) => {
 
         {/* Mobile Menu */}
         <aside
-          className={`fixed inset-0 bg-white z-30 flex flex-col items-center justify-start pt-16 gap-6 transition-transform duration-300 md:hidden ${
+          className={`fixed inset-0 bg-white z-30 flex flex-col items-center justify-start pt-16 gap-6 transition-transform duration-300 lg:hidden ${
             isOpen ? "translate-x-0" : "translate-x-full"
           } h-screen overflow-y-auto`}
         >
           <button
             className="absolute top-6 right-6 focus:outline-none"
-            onClick={() => setIsOpen(false)}
+            onClick={() => setIsOpen(!isOpen)}
           >
             <X size={28} />
           </button>
 
           {/* Ensure scrolling works */}
           <ul className="text-lg uppercase font-bold flex flex-col gap-5 w-full px-6">
-            <Link href={"/"}>
+            <Link onClick={() => setIsOpen(false)} href={"/"}>
               <Image className="h-10  w-fit" src={logo} alt="logo" />
             </Link>
             <hr className="border-2 border-primary" />
@@ -157,7 +157,9 @@ const NavBar = ({ settings }: TNavbarProps) => {
                 className="cursor-pointer transition-all duration-300 ease-in-out hover:text-primary"
               >
                 <div className="flex items-center gap-2">
-                  <Link href={`/${item.link}`}>{item.label}</Link>
+                  <Link onClick={() => setIsOpen(false)} href={`/${item.link}`}>
+                    {item.label}
+                  </Link>
                   {item.submenu && <ChevronDown size={16} />}
                 </div>
 
@@ -171,6 +173,7 @@ const NavBar = ({ settings }: TNavbarProps) => {
                           </p>
                         )}
                         <Link
+                          onClick={() => setIsOpen(false)}
                           href={`/${subItem.link}`}
                           className="block py-2 text-sm text-gray-700 hover:text-teal-600"
                         >

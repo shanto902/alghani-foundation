@@ -18,6 +18,10 @@ export type TSetting = {
   quick_links: { label: string; link: string }[];
   legal_links: { label: string; link: string }[];
   contact_details: string;
+  socials: {
+    icon: string;
+    link: string;
+  }[];
 };
 
 export type TSlider = {
@@ -283,6 +287,10 @@ export type TTeam = {
     designation: string;
     image: string;
     quote: string;
+    socials: {
+      link: string;
+      icon: string;
+    }[];
   };
 };
 

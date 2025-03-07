@@ -29,6 +29,10 @@
   -webkit-font-smoothing: antialiased;
 }
 
+.btn {
+  @apply relative w-fit inline-block px-6 py-3 rounded-lg border-2 border-primary shadow-none hover:shadow-lg text-primary font-bold text-sm  uppercase transition-all duration-300 hover:bg-primary hover:text-white;
+}
+
 .slider-text {
   @apply text-white;
 }

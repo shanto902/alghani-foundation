@@ -29,7 +29,7 @@ const ProjectBlock = async ({ block }: { block: TProjectPageBlock }) => {
   return (
     <PaddingContainer className="my-10">
       <div className="max-w-screen-xl mx-auto flex justify-between items-center">
-        <h1 className="text-4xl px-0 md:px-5 font-bold ">
+        <h1 className=" text-3xl  px-0 md:px-5 font-bold ">
           {block.item.foundation.name}
         </h1>
 

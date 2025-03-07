@@ -6,22 +6,41 @@ import Link from "next/link";
 import { FormEvent } from "react";
 import parser from "html-react-parser";
 import { FaPaperPlane } from "react-icons/fa";
+import { DynamicIcon } from "../common/DynamicIcon";
+import { DynamicFaIcon } from "../DynamicFaIcon";
 const Footer = ({ settings }: { settings: TSetting }) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Prevent page reload
+    e.preventDefault();
     const email = (e.target as HTMLFormElement).email.value; // Access email input
   };
   return (
     <>
       <footer className=" bg-cover bg-center relative mix-blend-multiply bg-[#27262C] text-white p-8">
         <div className="container mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-5  gap-8">
             {/* About Section */}
             <div>
               <h2 className="text-xl font-bold mb-4">
                 ABOUT AL GHANI FOUNDATION
               </h2>
               <p className="text-sm text-gray-400">{settings.description}</p>
+
+              <div className="flex gap-5  mt-5 ">
+                {settings.socials.map((social, i) => (
+                  <Link
+                    href={social.link}
+                    target="_blank"
+                    key={i}
+                    className="bg-primary  p-2 rounded-full group hover:bg-white transition-all duration-300"
+                  >
+                    <DynamicFaIcon
+                      iconName={social.icon}
+                      size={20}
+                      className="group-hover:text-primary text-white transition-all duration-300"
+                    />
+                  </Link>
+                ))}
+              </div>
             </div>
 
             {/* Quick Links Section */}
@@ -81,7 +100,7 @@ const Footer = ({ settings }: { settings: TSetting }) => {
             {/* Contact Section */}
             <div>
               <h2 className="text-xl font-bold mb-4">CONTACT US</h2>
-              <div className="footer-text">
+              <div className="footer-text break-all">
                 {parser(settings.contact_details)}
               </div>
             </div>
