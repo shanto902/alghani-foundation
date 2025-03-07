@@ -6,6 +6,7 @@ import HeroSliderBlock from "@/components/block/HeroSliderBlock";
 import LocationBlock from "@/components/block/LocationBlock";
 import PartnerBlock from "@/components/block/PartnerBlock";
 import ProjectBlock from "@/components/block/ProjectBlock";
+import ProjectShowcase from "@/components/block/ProjectShowcase";
 import RecognitionBlock from "@/components/block/RecognitionBlock";
 import ReportBlock from "@/components/block/ReportBlock";
 import ServedNumbers from "@/components/block/ServedNumbers";
@@ -22,15 +23,14 @@ import {
   THeaderBlock,
   THeroSliderBlock,
   TLocationBlock,
-  TPartner,
   TPartnerBlock,
   TProjectPageBlock,
+  TProjectShowcaseBlock,
   TRecognitionBlock,
   TReportBlock,
   TServedNumbersBlock,
   TSponsorProgramBlock,
   TTeamBlock,
-  TTestimonial,
   TTestimonialBlock,
   TTimelineBlock,
 } from "@/interfaces";
@@ -149,6 +149,13 @@ const renderBlock = (block: TBlock) => {
       return <TeamBlock key={block.id} block={block as TTeamBlock} />;
     case "block_timeline":
       return <TimelineBlock key={block.id} block={block as TTimelineBlock} />;
+    case "block_product_showcase":
+      return (
+        <ProjectShowcase
+          key={block.id}
+          block={block as TProjectShowcaseBlock}
+        />
+      );
     default:
       return <h2 key={block.id}>Unknown Block Type</h2>;
   }

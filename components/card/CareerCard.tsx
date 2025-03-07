@@ -1,7 +1,8 @@
 import { TCareer } from "@/interfaces";
 import React from "react";
-import CustomButton from "./CustomButton";
+
 import { slugify } from "@/lib/slugify";
+import CustomButton from "../common/CustomButton";
 
 const CareerCard = ({ career }: { career: TCareer }) => {
   return (

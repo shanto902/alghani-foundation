@@ -1,4 +1,4 @@
-import CareerCard from "@/components/common/CareerCard";
+import CareerCard from "@/components/card/CareerCard";
 import PaddingContainer from "@/components/layout/PaddingContainer";
 import { getPartialCareersData } from "@/helpers/fetchFromDirectus";
 import React from "react";

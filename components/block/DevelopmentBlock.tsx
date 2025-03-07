@@ -13,7 +13,7 @@ const DevelopmentBlock = ({ block }: { block: TDevelopmentBlock }) => {
   }>({});
 
   return (
-    <div className="grid md:max-w-4xl mx-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-2 justify-center my-10">
+    <div className="md:max-w-4xl mx-auto flex flex-wrap  my-10">
       {block.item.sectors.map((goal, index) => {
         const { number, prefix, suffix } = goal.sector_id.value
           ? parseStat(goal.sector_id.value.toString())
@@ -22,14 +22,12 @@ const DevelopmentBlock = ({ block }: { block: TDevelopmentBlock }) => {
         return (
           <motion.div
             key={index + 1}
-            className={`p-6 container flex flex-row items-center justify-between text-center ${
-              Math.floor(index + 1 / 2) % 2 === 0
+            className={`p-6 container md:w-1/2 flex flex-row items-center justify-between text-center ${
+              [0, 3, 6, 7].includes(index % 8)
                 ? "md:bg-primary md:text-white"
                 : "md:bg-white md:text-black"
             } ${
-              (index + 1) % 2 === 0
-                ? "bg-primary text-white"
-                : "bg-white text-black"
+              index % 2 === 0 ? "bg-primary text-white" : "bg-white text-black"
             }`}
             onViewportEnter={() =>
               setVisibleSectors((prev) => ({

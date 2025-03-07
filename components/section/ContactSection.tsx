@@ -1,33 +1,14 @@
+import { TSetting } from "@/interfaces";
 import React from "react";
-
-const ContactSection = () => {
+import parse from "html-react-parser";
+const ContactSection = ({ settings }: { settings: TSetting }) => {
   return (
     <div className=" flex items-center justify-center p-6 ">
       <div className="bg-white shadow-lg rounded-lg w-full max-w-4xl flex overflow-hidden">
         {/* Left Side - Contact Info */}
         <div className="w-1/2 bg-primary text-white p-8 flex flex-col justify-center">
           <h2 className="text-xl font-bold mb-4">CONTACT INFORMATION</h2>
-          <p className="flex items-center mb-2">
-            <span className="text-yellow-400 mr-2">🏠</span>
-            Al-Ghani Foundation, House #57, Road #7B, Block #H, Banani, 1213,
-            Bangladesh
-          </p>
-          <p className="flex items-center mb-2">
-            <span className="text-yellow-400 mr-2">✉</span>
-            info@alghanifoundation.com
-          </p>
-          <p className="flex items-center mb-4">
-            <span className="text-yellow-400 mr-2">📞</span>
-            +88017000000
-          </p>
-          <div className="flex space-x-3 text-lg">
-            {/* <span className="cursor-pointer">🔵</span>
-            <span className="cursor-pointer">🐦</span>
-            <span className="cursor-pointer">🔗</span>
-            <span className="cursor-pointer">▶️</span>
-            <span className="cursor-pointer">📷</span>
-            <span className="cursor-pointer">📌</span> */}
-          </div>
+          <div className="">{parse(settings.contact_details)}</div>
         </div>
 
         {/* Right Side - Contact Form */}

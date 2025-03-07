@@ -2,7 +2,7 @@ import { TProject, TProjectPageBlock } from "@/interfaces";
 import React from "react";
 import PaddingContainer from "../layout/PaddingContainer";
 import { getAllProjects } from "@/helpers/fetchFromDirectus";
-import Card from "../common/Card";
+import Card from "../card/Card";
 import PostBody from "../post-body/PostBody";
 import Image from "next/image";
 import Link from "next/link";

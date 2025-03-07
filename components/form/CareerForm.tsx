@@ -56,7 +56,7 @@ export default function CareerForm() {
     if (!contactNo.match(/^\d{10,15}$/)) {
       newErrors.contact_no = "Invalid mobile number";
     }
-
+    setProcessing(false);
     return newErrors;
   };
 
@@ -88,14 +88,16 @@ export default function CareerForm() {
       method: "POST",
       body: formData,
     });
-    setProcessing(false);
+
     const result = await response.json();
     if (result.success) {
+      setProcessing(false);
       toast.success("Data submitted successfully!", { id: "form-status" });
       form.reset();
       redirect("/career");
     } else {
       toast.error("Submission failed: " + result.error, { id: "form-status" });
+      setProcessing(false);
     }
   }
 
@@ -192,7 +194,14 @@ export default function CareerForm() {
           disabled={processing}
           className="w-full p-2 mt-5 font-bold bg-white text-primary hover:bg-primary hover:text-white hover:shadow-lg transition-all duration-300 rounded"
         >
-          {processing ? <Spinner /> : "Submit"}
+          {processing ? (
+            <span className=" flex justify-center items-center gap-2">
+              <div className="w-5 h-5 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div>{" "}
+              Loading
+            </span>
+          ) : (
+            "Submit"
+          )}
         </button>
       </form>
     </PaddingContainer>

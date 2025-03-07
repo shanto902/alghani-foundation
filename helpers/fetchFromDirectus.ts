@@ -80,6 +80,25 @@ export const fetchPage = cache(
                     block_about_us: ["*"],
                     block_team: ["*", { team: [{ team_id: ["*"] }] }],
                     block_timeline: ["*"],
+                    block_product_showcase: [
+                      "*",
+                      {
+                        projects: [
+                          "*",
+                          {
+                            projects_id: [
+                              "title",
+                              "slug",
+                              "image",
+                              "project_status",
+                              "date_created",
+                              "date_updated",
+                              { foundation: ["name", "slug"] },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
                   },
                 },
               ],

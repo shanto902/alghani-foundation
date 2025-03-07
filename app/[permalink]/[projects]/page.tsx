@@ -1,4 +1,4 @@
-import Card from "@/components/common/Card";
+import Card from "@/components/card/Card";
 import CustomButton from "@/components/common/CustomButton";
 import PaddingContainer from "@/components/layout/PaddingContainer";
 import PostBody from "@/components/post-body/PostBody";

@@ -17,9 +17,9 @@ const Footer = ({ settings }: { settings: TSetting }) => {
     <>
       <footer className=" bg-cover bg-center relative mix-blend-multiply bg-[#27262C] text-white p-8">
         <div className="container mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-5  gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5  gap-8">
             {/* About Section */}
-            <div>
+            <div className="md:row-span-2 ">
               <h2 className="text-xl font-bold mb-4">
                 ABOUT AL GHANI FOUNDATION
               </h2>
@@ -44,7 +44,7 @@ const Footer = ({ settings }: { settings: TSetting }) => {
             </div>
 
             {/* Quick Links Section */}
-            <div>
+            <div className="lg:row-span-2">
               <h2 className="text-xl font-bold mb-4">QUICK LINKS</h2>
 
               <ul className="text-sm text-gray-400">
@@ -62,7 +62,7 @@ const Footer = ({ settings }: { settings: TSetting }) => {
             </div>
 
             {/* Legal Links Section */}
-            <div>
+            <div className="lg:row-span-2">
               <h2 className="text-xl font-bold mb-4">LEGAL</h2>
               <ul className="text-sm text-gray-400">
                 {settings.legal_links.map((item, index) => (
@@ -76,7 +76,7 @@ const Footer = ({ settings }: { settings: TSetting }) => {
             </div>
 
             {/* Newsletter Signup Section */}
-            <div>
+            <div className="lg:order-last xl:order-none">
               <h2 className="text-xl font-bold mb-4">NEWSLETTER SIGNUP</h2>
               <p className="text-sm text-gray-400 mb-4">
                 Join our newsletter for exclusive updates, insider insights, and
@@ -86,7 +86,7 @@ const Footer = ({ settings }: { settings: TSetting }) => {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="p-2  text-black flex-grow"
+                  className="p-2 md:w-fit  text-black flex-grow"
                 />
                 <button
                   type="submit"
@@ -100,7 +100,7 @@ const Footer = ({ settings }: { settings: TSetting }) => {
             {/* Contact Section */}
             <div>
               <h2 className="text-xl font-bold mb-4">CONTACT US</h2>
-              <div className="footer-text break-all">
+              <div className="footer-text break-words">
                 {parser(settings.contact_details)}
               </div>
             </div>

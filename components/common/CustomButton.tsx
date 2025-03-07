@@ -7,18 +7,24 @@ const CustomButton = ({
   href,
   className,
   target,
+  invert = false,
 }: {
   children: ReactNode;
   href: string;
   className?: string;
   target?: "_blank" | "_parent" | "_self" | "_top";
+  invert?: boolean;
 }) => {
   return (
     <Link
       target={target}
       href={href}
       className={twMerge(
-        `relative inline-block px-6 py-3  hover:animate- rounded-lg border-2 border-primary shadow-none hover:shadow-lg text-primary font-bold text-md uppercase transition-all duration-300 hover:bg-primary hover:text-white`,
+        `relative inline-block px-6 py-3 ${
+          !invert
+            ? "hover:bg-primary text-primary hover:text-white bg-white"
+            : "hover:bg-white text-white hover:text-primary bg-primary"
+        } hover:animate- rounded-lg border-2 border-primary shadow-none hover:shadow-lg font-bold text-md uppercase transition-all duration-300  `,
         className
       )}
     >

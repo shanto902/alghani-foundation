@@ -334,6 +334,16 @@ export type TMilestone = {
   year: string;
 };
 
+export type TProjectShowcaseBlock = {
+  id: string;
+  collection: string;
+  item: {
+    id: string;
+    limit: number;
+    projects: { projects_id: TProject }[];
+  };
+};
+
 export type TBlock =
   | THeroSliderBlock
   | TSponsorProgramBlock
@@ -349,7 +359,8 @@ export type TBlock =
   | TReportBlock
   | TAboutUsBlock
   | TTeamBlock
-  | TTimelineBlock;
+  | TTimelineBlock
+  | TProjectShowcaseBlock;
 
 export type TPageBlock = {
   last_updated: string;
