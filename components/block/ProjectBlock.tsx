@@ -7,11 +7,25 @@ import PostBody from "../post-body/PostBody";
 import Image from "next/image";
 import Link from "next/link";
 import CustomButton from "../common/CustomButton";
+import { getBlurData } from "@/lib/getBlurData";
 
 const ProjectBlock = async ({ block }: { block: TProjectPageBlock }) => {
   const projects = await getAllProjects(block.item.foundation.slug);
-  const displayedProjects = projects.reverse().slice(0, 6); // Show only the first 6 projects
+  const displayedProjects = projects.reverse().slice(0, 6);
 
+  const imgMatches = [
+    ...(block?.item?.foundation?.body?.matchAll(
+      /<img[^>]+src=["']([^"']+)["']/g
+    ) ?? []),
+  ];
+  const imageSources = imgMatches && imgMatches.map((match) => match[1]);
+
+  const blurDataMap = await Promise.all(
+    imageSources.map(async (src) => ({
+      src,
+      blurDataURL: await getBlurData(src),
+    }))
+  );
   return (
     <PaddingContainer className="my-10">
       <div className="max-w-screen-xl mx-auto flex justify-between items-center">
@@ -29,9 +43,12 @@ const ProjectBlock = async ({ block }: { block: TProjectPageBlock }) => {
           />
         )}
       </div>
-      {block.item.foundation.body && (
+      {block.item.foundation.body && block.item.show_body === "enabled" && (
         <article className="max-w-screen-xl mx-auto">
-          <PostBody body={block.item.foundation.body} />
+          <PostBody
+            body={block.item.foundation.body}
+            blurDataMap={blurDataMap}
+          />
         </article>
       )}
       <div className="grid gap-5 pb-20 md:px-5 max-w-screen-xl mx-auto grid-cols-1 md:grid-cols-2 w-full">

@@ -9,11 +9,11 @@ const PaddingContainer = ({
   className?: string;
 }) => {
   return (
-    <div
+    <section
       className={twMerge("mx-auto px-8 container overflow-hidden", className)}
     >
       {children}
-    </div>
+    </section>
   );
 };
 

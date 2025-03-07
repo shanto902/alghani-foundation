@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-
+import { Toaster } from "sonner";
 import "./globals.css";
 import { Lato, Raleway } from "next/font/google";
 import Footer from "@/components/layout/Footer";
@@ -35,6 +35,7 @@ export default async function RootLayout({
         <NavBar settings={settings as TSetting} />
         <div className="min-h-[80vh]">{children}</div>
         <Footer settings={settings as TSetting} />
+        <Toaster />
       </body>
     </html>
   );

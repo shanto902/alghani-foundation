@@ -46,10 +46,16 @@ const ZoomImage = ({
   src,
   alt,
   id,
+  blurDataURL,
+  width,
+  height,
 }: {
   src: string;
   alt: string;
   id?: string;
+  blurDataURL: string;
+  width: string;
+  height: string;
 }) => {
   return (
     // Wrap the component with the ErrorBoundary
@@ -59,11 +65,17 @@ const ZoomImage = ({
           className="w-full pb-5 md:pb-0 object-cover object-center h-auto"
           src={src}
           alt={alt}
-          width={1280}
-          height={620}
-          placeholder={`data:image/svg+xml;base64,${toBase64(
-            shimmer(500, 500)
-          )}`}
+          width={Number(width) || 1200}
+          height={Number(height) || 700}
+          // placeholder={`data:image/svg+xml;base64,${toBase64(
+          //   shimmer(500, 500)
+          // )}`}
+          placeholder={
+            blurDataURL
+              ? "blur"
+              : `data:image/svg+xml;base64,${toBase64(shimmer(500, 500))}`
+          }
+          blurDataURL={blurDataURL}
         />
       </Zoom>
     </ErrorBoundary>

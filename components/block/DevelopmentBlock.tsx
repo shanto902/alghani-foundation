@@ -15,12 +15,10 @@ const DevelopmentBlock = ({ block }: { block: TDevelopmentBlock }) => {
   return (
     <div className="grid md:max-w-4xl mx-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-2 justify-center my-10">
       {block.item.sectors.map((goal, index) => {
-        console.log(index + 1);
         const { number, prefix, suffix } = goal.sector_id.value
           ? parseStat(goal.sector_id.value.toString())
           : { number: 0, prefix: "", suffix: "" };
 
-        console.log(block);
         return (
           <motion.div
             key={index + 1}

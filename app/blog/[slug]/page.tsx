@@ -8,7 +8,7 @@ import PaddingContainer from "@/components/layout/PaddingContainer";
 import moment from "moment";
 import { FaFacebookF } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { getProjectData } from "@/helpers/fetchFromDirectus";
+import { getBlogData, getProjectData } from "@/helpers/fetchFromDirectus";
 import { formatStatus } from "@/lib/format";
 import Link from "next/link";
 import { getBlurData } from "@/lib/getBlurData";
@@ -21,13 +21,13 @@ interface PageProps {
 export const generateStaticParams = async () => {
   try {
     const result = await directus.request(
-      readItems("projects", {
+      readItems("blogs", {
         filter: {
           status: {
             _eq: "published",
           },
         },
-        fields: ["slug", "project_status", "foundation.slug"],
+        fields: ["slug"],
       })
     );
 
@@ -35,32 +35,28 @@ export const generateStaticParams = async () => {
       (
         result as {
           slug: string;
-          project_status: string;
-          foundation: {
-            slug: string;
-          };
         }[]
       ).map((item) => ({
         slug: item.slug,
-        projects: item.project_status,
-        permalink: item.foundation.slug,
+        permalink: "blog",
       })) || [];
+
     return allParams;
   } catch (error) {
-    console.error("Error fetching posts:", error);
-    throw new Error("Error fetching posts");
+    console.error("Error fetching career:", error);
+    throw new Error("Error fetching Career");
   }
 };
+
 const page = async ({ params }: PageProps) => {
   const { slug } = await params;
-  const projectsData = await getProjectData(slug);
+  const blogData = await getBlogData(slug);
 
-  const imageUrl = `${process.env.NEXT_PUBLIC_ASSETS_URL}${projectsData.image}`;
+  const imageUrl = `${process.env.NEXT_PUBLIC_ASSETS_URL}${blogData.image}`;
   const blurDataURL = await getBlurData(imageUrl);
 
-  // Extract images from body HTML
   const imgMatches = [
-    ...projectsData.body.matchAll(/<img[^>]+src=["']([^"']+)["']/g),
+    ...blogData.body.matchAll(/<img[^>]+src=["']([^"']+)["']/g),
   ];
   const imageSources = imgMatches && imgMatches.map((match) => match[1]);
 
@@ -71,20 +67,18 @@ const page = async ({ params }: PageProps) => {
     }))
   );
 
-  // console.log(blurDataMap);
-
-  const currentURL = `${process.env.NEXT_PUBLIC_SITE_URL}${projectsData.foundation.slug}/${projectsData.project_status}/${projectsData.slug}`;
+  const currentURL = `${process.env.NEXT_PUBLIC_SITE_URL}blog/${blogData.slug}`;
 
   // Facebook share URL
   const facebookShareURL = `https://www.facebook.com/sharer/sharer.php?u=${currentURL}`;
 
-  const xShareURL = `https://twitter.com/intent/tweet?url=${currentURL}&text=${`Check out this project: ${projectsData.title}`}`;
+  const xShareURL = `https://twitter.com/intent/tweet?url=${currentURL}&text=${`Check out this project: ${blogData.title}`}`;
   return (
     <main>
       <div className="relative h-[85vh] overflow-hidden w-full">
         <Image
-          src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${projectsData.image}`}
-          alt={projectsData.title}
+          src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${blogData.image}`}
+          alt={blogData.title}
           width={1920}
           height={1800}
           blurDataURL={blurDataURL}
@@ -96,17 +90,11 @@ const page = async ({ params }: PageProps) => {
         <PaddingContainer className="relative  h-full w-full">
           <div className="absolute  left-0 bottom-0 z-20 w-full">
             <h2 className="text-4xl font-extrabold text-white px-5">
-              {projectsData.title}
+              {blogData.title}
             </h2>
             <div className="flex justify-between p-5">
               <div className="py-5  gap-2 text-sm items-center flex flex-wrap">
-                <Link
-                  href={`/${projectsData.foundation.slug}/${projectsData.project_status}`}
-                  className="bg-primary hover:bg-white hover:text-primary  transition-all duration-300  w-fit font-bold px-3 text-white  rounded-full py-1"
-                >
-                  {formatStatus(projectsData.project_status)} Projects
-                </Link>
-                {projectsData.tags.map((tag, i) => (
+                {blogData.tags.map((tag, i) => (
                   <div
                     className="bg-primary  w-fit font-bold px-3 text-white  rounded-full py-1"
                     key={i}
@@ -115,7 +103,7 @@ const page = async ({ params }: PageProps) => {
                   </div>
                 ))}
                 <p className="text-white text-sm">{`Updated: ${moment(
-                  projectsData.date_updated
+                  blogData.date_updated
                 ).format("MMM DD, YYYY")}`}</p>
               </div>
               <div className="text-white text-sm md:flex items-center gap-2 hidden ">
@@ -134,7 +122,7 @@ const page = async ({ params }: PageProps) => {
       </div>
 
       <article className="relative max-w-screen-xl mx-auto px-5 py-10">
-        <PostBody body={projectsData.body} blurDataMap={blurDataMap} />
+        <PostBody body={blogData.body} blurDataMap={blurDataMap} />
       </article>
     </main>
   );

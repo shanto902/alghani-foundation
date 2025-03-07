@@ -1,4 +1,4 @@
-import { TCareer, TPageBlock, TProject } from "@/interfaces";
+import { TBlog, TCareer, TPageBlock, TPress, TProject } from "@/interfaces";
 import directus from "@/lib/directus";
 
 import { readItems } from "@directus/sdk";
@@ -246,5 +246,97 @@ export const getPartialCareersData = cache(async (): Promise<TCareer[]> => {
   } catch (error) {
     console.error("Error fetching career data:", error);
     throw new Error("Error fetching careers");
+  }
+});
+
+export const getAllPress = cache(async (): Promise<TPress[]> => {
+  try {
+    const results = await directus.request(
+      readItems("press", {
+        filter: {
+          status: {
+            _eq: "published",
+          },
+        },
+        sort: ["sort"],
+        fields: ["*"],
+      })
+    );
+
+    return results as TPress[];
+  } catch (error) {
+    console.error("Error fetching press data:", error);
+    throw new Error("Error fetching press");
+  }
+});
+
+export const getAllBlogs = cache(
+  async (
+    page: number,
+    limit: number
+  ): Promise<{
+    results: TBlog[];
+    totalPages: number;
+  }> => {
+    try {
+      // Fetch paginated blog posts using `page` directly
+      const results = (await directus.request(
+        readItems("blogs", {
+          filter: {
+            status: {
+              _eq: "published",
+            },
+          },
+          page: page,
+          limit: limit,
+          sort: ["sort"],
+          fields: [
+            "id",
+            "date_created",
+            "date_updated",
+            "title",
+            "description",
+            "slug",
+            "tags",
+            "image",
+          ],
+        })
+      )) as TBlog[];
+
+      const totalCount = await directus.request(
+        readItems("blogs", {
+          aggregate: { count: ["id"] },
+          filter: { status: { _eq: "published" } },
+        })
+      );
+
+      const totalPages = Math.ceil(totalCount[0].count.id / limit);
+
+      return { results, totalPages };
+    } catch (error) {
+      console.error("Error fetching blogs:", error);
+      throw new Error("Error fetching blogs");
+    }
+  }
+);
+
+export const getBlogData = cache(async (slug: string): Promise<TBlog> => {
+  try {
+    const result = await directus.request(
+      readItems("blogs", {
+        filter: {
+          slug: {
+            _eq: slug,
+          },
+        },
+        sort: ["sort"],
+        fields: ["*"],
+      })
+    );
+
+    return result[0] as TBlog;
+  } catch (error) {
+    console.error("Error fetching member data:", error);
+    throw new Error("Error fetching post");
   }
 });

@@ -44,7 +44,6 @@ const historyData = [
 ];
 
 const TimelineBlock = ({ block }: { block: TTimelineBlock }) => {
-  console.log(block.item);
   return (
     <div className="py-10">
       {/* Vertical Line Added */}

@@ -34,14 +34,14 @@ const NavBar = ({ settings }: TNavbarProps) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Toggle submenu visibility for mobile
-  const toggleSubmenu = (index: number) => {
-    if (openSubmenuIndex === index) {
-      setOpenSubmenuIndex(null); // Close the submenu if it's already open
-    } else {
-      setOpenSubmenuIndex(index); // Open the submenu
-    }
-  };
+  // // Toggle submenu visibility for mobile
+  // const toggleSubmenu = (index: number) => {
+  //   if (openSubmenuIndex === index) {
+  //     setOpenSubmenuIndex(null); // Close the submenu if it's already open
+  //   } else {
+  //     setOpenSubmenuIndex(index); // Open the submenu
+  //   }
+  // };
 
   return (
     <>
@@ -133,7 +133,7 @@ const NavBar = ({ settings }: TNavbarProps) => {
         </div>
 
         {/* Mobile Menu */}
-        <div
+        <aside
           className={`fixed inset-0 bg-white z-30 flex flex-col items-center justify-start pt-16 gap-6 transition-transform duration-300 md:hidden ${
             isOpen ? "translate-x-0" : "translate-x-full"
           } h-screen overflow-y-auto`}
@@ -189,7 +189,7 @@ const NavBar = ({ settings }: TNavbarProps) => {
               Donate
             </Link>
           </ul>
-        </div>
+        </aside>
       </nav>
     </>
   );

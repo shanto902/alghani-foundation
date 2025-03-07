@@ -2,16 +2,17 @@
 
 import Spinner from "@/components/common/Spinner";
 import PaddingContainer from "@/components/layout/PaddingContainer";
-import { notFound, useSearchParams } from "next/navigation";
+import { notFound, redirect, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export default function CareerForm() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [position, setPosition] = useState<string | null>(null);
   const [isValidSlug, setIsValidSlug] = useState<boolean | null>(null);
+  const [processing, setProcessing] = useState(false);
   const searchParams = useSearchParams();
   const slug = searchParams.get("slug");
-
   useEffect(() => {
     const fetchCareer = async () => {
       if (!slug) return;
@@ -63,14 +64,14 @@ export default function CareerForm() {
     event.preventDefault();
 
     if (!position) {
-      alert("Position data is not available. Please try again.");
+      toast.error("Position data is not available. Please try again.", {
+        id: "form-status",
+      });
       return;
     }
-
+    setProcessing(true);
     const form = event.currentTarget;
     const formData = new FormData(form);
-
-    console.log("Position:", position); // Debugging
 
     // Append position to formData only if it's available
     formData.append("position", position);
@@ -87,20 +88,27 @@ export default function CareerForm() {
       method: "POST",
       body: formData,
     });
-
+    setProcessing(false);
     const result = await response.json();
     if (result.success) {
-      alert("Data submitted successfully!");
+      toast.success("Data submitted successfully!", { id: "form-status" });
       form.reset();
+      redirect("/career");
     } else {
-      alert("Submission failed: " + result.error);
+      toast.error("Submission failed: " + result.error, { id: "form-status" });
     }
   }
 
   return (
-    <PaddingContainer className="flex w-full flex-col justify-center items-center">
-      <h3 className="font-bold text-2xl my-10">{position || "Loading..."}</h3>
-      <form onSubmit={handleSubmit} className="w-full max-w-md">
+    <PaddingContainer className="flex w-full h-full my-10 flex-col justify-center items-center">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-xl bg-primary p-5 rounded-lg shadow-lg"
+      >
+        <p className="font-bold text-white">Position</p>
+        <p className="font-bold text-2xl mb-5 text-white">
+          {position || "Loading..."}
+        </p>
         <input
           type="email"
           name="email"
@@ -118,8 +126,8 @@ export default function CareerForm() {
           className="block w-full p-2 border rounded mb-2"
         />
 
-        <div className="mb-2 flex flex-col">
-          <label>Gender:</label>
+        <div className="mb-2 flex flex-col text-white">
+          <label className="font-bold">Gender:</label>
           <label>
             <input type="radio" name="gender" value="male" required /> Male
           </label>
@@ -181,9 +189,10 @@ export default function CareerForm() {
 
         <button
           type="submit"
-          className="w-full p-2 bg-primary text-white rounded"
+          disabled={processing}
+          className="w-full p-2 mt-5 font-bold bg-white text-primary hover:bg-primary hover:text-white hover:shadow-lg transition-all duration-300 rounded"
         >
-          Submit
+          {processing ? <Spinner /> : "Submit"}
         </button>
       </form>
     </PaddingContainer>

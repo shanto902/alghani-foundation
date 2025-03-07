@@ -177,6 +177,16 @@ export type TSector = {
   };
 };
 
+export type TPress = {
+  id: string;
+  title: string;
+  description?: string;
+  image?: string;
+  links: {
+    link: string;
+  }[];
+};
+
 export type TProject = {
   id: string;
   project_status: "on-going" | "completed" | "up-coming";
@@ -192,6 +202,18 @@ export type TProject = {
     name: string;
     logo: string;
   };
+};
+
+export type TBlog = {
+  id: string;
+  tags: string[];
+  body: string;
+  image: string;
+  slug: string;
+  title: string;
+  date_updated: string;
+  date_created: string;
+  description: string;
 };
 
 export type TCareer = {
@@ -278,11 +300,7 @@ export type TProjectPageBlock = {
   collection: string;
   item: {
     id: string;
-    project_status:
-      | "on-going-project"
-      | "upcoming-project"
-      | "completed-project"
-      | "all-projects";
+    show_body: "enabled" | "disabled";
     foundation: {
       id: string;
       name: string;

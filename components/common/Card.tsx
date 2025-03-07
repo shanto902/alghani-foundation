@@ -9,28 +9,28 @@ import Link from "next/link";
 import { formatStatus } from "@/lib/format";
 const Card = ({ project }: { project: TProject }) => {
   return (
-    <div className="mb-0 border w-full p-3 rounded-lg flex-col md:flex-row flex overflow-hidden shadow-none my-5 hover:shadow-2xl transition-all duration-300">
+    <div className="mb-0 border w-full p-3 rounded-lg grid grid-cols-3 overflow-hidden shadow-none my-5 hover:shadow-2xl transition-all duration-300">
       <Link
-        className="h-full w-full p-2"
+        className="h-full w-full p-2 flex-1/3 "
         href={`/${project.foundation.slug}/${project.project_status}/${project.slug}`}
       >
         <Image
           src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${project.image}`}
           width={300}
-          height={300}
+          height={400}
           alt={project.title}
-          className="w-full h-full aspect-square object-cover rounded-lg"
+          className="w-full h-full aspect-[3/4] object-cover rounded-lg"
         />
       </Link>
 
-      <div className="p-4 flex flex-col gap-2 justify-center">
+      <div className="p-4 col-span-2 flex flex-col gap-2 justify-center">
         <Link
           href={`/${project.foundation.slug}/${project.project_status}/${project.slug}`}
-          className="text-xl font-bold  transition-all duration-300"
+          className="text-xl font-bold  transition-all duration-300 line-clamp-2"
         >
           {project.title}
         </Link>
-        <div className="py-2 gap-2 text-sm items-center flex flex-wrap">
+        <div className="py-2 gap-2 text-sm items-center flex   flex-wrap">
           <Link
             href={`/${project.foundation.slug}/${project.project_status}`}
             className="bg-primary hover:bg-white border border-primary w-fit text-xs font-bold px-3 text-white rounded-full py-2 hover:text-primary transition-all duration-300"
