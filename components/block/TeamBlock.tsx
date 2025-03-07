@@ -9,8 +9,8 @@ import Link from "next/link";
 
 const TeamBlock = ({ block }: { block: TTeamBlock }) => {
   return (
-    <PaddingContainer className="py-12 flex justify-center items-center">
-      <div className="md:max-w-5xl  grid  md:gap-0 grid-cols-1 md:grid-cols-2">
+    <div className="py-12 flex justify-center items-center">
+      <div className="md:max-w-4xl  grid  md:gap-0 grid-cols-1 md:grid-cols-2">
         {block.item.team.map((member, index) => (
           <div
             key={index}
@@ -30,9 +30,9 @@ const TeamBlock = ({ block }: { block: TTeamBlock }) => {
               height={250}
             />
             <div
-              className={`relative md:w-1/2 w-full h-full flex justify-center items-center flex-col p-4 group-hover:bg-primary group-hover:text-white transition-all duration-300 group-hover:shadow-lg bg-white`}
+              className={`relative md:w-1/2 w-full h-full flex justify-center items-center flex-col p-4 group-hover:bg-primary text-center group-hover:text-white transition-all duration-300 group-hover:shadow-lg bg-white`}
             >
-              <h3 className="font-bold font-lg">{member.team_id.name}</h3>
+              <h3 className="font-bold  font-lg">{member.team_id.name}</h3>
               <p className="text-sm">{member.team_id.designation}</p>
               <p className="text-sm mt-2 text-center">{member.team_id.quote}</p>
               <hr className="bg-primary h-1 w-12 mt-8 group-hover:bg-white group-hover:shadow-lg transition-all duration-300" />
@@ -60,7 +60,7 @@ const TeamBlock = ({ block }: { block: TTeamBlock }) => {
           </div>
         ))}
       </div>
-    </PaddingContainer>
+    </div>
   );
 };
 

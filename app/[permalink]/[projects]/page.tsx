@@ -6,6 +6,7 @@ import { projectsDropdown } from "@/const";
 import { getAllProjectsBasedOnFoundation } from "@/helpers/fetchFromDirectus";
 import directus from "@/lib/directus";
 import { formatStatus } from "@/lib/format";
+import { getBlurData } from "@/lib/getBlurData";
 import { readItems } from "@directus/sdk";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
@@ -65,6 +66,15 @@ const page = async ({ params }: PageProps) => {
     projectData === "all-projects"
       ? await getAllProjectsBasedOnFoundation("all-projects", permalink)
       : await getAllProjectsBasedOnFoundation(projectData, permalink);
+
+  const blurDataMap = await Promise.all(
+    project.map(async (src) => ({
+      src,
+      blurDataURL: await getBlurData(
+        `${process.env.NEXT_PUBLIC_ASSETS_URL}${src.image}`
+      ),
+    }))
+  );
 
   return (
     <PaddingContainer className="py-10">
@@ -130,7 +140,9 @@ const page = async ({ params }: PageProps) => {
 
       <div className="grid gap-5 md:px-5 grid-cols-1 pb-10 max-w-screen-xl mx-auto md:grid-cols-2 w-full">
         {project.length > 0 ? (
-          project.map((project) => <Card key={project.id} project={project} />)
+          blurDataMap.map((project) => (
+            <Card key={project.src.id} project={project} />
+          ))
         ) : (
           <p className="text-center col-span-2 my-32 text-2xl font-bold flex flex-col gap-20 justify-center items-center">
             Nothing to Show
