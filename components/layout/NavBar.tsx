@@ -17,7 +17,6 @@ type TNavbarProps = {
 const NavBar = ({ settings }: TNavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hideTopBar, setHideTopBar] = useState(false);
-  const [openSubmenuIndex, setOpenSubmenuIndex] = useState<number | null>(null); // Track which submenu is open
 
   const pathName = usePathname();
 
@@ -33,15 +32,6 @@ const NavBar = ({ settings }: TNavbarProps) => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // // Toggle submenu visibility for mobile
-  // const toggleSubmenu = (index: number) => {
-  //   if (openSubmenuIndex === index) {
-  //     setOpenSubmenuIndex(null); // Close the submenu if it's already open
-  //   } else {
-  //     setOpenSubmenuIndex(index); // Open the submenu
-  //   }
-  // };
 
   return (
     <>
@@ -118,8 +108,9 @@ const NavBar = ({ settings }: TNavbarProps) => {
                 ))}
               </ul>
               <CustomButton
-                href="/donate"
+                href="/donation"
                 className="hidden lg:inline-block z-[0] "
+                invert
               >
                 Donate
               </CustomButton>
@@ -157,7 +148,7 @@ const NavBar = ({ settings }: TNavbarProps) => {
             {settings.menu.map((item, index) => (
               <li
                 key={index}
-                className="cursor-pointer transition-all duration-300 ease-in-out hover:text-primary"
+                className="cursor-pointer transition-all duration-300 ease-in-out hover:text-primary underline-offset-4"
               >
                 <div className="flex items-center gap-2">
                   <Link onClick={() => setIsOpen(false)} href={`/${item.link}`}>
@@ -178,7 +169,7 @@ const NavBar = ({ settings }: TNavbarProps) => {
                         <Link
                           onClick={() => setIsOpen(false)}
                           href={`/${subItem.link}`}
-                          className="block py-2 text-sm text-gray-700 hover:text-teal-600"
+                          className="block py-2 text-sm text-gray-700 hover:text-primary hover:underline underline-offset-4"
                         >
                           {subItem.label}
                         </Link>
@@ -189,11 +180,28 @@ const NavBar = ({ settings }: TNavbarProps) => {
               </li>
             ))}
             <Link
-              className="text-primary underline-offset-4 hover:underline mb-20"
+              className="text-primary underline-offset-4 hover:underline mb-5"
               href="#"
             >
               Donate
             </Link>
+            <div className="mb-20 flex gap-2 items-center text-sm">
+              <Link
+                className="text-primary underline-offset-4 hover:underline"
+                onClick={() => setIsOpen(false)}
+                href={`/${settings.press_link}`}
+              >
+                Press
+              </Link>
+              |
+              <Link
+                className="text-primary underline-offset-4 hover:underline "
+                onClick={() => setIsOpen(false)}
+                href={`/${settings.career_link}`}
+              >
+                Career
+              </Link>
+            </div>
           </ul>
         </aside>
       </nav>

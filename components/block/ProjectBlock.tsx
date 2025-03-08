@@ -44,7 +44,7 @@ const ProjectBlock = async ({ block }: { block: TProjectPageBlock }) => {
     <PaddingContainer className="my-10">
       {block.item.title === "enabled" ? (
         <div className="max-w-screen-xl mx-auto flex justify-between items-center">
-          <h1 className=" text-4xl  px-0 md:px-5 font-bold ">
+          <h1 className=" text-4xl px-0 md:px-5 font-bold ">
             <strong> {block.item.foundation.name}</strong>
           </h1>
 
@@ -81,8 +81,9 @@ const ProjectBlock = async ({ block }: { block: TProjectPageBlock }) => {
       {projects.length > 6 && (
         <div className="flex justify-center">
           <CustomButton
+            invert
             href={`${projects[0].foundation.slug}/all-projects/`}
-            className=""
+            className="text-sm"
           >
             Load More Projects
           </CustomButton>

@@ -14,18 +14,18 @@ const TopBar = ({ settings }: { settings: TSetting }) => {
               {settings.contact_no}
             </a>
           </p>
-          <div className="flex">
+          <div className="flex ">
             <Link
               href={`/${settings.press_link}`}
-              className="bg-transparent text-black border border-primary px-4 py-1 rounded-tl-lg rounded-bl-lg hover:bg-primary hover:text-white transition-colors duration-300"
+              className="bg-transparent text-black border-2 border-primary px-4 py-1 rounded-tl-lg rounded-bl-lg hover:bg-primary hover:text-white transition-colors duration-300"
             >
               Press
             </Link>
             <Link
               href={`/${settings.career_link}`}
-              className="bg-transparent text-black border border-primary px-4 py-1 rounded-br-lg rounded-tr-lg hover:bg-primary hover:text-white transition-colors duration-300"
+              className="bg-transparent text-black border-2 border-primary px-4 py-1 rounded-br-lg rounded-tr-lg hover:bg-primary hover:text-white transition-colors duration-300"
             >
-              Career
+              Careers
             </Link>
           </div>
         </div>

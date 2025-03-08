@@ -16,7 +16,7 @@ const Card = ({
   };
 }) => {
   return (
-    <div className="mb-0 border w-full p-3 rounded-lg flex flex-col lg:grid grid-cols-3 overflow-hidden shadow-none my-5 hover:shadow-2xl transition-all duration-300">
+    <div className="mb-0 border-2 border-primary w-full p-3 rounded-lg flex flex-col lg:grid grid-cols-3 overflow-hidden shadow-none my-5 hover:shadow-2xl transition-all duration-300">
       <Link
         className="h-full w-full p-2  "
         href={`/${project.src.foundation.slug}/${project.src.project_status}/${project.src.slug}`}

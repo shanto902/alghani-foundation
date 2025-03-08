@@ -13,6 +13,7 @@ const Footer = ({ settings }: { settings: TSetting }) => {
     e.preventDefault();
     const email = (e.target as HTMLFormElement).email.value; // Access email input
   };
+
   return (
     <>
       <footer className=" bg-cover bg-center relative mix-blend-multiply bg-[#27262C] text-white p-8">
@@ -20,9 +21,18 @@ const Footer = ({ settings }: { settings: TSetting }) => {
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5  gap-8">
             {/* About Section */}
             <div className="md:row-span-2 ">
-              <h2 className="text-xl font-bold mb-4">
-                ABOUT AL GHANI FOUNDATION
-              </h2>
+              {settings.logo_type === "image" ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  className="h-14 w-fit mb-3"
+                  src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${settings.logo}`}
+                  alt="logo"
+                />
+              ) : (
+                <h2 className="text-xl font-bold mb-4">
+                  ABOUT AL GHANI FOUNDATION
+                </h2>
+              )}
               <p className="text-sm text-gray-400">{settings.description}</p>
 
               <div className="flex gap-5  mt-5 ">

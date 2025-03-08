@@ -18,7 +18,7 @@ const ServedNumbers = ({ block }: { block: TServedNumbersBlock }) => {
   }, [block]);
 
   return (
-    <section className="md:px-10  py-10 px-5 max-w-5xl mx-auto bg-primary md:rounded-lg ">
+    <section className="md:px-10  py-10 my-10 px-5 max-w-5xl mx-auto bg-primary md:rounded-lg ">
       <motion.div
         className=" mx-auto"
         onViewportEnter={() => setIsVisible(true)} // Start animation when section comes into view

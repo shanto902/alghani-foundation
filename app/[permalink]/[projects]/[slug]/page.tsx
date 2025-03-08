@@ -115,9 +115,11 @@ const page = async ({ params }: PageProps) => {
                     {tag}
                   </div>
                 ))}
-                <p className="text-white text-sm">{`Updated: ${moment(
-                  projectsData.date_updated
-                ).format("MMM DD, YYYY")}`}</p>
+                <p className="text-white text-sm">{`Updated: ${
+                  projectsData?.date_updated
+                    ? moment(projectsData.date_updated).format("MMM DD, YYYY")
+                    : moment(projectsData.date_created).format("MMM DD, YYYY")
+                }`}</p>
               </div>
               <div className="text-white text-sm md:flex items-center gap-2 hidden ">
                 <p className=" text-white text-sm">Share On: </p>

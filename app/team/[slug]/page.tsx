@@ -55,13 +55,13 @@ const page = async ({ params }: PageProps) => {
             height={300}
           />
           <div className="flex flex-col justify-end items-end">
-            <h1 className="text-[clamp(2.2rem,4vw,5rem)]   text-right font-bold text-white text-shadow-lg px-5 pt-5">
+            <h1 className="text-[clamp(2.2rem,4vw,5rem)]   text-right font-bold text-white text-shadow-lg  pt-5">
               {teamData.team_id.name}
             </h1>
-            <h2 className="text-[clamp(1rem,3.2vw,2.2rem)] font-bold text-right pr-5 text-white text-shadow-lg">
+            <h2 className="text-[clamp(1rem,3.2vw,2.2rem)] font-bold text-right w-2/3 md:w-full text-white text-shadow-lg">
               {teamData.team_id.designation}
             </h2>
-            <div className="flex flex-wrap items-center  justify-end pr-5">
+            <div className="flex flex-wrap items-center  justify-end ">
               {teamData.team_id?.socials?.length > 0 &&
                 teamData.team_id?.socials?.map((social, i) => (
                   <Link

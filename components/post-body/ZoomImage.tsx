@@ -62,7 +62,7 @@ const ZoomImage = ({
     <ErrorBoundary>
       <Zoom key={id ? id : Math.random()} wrapElement="span">
         <Image
-          className="w-full pb-5 md:pb-0 object-cover object-center h-auto"
+          className="w-full pb-5 md:pb-0 object-cover rounded-lg object-center h-auto"
           src={src}
           alt={alt}
           width={Number(width) || 1200}

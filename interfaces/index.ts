@@ -13,6 +13,9 @@ export type TSetting = {
   menu: TMenu[];
   contact_no: string;
   press_link: string;
+  logo_type: "title" | "image";
+  title: string;
+  logo?: string;
   career_link: string;
   description: string;
   quick_links: { label: string; link: string }[];
@@ -278,6 +281,15 @@ export type TTeamBlock = {
     id: number;
     team: TTeam[];
   };
+};
+
+export type TDonation = {
+  id: string;
+  title: string;
+  image: string;
+  date_created: string;
+  date_updated: string;
+  body: string;
 };
 
 export type TTeam = {

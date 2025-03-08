@@ -1,6 +1,7 @@
 import {
   TBlog,
   TCareer,
+  TDonation,
   TPageBlock,
   TPress,
   TProject,
@@ -393,5 +394,45 @@ export const getTeamData = cache(async (slug: string): Promise<TTeam> => {
   } catch (error) {
     console.error("Error fetching career data:", error);
     throw new Error("Error fetching careers");
+  }
+});
+
+export const getDonationData = cache(async (id: string): Promise<TDonation> => {
+  try {
+    const results = await directus.request(
+      readItems("donations", {
+        filter: {
+          id,
+        },
+        sort: ["sort"],
+        fields: ["*"],
+      })
+    );
+
+    return results[0] as TDonation;
+  } catch (error) {
+    console.error("Error fetching donation data:", error);
+    throw new Error("Error fetching donation ");
+  }
+});
+
+export const getAllDonations = cache(async (): Promise<TDonation[]> => {
+  try {
+    const results = await directus.request(
+      readItems("donations", {
+        filter: {
+          status: {
+            _eq: "published",
+          },
+        },
+        sort: ["sort"],
+        fields: ["*"],
+      })
+    );
+
+    return results as TDonation[];
+  } catch (error) {
+    console.error("Error fetching press data:", error);
+    throw new Error("Error fetching press");
   }
 });

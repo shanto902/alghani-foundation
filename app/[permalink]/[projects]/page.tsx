@@ -84,7 +84,7 @@ const page = async ({ params }: PageProps) => {
           <div>
             <Link href={`/${project[0]?.foundation.slug}`}>
               <h1 className="text-4xl px-0 md:px-5 font-bold ">
-                {project[0]?.foundation.name}
+                <strong> {project[0]?.foundation.name}</strong>
               </h1>
             </Link>
           </div>

@@ -30,7 +30,7 @@ const LocationBlock = ({ block }: { block: TLocationBlock }) => {
   const mapCenter: LatLngExpression = [lat, lng];
 
   return (
-    <div className="relative container mx-auto px-6 py-12  overflow-hidden">
+    <div className="relative container mx-auto px-6 py-10  overflow-hidden">
       <div className="w-full h-96  overflow-hidden">
         <MapWrapper
           mapCenter={mapCenter}
@@ -67,7 +67,7 @@ const LocationBlock = ({ block }: { block: TLocationBlock }) => {
 
       <section className="flex mt-3 justify-center w-full">
         <CustomButton invert className="text-sm" href={"/contact"}>
-          CONTACT US FOR MORE INFORMATION
+          CONTACT US
         </CustomButton>
       </section>
     </div>

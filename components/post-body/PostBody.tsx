@@ -41,7 +41,9 @@ const PostBody = ({ body, blurDataMap }: PostBodyProps) => {
     return parse(body, options);
   };
 
-  return <article className="richtext h-full">{getParsedHtml(body)}</article>;
+  return (
+    <article className="richtext h-full mx-auto">{getParsedHtml(body)}</article>
+  );
 };
 
 export default PostBody;
