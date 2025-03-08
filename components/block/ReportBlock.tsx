@@ -11,29 +11,30 @@ const ReportBlock = ({ block }: { block: TReportBlock }) => {
             {block.item.section_name}
           </h2>
           <div className="space-y-4">
-            {block.item.reports.map((report, index) => (
-              <div
-                key={index}
-                className="bg-white p-6 rounded-lg shadow-md flex justify-between items-center"
-              >
-                <div>
-                  <h3 className="text-xl font-bold text-gray-800">
-                    {report.reports_id.title}
-                  </h3>
-                  <p className="text-textSecondary">
-                    <span className="font-bold">Year:</span>{" "}
-                    {report.reports_id.year}
-                  </p>
-                </div>
-                <CustomButton
-                  target="_blank"
-                  href={`${process.env.NEXT_PUBLIC_ASSETS_URL}${report.reports_id.pdf}`}
+            {block.item?.reports &&
+              block.item?.reports?.map((report, index) => (
+                <div
+                  key={index}
+                  className="bg-white p-6 rounded-lg shadow-md flex justify-between items-center"
                 >
-                  {" "}
-                  Download
-                </CustomButton>
-              </div>
-            ))}
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-800">
+                      {report.reports_id.title}
+                    </h3>
+                    <p className="text-textSecondary">
+                      <span className="font-bold">Year:</span>{" "}
+                      {report.reports_id.year}
+                    </p>
+                  </div>
+                  <CustomButton
+                    target="_blank"
+                    href={`${process.env.NEXT_PUBLIC_ASSETS_URL}${report.reports_id.pdf}`}
+                  >
+                    {" "}
+                    Download
+                  </CustomButton>
+                </div>
+              ))}
           </div>
         </section>
       </div>

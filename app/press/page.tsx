@@ -9,7 +9,7 @@ const page = async () => {
   return (
     <PaddingContainer>
       <div className="flex flex-col justify-center">
-        {pressData.map((data) => (
+        {pressData?.map((data) => (
           <PressCard key={data.id} data={data} />
         ))}
       </div>

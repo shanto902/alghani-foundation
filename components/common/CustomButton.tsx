@@ -20,11 +20,12 @@ const CustomButton = ({
       target={target}
       href={href}
       className={twMerge(
-        `relative inline-block px-6 py-3 ${
-          !invert
-            ? "hover:bg-primary text-primary hover:text-white bg-white"
-            : "hover:bg-white text-white hover:text-primary bg-primary"
-        } hover:animate- rounded-lg border-2 border-primary shadow-none hover:shadow-lg font-bold text-md uppercase transition-all duration-300  `,
+        `relative inline-flex items-center gap-2 px-6 py-3 text-center
+         ${
+           !invert
+             ? "hover:bg-primary text-primary hover:text-white bg-white"
+             : "hover:bg-white text-white hover:text-primary bg-primary"
+         } hover:animate- rounded-lg border-2 border-primary shadow-none hover:shadow-lg font-bold text-md uppercase transition-all duration-300  `,
         className
       )}
     >

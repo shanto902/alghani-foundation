@@ -8,8 +8,7 @@ import React from "react";
 const ContactPage = async () => {
   const settings = await directus.request(readSingleton("settings"));
   return (
-    <div>
-      <Breadcrumb text="Contact Us" />
+    <div className="min-h-[80vh] flex justify-center items-center">
       <ContactSection settings={settings as TSetting} />
     </div>
   );

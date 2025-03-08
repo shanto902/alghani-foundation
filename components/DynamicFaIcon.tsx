@@ -1,4 +1,16 @@
+"use client";
 import { useEffect, useState } from "react";
+import * as FaIcons from "react-icons/fa";
+import * as RiIcons from "react-icons/ri";
+import * as GrIcons from "react-icons/gr";
+import * as MdIcons from "react-icons/md";
+
+const allIcons: Record<string, React.ElementType> = {
+  ...FaIcons,
+  ...RiIcons,
+  ...GrIcons,
+  ...MdIcons,
+};
 
 export const DynamicFaIcon = ({
   iconName,
@@ -7,7 +19,6 @@ export const DynamicFaIcon = ({
 }: {
   iconName: string;
   size?: number;
-  color?: string;
   className?: string;
 }) => {
   const [IconComponent, setIconComponent] = useState<React.ElementType | null>(
@@ -15,20 +26,11 @@ export const DynamicFaIcon = ({
   );
 
   useEffect(() => {
-    const loadIcon = async () => {
-      try {
-        const prefix = iconName.substring(0, 2); // Extract "Fa" from "FaFacebookF"
-        const iconModule = await import(`react-icons/fa`);
-        setIconComponent(
-          () => (iconModule as any)[iconName] || iconModule["FaQuestionCircle"]
-        );
-      } catch (error) {
-        console.error(`Error loading icon: ${iconName}`, error);
-        setIconComponent(null);
-      }
-    };
-
-    loadIcon();
+    if (iconName in allIcons) {
+      setIconComponent(() => allIcons[iconName]); // Set as function reference to avoid JSX errors
+    } else {
+      setIconComponent(null);
+    }
   }, [iconName]);
 
   if (!IconComponent) return null;

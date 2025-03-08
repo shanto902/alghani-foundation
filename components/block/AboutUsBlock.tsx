@@ -31,7 +31,11 @@ const AboutUsBlock = ({ block }: { block: TAboutUsBlock }) => {
 
             {block.item.button && (
               <div className=" flex justify-center mt-10">
-                <CustomButton href={block.item.button_link as string}>
+                <CustomButton
+                  invert
+                  className="text-sm"
+                  href={block.item.button_link as string}
+                >
                   {block.item.button_text}
                 </CustomButton>
               </div>

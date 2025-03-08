@@ -62,17 +62,18 @@ const page = async ({ params }: PageProps) => {
   const imgMatches = [
     ...projectsData.body.matchAll(/<img[^>]+src=["']([^"']+)["']/g),
   ];
-  const imageSources = imgMatches && imgMatches.map((match) => match[1]);
+  const imageSources = [
+    ...(projectsData.body.matchAll(/<img[^>]+src=["']([^"']+)["']/g) || []),
+  ].map((match) => match[1]);
 
   const blurDataMap = await Promise.all(
-    imageSources.map(async (src) => ({
-      src,
-      blurDataURL: await getBlurData(src),
-    }))
+    imageSources.map((src) =>
+      getBlurData(src).then((blurDataURL) => ({
+        src,
+        blurDataURL,
+      }))
+    )
   );
-
-  // console.log(blurDataMap);
-
   const currentURL = `${process.env.NEXT_PUBLIC_SITE_URL}${projectsData.foundation.slug}/${projectsData.project_status}/${projectsData.slug}`;
 
   // Facebook share URL

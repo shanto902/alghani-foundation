@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  reactStrictMode: true,
   images: {
     remotePatterns: [
       {
@@ -23,6 +24,11 @@ const nextConfig: NextConfig = {
       {
         source: "/",
         destination: "/home",
+        permanent: true,
+      },
+      {
+        source: "/team",
+        destination: "/about-us",
         permanent: true,
       },
     ];

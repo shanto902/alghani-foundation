@@ -10,6 +10,7 @@ import ProjectShowcase from "@/components/block/ProjectShowcase";
 import RecognitionBlock from "@/components/block/RecognitionBlock";
 import ReportBlock from "@/components/block/ReportBlock";
 import ServedNumbers from "@/components/block/ServedNumbers";
+import ServicesBlock from "@/components/block/ServicesBlock";
 import SponsorProgram from "@/components/block/SponsorProgram";
 import TeamBlock from "@/components/block/TeamBlock";
 import TestimonialBlock from "@/components/block/TestimonialBlock";
@@ -29,6 +30,7 @@ import {
   TRecognitionBlock,
   TReportBlock,
   TServedNumbersBlock,
+  TServiceBlock,
   TSponsorProgramBlock,
   TTeamBlock,
   TTestimonialBlock,
@@ -140,7 +142,6 @@ const renderBlock = (block: TBlock) => {
       return (
         <BreadCrumbBlock key={block.id} block={block as TBreadCrumbBlock} />
       );
-
     case "block_reports":
       return <ReportBlock key={block.id} block={block as TReportBlock} />;
     case "block_about_us":
@@ -156,6 +157,8 @@ const renderBlock = (block: TBlock) => {
           block={block as TProjectShowcaseBlock}
         />
       );
+    case "block_services":
+      return <ServicesBlock key={block.id} block={block as TServiceBlock} />;
     default:
       return <h2 key={block.id}>Unknown Block Type</h2>;
   }

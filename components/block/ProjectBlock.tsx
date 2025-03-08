@@ -11,48 +11,56 @@ import { getBlurData } from "@/lib/getBlurData";
 
 const ProjectBlock = async ({ block }: { block: TProjectPageBlock }) => {
   const projects = await getAllProjects(block.item.foundation.slug);
-  const displayedProjects: TProject[] = projects.reverse().slice(0, 6);
+  const displayedProjects: TProject[] = projects.slice(-6).reverse(); // Reverse only the last 6 projects
 
-  const imgMatches = [
+  // Extract images safely from body content
+  const imageSources = [
     ...(block?.item?.foundation?.body?.matchAll(
       /<img[^>]+src=["']([^"']+)["']/g
-    ) ?? []),
-  ];
-  const imageSources = imgMatches && imgMatches.map((match) => match[1]);
+    ) || []),
+  ].map((match) => match[1]);
 
   const blurDataMap = await Promise.all(
-    imageSources.map(async (src) => ({
-      src,
-      blurDataURL: await getBlurData(src),
-    }))
+    imageSources.map((src) =>
+      getBlurData(src).then((blurDataURL) => ({
+        src,
+        blurDataURL,
+      }))
+    )
   );
 
   const blurDataMapProjects = await Promise.all(
-    displayedProjects.map(async (src) => ({
-      src,
-      blurDataURL: await getBlurData(
-        `${process.env.NEXT_PUBLIC_ASSETS_URL}${src.image}`
-      ),
-    }))
+    displayedProjects.map((src) =>
+      getBlurData(`${process.env.NEXT_PUBLIC_ASSETS_URL}${src.image}`).then(
+        (blurDataURL) => ({
+          src,
+          blurDataURL,
+        })
+      )
+    )
   );
 
   return (
     <PaddingContainer className="my-10">
-      <div className="max-w-screen-xl mx-auto flex justify-between items-center">
-        <h1 className=" text-3xl  px-0 md:px-5 font-bold ">
-          {block.item.foundation.name}
-        </h1>
+      {block.item.title === "enabled" ? (
+        <div className="max-w-screen-xl mx-auto flex justify-between items-center">
+          <h1 className=" text-4xl  px-0 md:px-5 font-bold ">
+            <strong> {block.item.foundation.name}</strong>
+          </h1>
 
-        {block.item.foundation.logo && (
-          <Image
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${block.item.foundation.logo}`}
-            alt={block.item.foundation.name}
-            height={96}
-            width={96}
-            className="w-32 h-32 object-contain overflow-hidden"
-          />
-        )}
-      </div>
+          {block.item.foundation.logo && (
+            <Image
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${block.item.foundation.logo}`}
+              alt={block.item.foundation.name}
+              height={96}
+              width={96}
+              className="w-32 h-32 object-contain overflow-hidden"
+            />
+          )}
+        </div>
+      ) : (
+        <></>
+      )}
       {block.item.foundation.body && block.item.show_body === "enabled" && (
         <article className="max-w-screen-xl mx-auto">
           <PostBody

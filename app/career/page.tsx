@@ -13,7 +13,7 @@ const page = async () => {
         Become a Part of Our Team
       </h2>
       <div className="flex my-10 flex-col items-center w-full">
-        {careers.map((career) => (
+        {careers?.map((career) => (
           <CareerCard key={career.id} career={career} />
         ))}
       </div>

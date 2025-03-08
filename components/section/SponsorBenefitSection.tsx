@@ -31,7 +31,7 @@ const SponsorBenefitSection = () => {
       </p>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-        {benefits.map((item, index) => (
+        {benefits?.map((item, index) => (
           <div key={index} className="flex flex-col items-center">
             <div className="text-white">{item.icon}</div>
             <p className="text-sm mt-2">{item.label}</p>

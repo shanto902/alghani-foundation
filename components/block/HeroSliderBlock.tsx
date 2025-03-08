@@ -12,12 +12,14 @@ export type TSliderBlurData = {
 
 const HeroSliderBlock = async ({ block }: { block: THeroSliderBlock }) => {
   const blurDataMap = await Promise.all(
-    block.item.sliders.map(async (src: TSlider) => ({
-      src,
-      blurDataURL: await getBlurData(
+    (block.item.sliders || []).map((src: TSlider) =>
+      getBlurData(
         `${process.env.NEXT_PUBLIC_ASSETS_URL}${src.sliders_id.image}`
-      ),
-    }))
+      ).then((blurDataURL) => ({
+        src,
+        blurDataURL,
+      }))
+    )
   );
 
   return (

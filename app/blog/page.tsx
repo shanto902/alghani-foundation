@@ -17,14 +17,15 @@ const page = async (props: { searchParams: SearchParams }) => {
   const limit = 10;
   const blogData = await getAllBlogs(currentPage, limit);
   const blurDataMap = await Promise.all(
-    blogData.results.map(async (src) => ({
-      src,
-      blurDataURL: await getBlurData(
-        `${process.env.NEXT_PUBLIC_ASSETS_URL}${src.image}`
-      ),
-    }))
+    blogData.results.map((src) =>
+      getBlurData(`${process.env.NEXT_PUBLIC_ASSETS_URL}${src.image}`).then(
+        (blurDataURL) => ({
+          src,
+          blurDataURL,
+        })
+      )
+    )
   );
-
   return (
     <div className="w-full lg:max-w-screen-lg xl:max-w-screen-xl max-w-screen-sm mx-auto px-5 my-10 flex flex-col ">
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">

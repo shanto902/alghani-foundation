@@ -25,8 +25,8 @@ const ShowcaseCard = ({ project }: { project: TProjectShowcaseBlurData }) => {
         width={400}
         className="w-full object-cover h-56 rounded-lg"
       />
-      <div className="space-y-2">
-        <div className=" flex flex-wrap items-center justify-between">
+      <div className="space-y-2 w-full">
+        <div className=" flex flex-wrap items-center justify-between w-full">
           <div className="bg-primary text-xs w-fit border border-primary  font-bold px-2 text-white rounded-full py-1">
             {project.src.projects_id.foundation.name}
           </div>

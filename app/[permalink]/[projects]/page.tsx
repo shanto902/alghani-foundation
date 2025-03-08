@@ -62,18 +62,19 @@ export const generateStaticParams = async () => {
 const page = async ({ params }: PageProps) => {
   const { permalink, projects: projectData } = await params;
 
-  const project =
-    projectData === "all-projects"
-      ? await getAllProjectsBasedOnFoundation("all-projects", permalink)
-      : await getAllProjectsBasedOnFoundation(projectData, permalink);
+  const projectType =
+    projectData === "all-projects" ? "all-projects" : projectData;
+  const project = await getAllProjectsBasedOnFoundation(projectType, permalink);
 
   const blurDataMap = await Promise.all(
-    project.map(async (src) => ({
-      src,
-      blurDataURL: await getBlurData(
-        `${process.env.NEXT_PUBLIC_ASSETS_URL}${src.image}`
-      ),
-    }))
+    project.map((src) =>
+      getBlurData(`${process.env.NEXT_PUBLIC_ASSETS_URL}${src.image}`).then(
+        (blurDataURL) => ({
+          src,
+          blurDataURL,
+        })
+      )
+    )
   );
 
   return (

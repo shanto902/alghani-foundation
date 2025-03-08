@@ -55,16 +55,17 @@ const page = async ({ params }: PageProps) => {
   const imageUrl = `${process.env.NEXT_PUBLIC_ASSETS_URL}${blogData.image}`;
   const blurDataURL = await getBlurData(imageUrl);
 
-  const imgMatches = [
-    ...blogData.body.matchAll(/<img[^>]+src=["']([^"']+)["']/g),
-  ];
-  const imageSources = imgMatches && imgMatches.map((match) => match[1]);
+  const imageSources = [
+    ...(blogData.body.matchAll(/<img[^>]+src=["']([^"']+)["']/g) || []),
+  ].map((match) => match[1]);
 
   const blurDataMap = await Promise.all(
-    imageSources.map(async (src) => ({
-      src,
-      blurDataURL: await getBlurData(src),
-    }))
+    imageSources.map((src) =>
+      getBlurData(src).then((blurDataURL) => ({
+        src,
+        blurDataURL,
+      }))
+    )
   );
 
   const currentURL = `${process.env.NEXT_PUBLIC_SITE_URL}blog/${blogData.slug}`;

@@ -37,7 +37,7 @@ export type TSlider = {
 };
 
 export type THeroSliderBlock = {
-  id: string;
+  id: number;
   collection: string;
   item: {
     id: string;
@@ -55,7 +55,7 @@ export type TRecognition = {
 };
 
 export type TRecognitionBlock = {
-  id: string;
+  id: number;
   collection: string;
   item: {
     id: string;
@@ -63,7 +63,7 @@ export type TRecognitionBlock = {
   };
 };
 export type TPartnerBlock = {
-  id: string;
+  id: number;
   collection: string;
   item: {
     id: string;
@@ -72,7 +72,7 @@ export type TPartnerBlock = {
 };
 
 export type TLocationBlock = {
-  id: string;
+  id: number;
   collection: string;
   item: {
     id: string;
@@ -107,7 +107,7 @@ export type TPartner = {
 };
 
 export type TSponsorProgramBlock = {
-  id: string;
+  id: number;
   collection: string;
   item: {
     id: string;
@@ -120,7 +120,7 @@ export type TSponsorProgramBlock = {
 };
 
 export type THeaderBlock = {
-  id: string;
+  id: number;
   collection: string;
   item: {
     id: string;
@@ -130,7 +130,7 @@ export type THeaderBlock = {
 };
 
 export type TServedNumbersBlock = {
-  id: string;
+  id: number;
   collection: string;
   item: {
     id: string;
@@ -142,7 +142,7 @@ export type TServedNumbersBlock = {
 };
 
 export type TDevelopmentBlock = {
-  id: string;
+  id: number;
   collection: string;
   item: {
     id: string;
@@ -151,7 +151,7 @@ export type TDevelopmentBlock = {
 };
 
 export type TTestimonialBlock = {
-  id: string;
+  id: number;
   collection: string;
   item: {
     id: string;
@@ -287,6 +287,8 @@ export type TTeam = {
     designation: string;
     image: string;
     quote: string;
+    body: string;
+    slug: string;
     socials: {
       link: string;
       icon: string;
@@ -304,10 +306,11 @@ export type TReport = {
 };
 
 export type TProjectPageBlock = {
-  id: string;
+  id: number;
   collection: string;
   item: {
     id: string;
+    title: "enabled" | "disabled";
     show_body: "enabled" | "disabled";
     foundation: {
       id: string;
@@ -335,12 +338,34 @@ export type TMilestone = {
 };
 
 export type TProjectShowcaseBlock = {
-  id: string;
+  id: number;
   collection: string;
   item: {
     id: string;
     limit: number;
     projects: { projects_id: TProject }[];
+  };
+};
+
+export type TService = {
+  id: number;
+  icon: string;
+  title: string;
+  description: string;
+};
+
+export type TServiceBlock = {
+  id: number;
+  collection: string;
+  item: {
+    id: number;
+    services: {
+      services_id: TService;
+    }[];
+    info_text: string;
+    button_link?: string;
+    button_text?: string;
+    button: "enabled" | "disabled";
   };
 };
 
@@ -360,7 +385,8 @@ export type TBlock =
   | TAboutUsBlock
   | TTeamBlock
   | TTimelineBlock
-  | TProjectShowcaseBlock;
+  | TProjectShowcaseBlock
+  | TServiceBlock;
 
 export type TPageBlock = {
   last_updated: string;

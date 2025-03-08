@@ -7,17 +7,20 @@ import CustomButton from "../common/CustomButton";
 
 const ProjectShowcase = async ({ block }: { block: TProjectShowcaseBlock }) => {
   const blurDataMap = await Promise.all(
-    block.item.projects.slice(0, block.item.limit).map(async (src) => ({
-      src,
-      blurDataURL: await getBlurData(
+    (block.item.projects || []).slice(0, block.item.limit).map((src) =>
+      getBlurData(
         `${process.env.NEXT_PUBLIC_ASSETS_URL}${src.projects_id.image}`
-      ),
-    }))
+      ).then((blurDataURL) => ({
+        src,
+        blurDataURL,
+      }))
+    )
   );
 
   return (
     <PaddingContainer className="max-w-screen-xl">
       <div
+        key={block.item.id}
         className=" my-5
     grid lg:grid-cols-3 gap-5 md:grid-cols-2 grid-cols-1  mx-auto"
       >

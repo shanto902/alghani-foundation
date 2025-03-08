@@ -1,4 +1,11 @@
-import { TBlog, TCareer, TPageBlock, TPress, TProject } from "@/interfaces";
+import {
+  TBlog,
+  TCareer,
+  TPageBlock,
+  TPress,
+  TProject,
+  TTeam,
+} from "@/interfaces";
 import directus from "@/lib/directus";
 
 import { readItems } from "@directus/sdk";
@@ -87,6 +94,7 @@ export const fetchPage = cache(
                           "*",
                           {
                             projects_id: [
+                              "id",
                               "title",
                               "slug",
                               "image",
@@ -98,6 +106,10 @@ export const fetchPage = cache(
                           },
                         ],
                       },
+                    ],
+                    block_services: [
+                      "*",
+                      { services: ["*", { services_id: ["*"] }] },
                     ],
                   },
                 },
@@ -357,5 +369,29 @@ export const getBlogData = cache(async (slug: string): Promise<TBlog> => {
   } catch (error) {
     console.error("Error fetching member data:", error);
     throw new Error("Error fetching post");
+  }
+});
+
+export const getTeamData = cache(async (slug: string): Promise<TTeam> => {
+  try {
+    const results = await directus.request(
+      readItems("team", {
+        filter: {
+          slug,
+        },
+        sort: ["sort"],
+        fields: ["*"],
+      })
+    );
+    const newData = {
+      team_id: {
+        ...results[0],
+      },
+    };
+
+    return newData as TTeam;
+  } catch (error) {
+    console.error("Error fetching career data:", error);
+    throw new Error("Error fetching careers");
   }
 });

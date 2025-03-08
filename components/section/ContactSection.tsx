@@ -3,16 +3,16 @@ import React from "react";
 import parse from "html-react-parser";
 const ContactSection = ({ settings }: { settings: TSetting }) => {
   return (
-    <div className=" flex items-center justify-center p-6 ">
-      <div className="bg-white shadow-lg rounded-lg w-full max-w-4xl flex overflow-hidden">
+    <div className=" flex  items-center justify-center p-6 ">
+      <div className="bg-white shadow-lg flex-col rounded-lg w-full md:flex-row  max-w-4xl flex overflow-hidden">
         {/* Left Side - Contact Info */}
-        <div className="w-1/2 bg-primary text-white p-8 flex flex-col justify-center">
+        <div className="md:w-1/2 bg-primary text-white p-8 flex flex-col justify-center">
           <h2 className="text-xl font-bold mb-4">CONTACT INFORMATION</h2>
           <div className="">{parse(settings.contact_details)}</div>
         </div>
 
         {/* Right Side - Contact Form */}
-        <div className="w-1/2 p-8 bg-gray-100">
+        <div className="md:w-1/2 p-8 bg-gray-100">
           <form className="space-y-4">
             <input
               type="text"

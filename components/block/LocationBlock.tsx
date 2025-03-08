@@ -14,6 +14,7 @@ import Spinner from "../common/Spinner";
 import Link from "next/link";
 import { FaEnvelope } from "react-icons/fa";
 import { MoveLeft, MoveRight } from "lucide-react";
+import CustomButton from "../common/CustomButton";
 const MapWrapper = dynamic(() => import("../map/MapWrapper"), {
   ssr: false,
   loading: () => <Spinner />,
@@ -39,12 +40,12 @@ const LocationBlock = ({ block }: { block: TLocationBlock }) => {
       </div>
 
       {selectedProject && (
-        <div className="mt-4 rounded-lg p-4 bg-primary flex md:flex-row flex-col gap-5  ">
+        <div className="mt-4 rounded-lg p-4 bg-primary flex md:flex-row mb-3 flex-col gap-5  ">
           <div className="self-center  border-b-2 md:border-b-0 md:pb-0 md:border-r-2 md:pr-5 pb-5 border-white">
             <Image
-              className=" rounded-lg aspect-square object-cover "
-              height={300}
-              width={300}
+              className=" rounded-lg object-cover "
+              height={400}
+              width={400}
               src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${selectedProject.locations_id.image}`}
               alt={selectedProject.locations_id.title}
             />
@@ -63,14 +64,12 @@ const LocationBlock = ({ block }: { block: TLocationBlock }) => {
           </div>
         </div>
       )}
-      <div className="flex justify-end">
-        <Link
-          className="flex text-lg px-3 py-2 text-primary hover:underline underline-offset-4 hover:animate-pulse font-bold items-center gap-2 "
-          href={"/contact"}
-        >
-          CONTACT US FOR MORE INFORMATION <MoveRight />
-        </Link>
-      </div>
+
+      <section className="flex mt-3 justify-center w-full">
+        <CustomButton invert className="text-sm" href={"/contact"}>
+          CONTACT US FOR MORE INFORMATION
+        </CustomButton>
+      </section>
     </div>
   );
 };

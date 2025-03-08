@@ -63,7 +63,7 @@ const NavBar = ({ settings }: TNavbarProps) => {
         <div className="flex px-8 max-w-screen-2xl justify-between w-full items-center">
           {/* Logo */}
           <Link href={"/"}>
-            <Image className="h-16 w-fit" src={logo} alt="logo" />
+            <Image className="h-14 w-fit" src={logo} alt="logo" />
           </Link>
 
           {/* Desktop Menu */}
@@ -117,7 +117,10 @@ const NavBar = ({ settings }: TNavbarProps) => {
                   </li>
                 ))}
               </ul>
-              <CustomButton href="/donate" className="hidden lg:block">
+              <CustomButton
+                href="/donate"
+                className="hidden lg:inline-block z-[0] "
+              >
                 Donate
               </CustomButton>
             </div>
