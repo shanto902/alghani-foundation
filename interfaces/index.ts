@@ -195,6 +195,7 @@ export type TPress = {
 };
 
 export type TProject = {
+  blurDataURL: string | undefined;
   id: string;
   project_status: "on-going" | "completed" | "up-coming";
   tags: string[];
@@ -221,6 +222,7 @@ export type TBlog = {
   date_updated: string;
   date_created: string;
   description: string;
+  blurDataURL: string;
 };
 
 export type TCareer = {
@@ -401,6 +403,7 @@ export type TBlock =
   | TServiceBlock;
 
 export type TPageBlock = {
+  date_created: any;
   last_updated: string;
   id: string;
   name: string;

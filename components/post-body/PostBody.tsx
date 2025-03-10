@@ -2,7 +2,6 @@ import parse from "html-react-parser";
 
 import "./overlayStyle.css";
 import ZoomImage from "./ZoomImage";
-import { getBlurData } from "@/lib/getBlurData";
 
 interface PostBodyProps {
   body: string;

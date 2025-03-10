@@ -4,8 +4,13 @@ import Image from "next/image";
 import PaddingContainer from "../layout/PaddingContainer";
 import { TAboutUsBlock } from "@/interfaces";
 import PostBody from "../post-body/PostBody";
+import { getPlaceholderImage } from "@/lib/getBlurData";
 
-const AboutUsBlock = ({ block }: { block: TAboutUsBlock }) => {
+const AboutUsBlock = async ({ block }: { block: TAboutUsBlock }) => {
+  const imageUrl = `${process.env.NEXT_PUBLIC_ASSETS_URL}${block.item.image}`;
+  const blurDataURL = block.item.image
+    ? await getPlaceholderImage(imageUrl)
+    : "";
   return (
     <PaddingContainer className="my-12">
       {/* Content Section */}
@@ -27,6 +32,8 @@ const AboutUsBlock = ({ block }: { block: TAboutUsBlock }) => {
               className=" w-full rounded-lg"
               width={600}
               height={400}
+              placeholder="blur"
+              blurDataURL={blurDataURL}
             />
 
             {block.item.button && (

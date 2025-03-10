@@ -9,8 +9,12 @@ import { THeaderBlock } from "@/interfaces";
 import directus from "@/lib/directus";
 import { readSingleton } from "@directus/sdk";
 import moment from "moment";
+import { Metadata } from "next";
 import Image from "next/image";
 import React from "react";
+export const metadata: Metadata = {
+  title: "Donations",
+};
 const block = {
   item: {
     title: "Donate",

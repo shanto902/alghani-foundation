@@ -4,11 +4,14 @@ import PaddingContainer from "@/components/layout/PaddingContainer";
 import PostBody from "@/components/post-body/PostBody";
 import { projectsDropdown } from "@/const";
 import { getAllProjectsBasedOnFoundation } from "@/helpers/fetchFromDirectus";
+import { TProject } from "@/interfaces";
 import directus from "@/lib/directus";
 import { formatStatus } from "@/lib/format";
-import { getBlurData } from "@/lib/getBlurData";
+import { getPlaceholderImage } from "@/lib/getBlurData";
+
 import { readItems } from "@directus/sdk";
 import { ChevronDown } from "lucide-react";
+import { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -16,8 +19,47 @@ import React from "react";
 interface PageProps {
   params: Promise<{
     permalink: string;
-    projects: string;
+    project_status: string;
   }>;
+}
+
+export async function generateMetadata(
+  { params }: PageProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  try {
+    const { permalink, project_status } = await params;
+    const project = await directus.request(
+      readItems("projects", {
+        filter: {
+          foundation: {
+            slug: {
+              _eq: permalink,
+            },
+          },
+          project_status,
+        },
+        sort: ["sort"],
+        fields: ["title", { foundation: ["name"] }],
+      })
+    );
+
+    if (project !== null) {
+      return {
+        title: project[0].foundation.name || project[0].title,
+      };
+    }
+    return {
+      title: "Project not Found",
+      description: "This page does not exist.",
+    };
+  } catch (error) {
+    console.error("Error fetching page metadata:", error);
+    return {
+      title: "Error",
+      description: "Failed to fetch page metadata.",
+    };
+  }
 }
 
 export const generateStaticParams = async () => {
@@ -42,7 +84,7 @@ export const generateStaticParams = async () => {
           };
         }[]
       ).map((item) => ({
-        projects: item.project_status,
+        project_status: item.project_status,
         permalink: item.foundation.slug,
       })) || [];
 
@@ -60,21 +102,20 @@ export const generateStaticParams = async () => {
 };
 
 const page = async ({ params }: PageProps) => {
-  const { permalink, projects: projectData } = await params;
+  const { permalink, project_status } = await params;
 
   const projectType =
-    projectData === "all-projects" ? "all-projects" : projectData;
+    project_status === "all-projects" ? "all-projects" : project_status;
   const project = await getAllProjectsBasedOnFoundation(projectType, permalink);
 
-  const blurDataMap = await Promise.all(
-    project.map((src) =>
-      getBlurData(`${process.env.NEXT_PUBLIC_ASSETS_URL}${src.image}`).then(
-        (blurDataURL) => ({
-          src,
-          blurDataURL,
-        })
-      )
-    )
+  // ✅ Fetch blurDataURL for each project image before rendering
+  const projectWithBlur = await Promise.all(
+    project.map(async (proj) => ({
+      ...proj,
+      blurDataURL: await getPlaceholderImage(
+        `${process.env.NEXT_PUBLIC_ASSETS_URL}${proj.image}`
+      ),
+    }))
   );
 
   return (
@@ -112,9 +153,9 @@ const page = async ({ params }: PageProps) => {
                 htmlFor="dropdown-toggle"
                 className=" font-bold text-lg flex  items-center gap-2 cursor-pointer"
               >
-                {projectData === "all-projects"
+                {project_status === "all-projects"
                   ? "All Published Projects"
-                  : projectData.length > 0 &&
+                  : project_status?.length > 0 &&
                     formatStatus(project[0]?.project_status) + " Projects"}
                 <ChevronDown
                   size={16}
@@ -141,8 +182,8 @@ const page = async ({ params }: PageProps) => {
 
       <div className="grid gap-5 md:px-5 grid-cols-1 pb-10 max-w-screen-xl mx-auto md:grid-cols-2 w-full">
         {project.length > 0 ? (
-          blurDataMap.map((project) => (
-            <Card key={project.src.id} project={project} />
+          projectWithBlur.map((project) => (
+            <Card key={project.id} project={project} />
           ))
         ) : (
           <p className="text-center col-span-2 my-32 text-2xl font-bold flex flex-col gap-20 justify-center items-center">

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Toaster } from "sonner";
 import "./globals.css";
 import { Lato, Raleway } from "next/font/google";
@@ -14,11 +14,16 @@ const lato = Raleway({
   display: "swap",
   variable: "--font-lato",
 });
-export const metadata: Metadata = {
-  title: "Al Ghani Foundation",
-  description: "Al Ghani Foundation is a non-profit organization.",
-};
 
+export const metadata: Metadata = {
+  title: {
+    template: "%s | Al Ghani Foundation",
+    default: "Al Ghani Foundation is a non-profit organization.", // a default is required when creating a template
+  },
+};
+export const viewport: Viewport = {
+  themeColor: "#045857",
+};
 export default async function RootLayout({
   children,
 }: Readonly<{

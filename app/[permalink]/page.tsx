@@ -38,7 +38,7 @@ import {
 } from "@/interfaces";
 import directus from "@/lib/directus";
 import { readItems } from "@directus/sdk";
-import { Metadata } from "next";
+import { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 import React from "react";
 interface PageProps {
@@ -46,9 +46,10 @@ interface PageProps {
     permalink: string;
   }>;
 }
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(
+  { params }: PageProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
   try {
     const { permalink } = await params;
     const result = await directus.request(
@@ -63,15 +64,16 @@ export async function generateMetadata({
       })
     );
 
+    const previousImages = (await parent).openGraph?.images || [];
     if (result && result.length > 0) {
       const page = result[0];
       return {
         title: page.name || page.permalink,
         description: page.description || "",
         openGraph: {
-          images: page.og_image ?? [
-            { url: `${process.env.NEXT_PUBLIC_ASSETS_URL}${page.og_image}` },
-          ],
+          images: page.og_image
+            ? [{ url: `${process.env.NEXT_PUBLIC_ASSETS_URL}${page.og_image}` }]
+            : [...previousImages],
         },
         twitter: {
           card: "summary_large_image",

@@ -2,8 +2,8 @@ import directus from "@/lib/directus";
 import { readItems } from "@directus/sdk";
 import Image from "next/image";
 import React from "react";
-import { getPlaiceholder } from "plaiceholder";
 import PostBody from "@/components/post-body/PostBody";
+import parse from "html-react-parser";
 import PaddingContainer from "@/components/layout/PaddingContainer";
 import moment from "moment";
 import { FaFacebookF } from "react-icons/fa";
@@ -11,12 +11,55 @@ import { FaXTwitter } from "react-icons/fa6";
 import { getProjectData } from "@/helpers/fetchFromDirectus";
 import { formatStatus } from "@/lib/format";
 import Link from "next/link";
-import { getBlurData } from "@/lib/getBlurData";
+import { getPlaceholderImage } from "@/lib/getBlurData";
+import { Metadata, ResolvingMetadata } from "next";
 interface PageProps {
   params: Promise<{
     permalink: string;
     slug: string;
   }>;
+}
+
+export async function generateMetadata(
+  { params }: PageProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  try {
+    const { slug } = await params;
+    const project = await getProjectData(slug);
+
+    console.log(project.foundation.name);
+    const previousImages = (await parent).openGraph?.images || [];
+    if (project !== null) {
+      return {
+        title: project.title,
+        description: `${project.foundation.name}` || "",
+        openGraph: {
+          images: project.image
+            ? [
+                {
+                  url: `${process.env.NEXT_PUBLIC_ASSETS_URL}${project.image}`,
+                },
+              ]
+            : [...previousImages],
+        },
+      };
+    }
+
+    // Default metadata if the page is not found
+    return {
+      title: "Project not Found",
+      description: "This page does not exist.",
+    };
+  } catch (error) {
+    console.error("Error fetching page metadata:", error);
+
+    // Return default metadata in case of error
+    return {
+      title: "Error",
+      description: "Failed to fetch page metadata.",
+    };
+  }
 }
 export const generateStaticParams = async () => {
   try {
@@ -42,7 +85,7 @@ export const generateStaticParams = async () => {
         }[]
       ).map((item) => ({
         slug: item.slug,
-        projects: item.project_status,
+        projects_status: item.project_status,
         permalink: item.foundation.slug,
       })) || [];
     return allParams;
@@ -55,25 +98,23 @@ const page = async ({ params }: PageProps) => {
   const { slug } = await params;
   const projectsData = await getProjectData(slug);
 
-  const imageUrl = `${process.env.NEXT_PUBLIC_ASSETS_URL}${projectsData.image}`;
-  const blurDataURL = await getBlurData(imageUrl);
+  const blurDataURL = await getPlaceholderImage(
+    `${process.env.NEXT_PUBLIC_ASSETS_URL}${projectsData.image}`
+  );
 
-  // Extract images from body HTML
-  const imgMatches = [
-    ...projectsData.body.matchAll(/<img[^>]+src=["']([^"']+)["']/g),
-  ];
-  const imageSources = [
-    ...(projectsData.body.matchAll(/<img[^>]+src=["']([^"']+)["']/g) || []),
-  ].map((match) => match[1]);
+  const imageSources = projectsData?.body
+    ? [...projectsData.body.matchAll(/<img[^>]+src=["']([^"']+)["']/g)].map(
+        (match) => match[1]
+      )
+    : [];
 
   const blurDataMap = await Promise.all(
-    imageSources.map((src) =>
-      getBlurData(src).then((blurDataURL) => ({
-        src,
-        blurDataURL,
-      }))
-    )
+    imageSources.map(async (src) => ({
+      src,
+      blurDataURL: await getPlaceholderImage(src), // Ensure it's resolved
+    }))
   );
+
   const currentURL = `${process.env.NEXT_PUBLIC_SITE_URL}${projectsData.foundation.slug}/${projectsData.project_status}/${projectsData.slug}`;
 
   // Facebook share URL

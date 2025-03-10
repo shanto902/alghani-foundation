@@ -4,11 +4,13 @@ import PostBody from "@/components/post-body/PostBody";
 import { getDonationData } from "@/helpers/fetchFromDirectus";
 import { TSetting } from "@/interfaces";
 import directus from "@/lib/directus";
-import { getBlurData } from "@/lib/getBlurData";
+import { getPlaceholderImage } from "@/lib/getBlurData";
 import { readItems, readSingleton } from "@directus/sdk";
+import { Metadata, ResolvingMetadata } from "next";
 import React from "react";
 import { FaFacebookF } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import parse from "html-react-parser";
 
 interface PageProps {
   params: Promise<{
@@ -16,6 +18,50 @@ interface PageProps {
     id: string;
   }>;
 }
+export async function generateMetadata(
+  { params }: PageProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  try {
+    const { id } = await params;
+    const donation = await getDonationData(id);
+    const bodyText = donation?.body
+      ? parse(donation.body.toString().slice(0, 200))
+      : "";
+    const previousImages = (await parent).openGraph?.images || [];
+
+    if (donation !== null) {
+      return {
+        title: donation.title,
+        description: `${bodyText}` || "",
+        openGraph: {
+          images: donation.image
+            ? [
+                {
+                  url: `${process.env.NEXT_PUBLIC_ASSETS_URL}${donation.image}`,
+                },
+              ]
+            : [...previousImages],
+        },
+      };
+    }
+
+    // Default metadata if the page is not found
+    return {
+      title: "Donation not Found",
+      description: "This page does not exist.",
+    };
+  } catch (error) {
+    console.error("Error fetching page metadata:", error);
+
+    // Return default metadata in case of error
+    return {
+      title: "Error",
+      description: "Failed to fetch page metadata.",
+    };
+  }
+}
+
 export const generateStaticParams = async () => {
   try {
     const result = await directus.request(
@@ -50,25 +96,20 @@ const page = async ({ params }: PageProps) => {
   const { id } = await params;
   const donationData = await getDonationData(id);
   const settings = await directus.request(readSingleton("settings"));
-  // const imageUrl = `${process.env.NEXT_PUBLIC_ASSETS_URL}${donationData.image}`;
-  // const blurDataURL = await getBlurData(imageUrl);
-
-  const imageSources = [
-    ...(donationData.body.matchAll(/<img[^>]+src=["']([^"']+)["']/g) || []),
-  ].map((match) => match[1]);
-
+  const imageSources = donationData.body
+    ? [...donationData.body.matchAll(/<img[^>]+src=["']([^"']+)["']/g)].map(
+        (match) => match[1]
+      )
+    : [];
   const blurDataMap = await Promise.all(
-    imageSources.map((src) =>
-      getBlurData(src).then((blurDataURL) => ({
-        src,
-        blurDataURL,
-      }))
-    )
+    imageSources.map(async (src) => ({
+      src,
+      blurDataURL: await getPlaceholderImage(src),
+    }))
   );
 
   const currentURL = `${process.env.NEXT_PUBLIC_SITE_URL}donation/${donationData.id}`;
 
-  // Facebook share URL
   const facebookShareURL = `https://www.facebook.com/sharer/sharer.php?u=${currentURL}`;
 
   const xShareURL = `https://twitter.com/intent/tweet?url=${currentURL}&text=${`${donationData.title}`}`;
@@ -102,11 +143,11 @@ const page = async ({ params }: PageProps) => {
         <h2 className="text-center text-3xl font-bold uppercase mb-10">
           Payment method
         </h2>
-        <PaddingContainer className="flex max-w-screen-xl  items-start justify-between">
-          <div className="w-1/2">
+        <PaddingContainer className="flex max-w-screen flex-col md:flex-row items-start justify-between">
+          <div className="md:w-1/2 w-full">
             <PostBody body={settings.bank_details}></PostBody>
           </div>
-          <div className="w-1/2">
+          <div className="md:w-1/2 w-full">
             <PostBody body={settings.bkash_details}></PostBody>
             <hr className="h-px bg-white" />
             <div className="my-5 space-y-2">

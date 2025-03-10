@@ -26,6 +26,7 @@ const PressCard = ({ data }: { data: TPress }) => {
             {data.links.map((link, index) => (
               <li key={index}>
                 <Link
+                  target="_blank"
                   className="hover:text-primary hover:underline break-all"
                   href={link.link}
                 >

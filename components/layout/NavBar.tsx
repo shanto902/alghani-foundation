@@ -199,7 +199,7 @@ const NavBar = ({ settings }: TNavbarProps) => {
                 onClick={() => setIsOpen(false)}
                 href={`/${settings.career_link}`}
               >
-                Career
+                Careers
               </Link>
             </div>
           </ul>

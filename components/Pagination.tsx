@@ -38,7 +38,7 @@ const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
       ).map((page) => (
         <Link
           key={page}
-          href={`/blog?page=${page}`}
+          href={`/blog/page/${page}`}
           className={`size-10 flex border-2 border-primary justify-center items-center text-lg rounded-full transition-all duration-300 text-primary ${
             currentPage === page
               ? "bg-primary text-white font-bold"
@@ -51,7 +51,7 @@ const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
 
       {/* Next Button */}
       <Link
-        href={currentPage < totalPages ? `/blog?page=${currentPage + 1}` : "#"}
+        href={currentPage < totalPages ? `/blog/page/${currentPage + 1}` : "#"}
         className={`size-10 flex justify-center text-primary border-2 border-primary items-center text-lg rounded-full transition-all duration-300 ${
           currentPage < totalPages
             ? "bg-white  hover:bg-primary hover:text-white"

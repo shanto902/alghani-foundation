@@ -1,18 +1,26 @@
-"use client";
-
 import Image from "next/image";
 import PaddingContainer from "../layout/PaddingContainer";
 import { TTeamBlock } from "@/interfaces";
 
 import { DynamicFaIcon } from "../DynamicFaIcon";
 import Link from "next/link";
+import { getPlaceholderImage } from "@/lib/getBlurData";
 
-const TeamBlock = ({ block }: { block: TTeamBlock }) => {
+const TeamBlock = async ({ block }: { block: TTeamBlock }) => {
+  const teamWithBlur = await Promise.all(
+    block?.item?.team?.map(async (member) => ({
+      ...member,
+      blurDataURL: await getPlaceholderImage(
+        `${process.env.NEXT_PUBLIC_ASSETS_URL}${member.team_id.image}`
+      ),
+    })) || []
+  );
+
   return (
     <div className="py-12 flex justify-center items-center">
       <div className="md:max-w-4xl  grid  md:gap-0 grid-cols-1 md:grid-cols-2">
         {block?.item?.team &&
-          block?.item?.team?.map((member, index) => (
+          teamWithBlur.map((member, index) => (
             <Link
               href={`/team/${member.team_id.slug}`}
               key={index}
@@ -30,6 +38,8 @@ const TeamBlock = ({ block }: { block: TTeamBlock }) => {
                 className=" w-1/2 object-top   aspect-square object-cover self-center md:self-end"
                 width={250}
                 height={250}
+                placeholder="blur"
+                blurDataURL={member.blurDataURL}
               />
               <div
                 className={`relative md:w-1/2 w-full h-full flex justify-center items-center flex-col p-4 group-hover:bg-primary text-center group-hover:text-white transition-all duration-300 group-hover:shadow-lg bg-white`}

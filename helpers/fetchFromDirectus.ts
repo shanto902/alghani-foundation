@@ -11,7 +11,7 @@ import directus from "@/lib/directus";
 
 import { readItems } from "@directus/sdk";
 import { cache } from "react";
-
+import { getPlaceholderImage } from "@/lib/getBlurData"; // ✅ Import blur function
 export const fetchPage = cache(
   async (permalink: string): Promise<TPageBlock | null> => {
     try {
@@ -132,7 +132,7 @@ export const fetchPages = async (): Promise<TPageBlock[]> => {
   try {
     const result = await directus.request(
       readItems("pages", {
-        fields: ["permalink", "date_updated"],
+        fields: ["permalink", "date_updated", "date_created"],
       })
     );
     return result as TPageBlock[];
@@ -311,7 +311,7 @@ export const getAllBlogs = cache(
     totalPages: number;
   }> => {
     try {
-      // Fetch paginated blog posts using `page` directly
+      // ✅ Fetch paginated blog posts from Directus
       const results = (await directus.request(
         readItems("blogs", {
           filter: {
@@ -335,6 +335,7 @@ export const getAllBlogs = cache(
         })
       )) as TBlog[];
 
+      // ✅ Fetch total count for pagination
       const totalCount = await directus.request(
         readItems("blogs", {
           aggregate: { count: ["id"] },
@@ -344,7 +345,17 @@ export const getAllBlogs = cache(
 
       const totalPages = Math.ceil(totalCount[0].count.id / limit);
 
-      return { results, totalPages };
+      // ✅ Generate blur placeholders for all blog images
+      const blogsWithBlur = await Promise.all(
+        results.map(async (blog) => ({
+          ...blog,
+          blurDataURL: await getPlaceholderImage(
+            `${process.env.NEXT_PUBLIC_ASSETS_URL}${blog.image}`
+          ), // ✅ Ensure blur is fetched
+        }))
+      );
+
+      return { results: blogsWithBlur, totalPages };
     } catch (error) {
       console.error("Error fetching blogs:", error);
       throw new Error("Error fetching blogs");

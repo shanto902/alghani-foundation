@@ -7,37 +7,37 @@ import PostBody from "../post-body/PostBody";
 import Image from "next/image";
 import Link from "next/link";
 import CustomButton from "../common/CustomButton";
-import { getBlurData } from "@/lib/getBlurData";
+import { getPlaceholderImage } from "@/lib/getBlurData";
 
 const ProjectBlock = async ({ block }: { block: TProjectPageBlock }) => {
   const projects = await getAllProjects(block.item.foundation.slug);
   const displayedProjects: TProject[] = projects.slice(-6).reverse(); // Reverse only the last 6 projects
 
   // Extract images safely from body content
-  const imageSources = [
-    ...(block?.item?.foundation?.body?.matchAll(
-      /<img[^>]+src=["']([^"']+)["']/g
-    ) || []),
-  ].map((match) => match[1]);
+  const imageSources = block?.item?.foundation?.body
+    ? [
+        ...block.item.foundation.body.matchAll(
+          /<img[^>]+src=["']([^"']+)["']/g
+        ),
+      ].map((match) => match[1])
+    : [];
 
+  // Generate placeholder images (Async)
   const blurDataMap = await Promise.all(
-    imageSources.map((src) =>
-      getBlurData(src).then((blurDataURL) => ({
-        src,
-        blurDataURL,
-      }))
-    )
+    imageSources.map(async (src) => ({
+      src,
+      blurDataURL: await getPlaceholderImage(src), // Ensure we await here
+    }))
   );
 
+  // Generate placeholder images for projects (Async)
   const blurDataMapProjects = await Promise.all(
-    displayedProjects.map((src) =>
-      getBlurData(`${process.env.NEXT_PUBLIC_ASSETS_URL}${src.image}`).then(
-        (blurDataURL) => ({
-          src,
-          blurDataURL,
-        })
-      )
-    )
+    displayedProjects.map(async (project) => ({
+      ...project,
+      blurDataURL: await getPlaceholderImage(
+        `${process.env.NEXT_PUBLIC_ASSETS_URL}${project.image}`
+      ),
+    }))
   );
 
   return (
@@ -72,7 +72,7 @@ const ProjectBlock = async ({ block }: { block: TProjectPageBlock }) => {
       <div className="grid gap-5 pb-20 md:px-5 max-w-screen-xl mx-auto grid-cols-1 md:grid-cols-2 w-full">
         {blurDataMapProjects.length > 0 ? (
           blurDataMapProjects.map((project) => (
-            <Card key={project.src.id} project={project} />
+            <Card key={project.id} project={project} />
           ))
         ) : (
           <p>Nothing to Show</p>

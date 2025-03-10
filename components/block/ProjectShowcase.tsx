@@ -2,19 +2,17 @@ import { TProject, TProjectShowcaseBlock } from "@/interfaces";
 import React from "react";
 import PaddingContainer from "../layout/PaddingContainer";
 import ShowcaseCard, { TProjectShowcaseBlurData } from "../card/ShowcaseCard";
-import { getBlurData } from "@/lib/getBlurData";
 import CustomButton from "../common/CustomButton";
+import { getPlaceholderImage } from "@/lib/getBlurData";
 
 const ProjectShowcase = async ({ block }: { block: TProjectShowcaseBlock }) => {
   const blurDataMap = await Promise.all(
-    (block.item.projects || []).slice(0, block.item.limit).map((src) =>
-      getBlurData(
-        `${process.env.NEXT_PUBLIC_ASSETS_URL}${src.projects_id.image}`
-      ).then((blurDataURL) => ({
-        src,
-        blurDataURL,
-      }))
-    )
+    (block.item.projects || []).slice(0, block.item.limit).map(async (src) => ({
+      src,
+      blurDataURL: await getPlaceholderImage(
+        `${process.env.NEXT_PUBLIC_ASSETS_URL}${src?.projects_id?.image}`
+      ),
+    }))
   );
 
   return (

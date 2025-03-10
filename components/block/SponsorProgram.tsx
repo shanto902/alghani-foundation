@@ -3,7 +3,11 @@ import CustomButton from "../common/CustomButton";
 import { TSponsorProgramBlock } from "@/interfaces";
 import parser from "html-react-parser";
 import PaddingContainer from "../layout/PaddingContainer";
-const SponsorProgram = ({ block }: { block: TSponsorProgramBlock }) => {
+import { getPlaceholderImage } from "@/lib/getBlurData";
+const SponsorProgram = async ({ block }: { block: TSponsorProgramBlock }) => {
+  const blurDataURL = await getPlaceholderImage(
+    `${process.env.NEXT_PUBLIC_ASSETS_URL}${block.item.image}`
+  );
   return (
     <PaddingContainer className="my-10 flex  gap-10 flex-col md:flex-row items-center  overflow-hidden p-6">
       {/* Left side - Image */}
@@ -13,6 +17,8 @@ const SponsorProgram = ({ block }: { block: TSponsorProgramBlock }) => {
           alt={block.item.headline}
           width={600}
           height={400}
+          placeholder="blur"
+          blurDataURL={blurDataURL}
           className="w-full object-top object-cover rounded-lg aspect-[4/3]"
         />
       </div>

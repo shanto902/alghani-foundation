@@ -4,10 +4,58 @@ import PostBody from "@/components/post-body/PostBody";
 import { getTeamData } from "@/helpers/fetchFromDirectus";
 import directus from "@/lib/directus";
 import { readItems } from "@directus/sdk";
+import { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+interface PageProps {
+  params: Promise<{
+    permalink: string;
+    slug: string;
+  }>;
+}
 
+export async function generateMetadata(
+  { params }: PageProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  try {
+    const { slug } = await params;
+    const member = await getTeamData(slug);
+
+    const previousImages = (await parent).openGraph?.images || [];
+    if (member !== null) {
+      return {
+        title: member.team_id.name,
+        description:
+          `${member.team_id.designation} - ${member.team_id.quote}` || "",
+        openGraph: {
+          images: member.team_id.image
+            ? [
+                {
+                  url: `${process.env.NEXT_PUBLIC_ASSETS_URL}${member.team_id.image}`,
+                },
+              ]
+            : [...previousImages],
+        },
+      };
+    }
+
+    // Default metadata if the page is not found
+    return {
+      title: "member not Found",
+      description: "This page does not exist.",
+    };
+  } catch (error) {
+    console.error("Error fetching page metadata:", error);
+
+    // Return default metadata in case of error
+    return {
+      title: "Error",
+      description: "Failed to fetch page metadata.",
+    };
+  }
+}
 export const generateStaticParams = async () => {
   try {
     const result = await directus.request(
@@ -33,12 +81,6 @@ export const generateStaticParams = async () => {
   }
 };
 
-interface PageProps {
-  params: Promise<{
-    permalink: string;
-    slug: string;
-  }>;
-}
 const page = async ({ params }: PageProps) => {
   const { slug } = await params;
   const teamData = await getTeamData(slug);
