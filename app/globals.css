@@ -8,7 +8,7 @@
   display: block;
   width: 100%;
   padding: 0;
-  margin: 0;
+  margin-bottom: 10px !important;
   list-style: none;
   text-align: center;
 }
@@ -25,16 +25,17 @@
   content: "•";
   text-align: center;
   opacity: 0.25;
+
   color: white !important;
   -webkit-font-smoothing: antialiased;
 }
 
 .btn {
-  @apply relative my-5 w-fit inline-block px-6 py-3 rounded-lg border-2 border-primary shadow-none hover:shadow-lg text-primary font-bold text-sm  uppercase transition-all duration-300 hover:bg-primary hover:text-white bg-white;
+  @apply relative my-5 w-fit inline-block px-6 py-3 rounded-lg border-2 border-primary shadow-none hover:shadow-lg text-primary font-bold text-sm  uppercase transition-all duration-300 hover:bg-primary hover:text-white hover:border-white bg-white;
 }
 
 .btn-invert {
-  @apply relative my-5 w-fit inline-block px-6 py-3 rounded-lg border-2 border-primary shadow-none hover:shadow-lg  font-bold text-sm  uppercase transition-all duration-300 hover:bg-white text-white hover:text-primary bg-primary;
+  @apply relative my-5 w-fit inline-block px-6 py-3 rounded-lg border-2 border-primary shadow-none hover:shadow-lg  font-bold text-sm  uppercase transition-all duration-300 hover:bg-white text-white hover:text-primary hover:border-primary bg-primary;
 }
 
 .slider-text {

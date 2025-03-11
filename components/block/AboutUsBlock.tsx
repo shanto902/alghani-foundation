@@ -73,7 +73,7 @@ const AboutUsBlock = async ({ block }: { block: TAboutUsBlock }) => {
             }`}
           >
             {block.item.image_position === "none" && block.item.button && (
-              <CustomButton href={block.item.button_link as string}>
+              <CustomButton invert href={block.item.button_link as string}>
                 {block.item.button_text}
               </CustomButton>
             )}

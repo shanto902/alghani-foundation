@@ -8,12 +8,8 @@ import parser from "html-react-parser";
 import { FaPaperPlane } from "react-icons/fa";
 import { DynamicIcon } from "../common/DynamicIcon";
 import { DynamicFaIcon } from "../DynamicFaIcon";
+import SubscribeForm from "../form/SubscribeForm";
 const Footer = ({ settings }: { settings: TSetting }) => {
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const email = (e.target as HTMLFormElement).email.value; // Access email input
-  };
-
   return (
     <>
       <footer className=" bg-cover bg-center relative mix-blend-multiply bg-[#27262C] text-white p-8">
@@ -62,7 +58,7 @@ const Footer = ({ settings }: { settings: TSetting }) => {
                   <li key={index} className="mb-2">
                     <Link
                       href={item.link}
-                      className="hover:text-white uppercase"
+                      className="hover:text-white uppercase hover:underline underline-offset-4"
                     >
                       {item.label}
                     </Link>
@@ -77,7 +73,10 @@ const Footer = ({ settings }: { settings: TSetting }) => {
               <ul className="text-sm text-gray-400">
                 {settings.legal_links.map((item, index) => (
                   <li key={index} className="mb-2">
-                    <a href={item.link} className="hover:text-white">
+                    <a
+                      href={item.link}
+                      className="hover:text-white uppercase hover:underline underline-offset-4"
+                    >
                       {item.label}
                     </a>
                   </li>
@@ -89,22 +88,11 @@ const Footer = ({ settings }: { settings: TSetting }) => {
             <div className="lg:order-last xl:order-none">
               <h2 className="text-xl font-bold mb-4">NEWSLETTER SIGNUP</h2>
               <p className="text-sm text-gray-400 mb-4">
-                Join our newsletter for exclusive updates, insider insights, and
-                special offers delivered straight to your inbox.
+                Join our newsletter for exclusive updates, inspiring stories,
+                and important impact reports—delivered straight to your inbox.
+                Stay connected and be part of the change!
               </p>
-              <form className="flex" onSubmit={handleSubmit}>
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="p-2 md:w-fit  text-black flex-grow"
-                />
-                <button
-                  type="submit"
-                  className="bg-primary px-4  hover:bg-white hover:text-primary transition-all duration-300 border border-primary font-bold"
-                >
-                  <FaPaperPlane />
-                </button>
-              </form>
+              <SubscribeForm />
             </div>
 
             {/* Contact Section */}

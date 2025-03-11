@@ -86,6 +86,7 @@ const RecognitionSlider = ({ block }: { block: PageProps[] }) => {
                     alt={recognition.src.title}
                     height={192}
                     width={420}
+                    priority
                     placeholder="blur"
                     blurDataURL={recognition.blurDataURL}
                     className="object-cover w-full h-full rounded-lg"

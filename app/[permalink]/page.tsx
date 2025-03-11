@@ -43,7 +43,7 @@ import { getPlaceholderImage } from "@/lib/getBlurData";
 import { readItems } from "@directus/sdk";
 import { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
-import React from "react";
+import React, { Suspense } from "react";
 interface PageProps {
   params: Promise<{
     permalink: string;
@@ -113,7 +113,9 @@ const renderBlock = (block: TBlock) => {
   switch (block.collection) {
     case "block_hero_slider":
       return (
-        <HeroSliderBlock key={block.id} block={block as THeroSliderBlock} />
+        <Suspense>
+          <HeroSliderBlock key={block.id} block={block as THeroSliderBlock} />
+        </Suspense>
       );
     case "block_sponsor_program":
       return (
@@ -127,10 +129,16 @@ const renderBlock = (block: TBlock) => {
       );
     case "block_recognition":
       return (
-        <RecognitionBlock key={block.id} block={block as TRecognitionBlock} />
+        <Suspense>
+          <RecognitionBlock key={block.id} block={block as TRecognitionBlock} />
+        </Suspense>
       );
     case "block_partners":
-      return <PartnerBlock key={block.id} block={block as TPartnerBlock} />;
+      return (
+        <Suspense>
+          <PartnerBlock key={block.id} block={block as TPartnerBlock} />
+        </Suspense>
+      );
     case "block_locations":
       return <LocationBlock key={block.id} block={block as TLocationBlock} />;
     case "block_development":
@@ -139,7 +147,9 @@ const renderBlock = (block: TBlock) => {
       );
     case "block_testimonials":
       return (
-        <TestimonialBlock key={block.id} block={block as TTestimonialBlock} />
+        <Suspense>
+          <TestimonialBlock key={block.id} block={block as TTestimonialBlock} />
+        </Suspense>
       );
     case "page_project":
       return <ProjectBlock key={block.id} block={block as TProjectPageBlock} />;
@@ -157,10 +167,12 @@ const renderBlock = (block: TBlock) => {
       return <TimelineBlock key={block.id} block={block as TTimelineBlock} />;
     case "block_product_showcase":
       return (
-        <ProjectShowcase
-          key={block.id}
-          block={block as TProjectShowcaseBlock}
-        />
+        <Suspense>
+          <ProjectShowcase
+            key={block.id}
+            block={block as TProjectShowcaseBlock}
+          />
+        </Suspense>
       );
     case "block_services":
       return <ServicesBlock key={block.id} block={block as TServiceBlock} />;
@@ -183,7 +195,7 @@ const Page = async ({ params }: PageProps) => {
   }
 
   return (
-    <div className="min-h-[80vh]">
+    <div className="min-h-[80vh]" key={page.id}>
       {page.blocks?.map((block) => renderBlock(block))}
       {page.show_modal === "true" && <ModalTrigger modal_body={modal_body} />}
     </div>

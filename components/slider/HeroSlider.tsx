@@ -20,16 +20,12 @@ const HeroSlider = ({ block }: { block: TSliderBlurData[] }) => {
     autoplaySpeed: 10000,
   };
   return (
-    <Slider {...settings} className="overflow-hidden h-screen md:h-[700px]">
+    <Slider {...settings} className="overflow-hidden h-screen ">
       {block.map((slide) => (
-        <div
-          key={slide.src.sliders_id.id}
-          className="relative h-screen md:h-[700px]"
-        >
+        <div key={slide.src.sliders_id.id} className="relative h-screen ">
           <Image
-            width={1260}
-            height={750}
             priority
+            fill
             src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${slide.src.sliders_id.image}`}
             alt={slide.src.sliders_id.text}
             className="w-full h-full object-cover object-center"

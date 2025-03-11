@@ -6,7 +6,6 @@ import { DynamicFaIcon } from "../DynamicFaIcon";
 const SponsorBenefitSection = async () => {
   const donation = await directus.request(readSingleton("donation_page"));
 
-  console.log(donation);
   return (
     <section className="bg-primary text-white text-center py-10 px-6">
       <PostBody body={donation.body} />

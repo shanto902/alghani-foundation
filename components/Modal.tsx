@@ -20,7 +20,6 @@ export default function Modal({
 }) {
   if (!isOpen) return null; // Do not render if modal is closed
 
-  console.log(modal_body);
   return (
     <div className="fixed inset-0 bg-black bg-opacity-80 flex z-50 w-screen h-screen items-center justify-center">
       <div className="bg-white  rounded-lg shadow-lg max-w-screen-2xl relative">

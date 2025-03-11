@@ -114,9 +114,9 @@ const page = async ({ params }: PageProps) => {
 
   const xShareURL = `https://twitter.com/intent/tweet?url=${currentURL}&text=${`${donationData.title}`}`;
   return (
-    <div>
+    <>
       <header className="bg-primary  pb-10 relative ">
-        <PaddingContainer className="flex overflow-visible flex-col relative justify-center items-center">
+        <PaddingContainer className="flex  h-full flex-col relative justify-center items-center">
           <h1 className="text-[clamp(2.2rem,4vw,3rem)]   text-center font-bold text-white text-shadow-lg  pt-5">
             {donationData.title}
           </h1>
@@ -126,10 +126,10 @@ const page = async ({ params }: PageProps) => {
 
             <div className="flex gap-2">
               <a target="_blank" href={facebookShareURL}>
-                <FaFacebookF className="bg-white hover:bg-primary hover:text-white h-8 w-8 p-2 rounded-full text-primary transition-all duration-300" />
+                <FaFacebookF className="bg-white hover:bg-primary border-2 border-primary hover:border-white hover:text-white h-8 w-8 p-2 rounded-full text-primary transition-all duration-300" />
               </a>
               <a target="_blank" href={xShareURL}>
-                <FaXTwitter className="bg-white hover:bg-primary hover:text-white h-8 w-8 p-2 rounded-full text-primary transition-all duration-300" />
+                <FaXTwitter className="bg-white hover:bg-primary border-2 border-primary hover:border-white hover:text-white h-8 w-8 p-2 rounded-full text-primary transition-all duration-300" />
               </a>
             </div>
           </div>
@@ -138,16 +138,19 @@ const page = async ({ params }: PageProps) => {
       <PaddingContainer className="max-w-screen-lg my-5">
         <PostBody body={donationData.body} blurDataMap={blurDataMap} />
       </PaddingContainer>
-
-      <section className="bg-primary  py-10 gap-10 text-white">
+      <div id="payment-section" className="h-20"></div>
+      <section
+        id="payment-section"
+        className="bg-primary  py-10  gap-10 text-white"
+      >
         <h2 className="text-center text-3xl font-bold uppercase mb-10">
           Payment method
         </h2>
-        <PaddingContainer className="">
-          <PostBody body={settings.payment_body}></PostBody>
-        </PaddingContainer>
+        <div className="h-[350px] md:h-auto overflow-hidden">
+          <div className="richtext">{parse(settings.payment_body)}</div>
+        </div>
       </section>
-    </div>
+    </>
   );
 };
 

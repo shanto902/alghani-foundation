@@ -56,6 +56,7 @@ const NavBar = ({ settings }: TNavbarProps) => {
             {settings.main_logo ? (
               <Image
                 className="h-16 w-fit"
+                priority
                 src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${settings.main_logo}`}
                 alt="logo"
                 width={300}
@@ -157,7 +158,7 @@ const NavBar = ({ settings }: TNavbarProps) => {
           {/* Ensure scrolling works */}
           <ul className="text-lg uppercase font-bold flex flex-col gap-5 w-full px-6">
             <Link onClick={() => setIsOpen(false)} href={"/"}>
-              <Image className="h-10  w-fit" src={logo} alt="logo" />
+              <Image className="h-10  w-fit" src={logo} priority alt="logo" />
             </Link>
             <hr className="border-2 border-primary" />
             {settings.menu.map((item, index) => (
@@ -196,7 +197,8 @@ const NavBar = ({ settings }: TNavbarProps) => {
             ))}
             <Link
               className="text-primary underline-offset-4 hover:underline mb-5"
-              href="#"
+              href="/donation"
+              onClick={() => setIsOpen(false)}
             >
               Donate
             </Link>

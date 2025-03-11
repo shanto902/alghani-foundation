@@ -17,6 +17,7 @@ const SponsorProgram = async ({ block }: { block: TSponsorProgramBlock }) => {
           alt={block.item.headline}
           width={600}
           height={400}
+          priority
           placeholder="blur"
           blurDataURL={blurDataURL}
           className="w-full object-top object-cover rounded-lg aspect-[4/3]"
