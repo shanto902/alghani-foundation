@@ -15,6 +15,8 @@ import SponsorProgram from "@/components/block/SponsorProgram";
 import TeamBlock from "@/components/block/TeamBlock";
 import TestimonialBlock from "@/components/block/TestimonialBlock";
 import TimelineBlock from "@/components/block/TimelineBlock";
+import ModalTrigger from "@/components/ModalTrigger";
+
 import { fetchPage, fetchPages } from "@/helpers/fetchFromDirectus";
 import {
   TAboutUsBlock,
@@ -37,6 +39,7 @@ import {
   TTimelineBlock,
 } from "@/interfaces";
 import directus from "@/lib/directus";
+import { getPlaceholderImage } from "@/lib/getBlurData";
 import { readItems } from "@directus/sdk";
 import { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
@@ -168,7 +171,13 @@ const renderBlock = (block: TBlock) => {
 const Page = async ({ params }: PageProps) => {
   const { permalink } = await params;
   const page = await fetchPage(permalink);
+  const imageUrl = `${process.env.NEXT_PUBLIC_ASSETS_URL}${page?.modal_image}`;
+  const blurDataURL = await getPlaceholderImage(imageUrl);
 
+  const modal_body = {
+    imageUrl,
+    blurDataURL,
+  };
   if (!page) {
     notFound();
   }
@@ -176,6 +185,7 @@ const Page = async ({ params }: PageProps) => {
   return (
     <div className="min-h-[80vh]">
       {page.blocks?.map((block) => renderBlock(block))}
+      {page.show_modal === "true" && <ModalTrigger modal_body={modal_body} />}
     </div>
   );
 };

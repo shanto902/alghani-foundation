@@ -21,6 +21,9 @@ export type TSetting = {
   quick_links: { label: string; link: string }[];
   legal_links: { label: string; link: string }[];
   contact_details: string;
+  main_title: string;
+  main_logo?: string;
+  motto?: string;
   socials: {
     icon: string;
     link: string;
@@ -366,6 +369,9 @@ export type TService = {
   icon: string;
   title: string;
   description: string;
+  slug: string;
+  body: string;
+  image: string;
 };
 
 export type TServiceBlock = {
@@ -406,6 +412,8 @@ export type TPageBlock = {
   date_created: any;
   last_updated: string;
   id: string;
+  show_modal: "true" | "false";
+  modal_image?: string;
   name: string;
   permalink: string;
   date_updated: string;

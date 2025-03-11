@@ -5,6 +5,7 @@ import {
   TPageBlock,
   TPress,
   TProject,
+  TService,
   TTeam,
 } from "@/interfaces";
 import directus from "@/lib/directus";
@@ -24,6 +25,8 @@ export const fetchPage = cache(
           },
           sort: ["blocks.sort"],
           fields: [
+            "show_modal",
+            "modal_image",
             {
               blocks: [
                 "*",
@@ -445,5 +448,24 @@ export const getAllDonations = cache(async (): Promise<TDonation[]> => {
   } catch (error) {
     console.error("Error fetching press data:", error);
     throw new Error("Error fetching press");
+  }
+});
+
+export const getServiceData = cache(async (slug: string): Promise<TService> => {
+  try {
+    const results = await directus.request(
+      readItems("services", {
+        filter: {
+          slug,
+        },
+        sort: ["sort"],
+        fields: ["*"],
+      })
+    );
+
+    return results[0] as TService;
+  } catch (error) {
+    console.error("Error fetching career data:", error);
+    throw new Error("Error fetching careers");
   }
 });

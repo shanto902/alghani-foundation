@@ -53,11 +53,26 @@ const NavBar = ({ settings }: TNavbarProps) => {
         <div className="flex px-8 max-w-screen-2xl justify-between w-full items-center">
           {/* Logo */}
           <Link href={"/"}>
-            <Image className="h-14 w-fit" src={logo} alt="logo" />
+            {settings.main_logo ? (
+              <Image
+                className="h-16 w-fit"
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${settings.main_logo}`}
+                alt="logo"
+                width={300}
+                height={120}
+              />
+            ) : (
+              <h1 className="text-3xl font-bold break-words text-primary">
+                {settings.main_title}
+              </h1>
+            )}
+            {settings.motto && (
+              <p className="text-xs font-bold">{settings.motto}</p>
+            )}
           </Link>
 
           {/* Desktop Menu */}
-          <div className="  hidden lg:flex flex-1 justify-end items-center">
+          <div className="  hidden lg:flex flex-wrap flex-1 justify-end items-center">
             <div className="flex items-center gap-5">
               <ul className=" text-white rounded-lg bg-primary p-4 text-sm uppercase font-bold flex space-x-5">
                 {settings.menu.map((item, index) => (

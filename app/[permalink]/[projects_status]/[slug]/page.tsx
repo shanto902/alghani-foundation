@@ -28,7 +28,6 @@ export async function generateMetadata(
     const { slug } = await params;
     const project = await getProjectData(slug);
 
-    console.log(project.foundation.name);
     const previousImages = (await parent).openGraph?.images || [];
     if (project !== null) {
       return {
@@ -128,11 +127,11 @@ const page = async ({ params }: PageProps) => {
           src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${projectsData.image}`}
           alt={projectsData.title}
           width={1920}
-          height={1800}
+          height={1080}
           blurDataURL={blurDataURL}
           placeholder="blur"
           style={{ objectPosition: "50% 50%" }}
-          className=" w-full h-full object-cover absolute object-bottom"
+          className=" w-full h-full object-cover absolute object-center"
         />
         <div className=" bg-gradient-to-b from-transparent via-transparent to-black/80 absolute w-full h-full indent-0 z-10"></div>
         <PaddingContainer className="relative  h-full w-full">

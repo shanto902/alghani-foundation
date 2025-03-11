@@ -39,6 +39,7 @@ export default async function RootLayout({
       >
         <NavBar settings={settings as TSetting} />
         <div className="min-h-[80vh]">{children}</div>
+
         <Footer settings={settings as TSetting} />
         <Toaster />
       </body>

@@ -12,6 +12,7 @@ import { getBlogData } from "@/helpers/fetchFromDirectus";
 import { getPlaceholderImage } from "@/lib/getBlurData";
 import Link from "next/link";
 import { Metadata, ResolvingMetadata } from "next";
+import CustomButton from "@/components/common/CustomButton";
 
 interface PageProps {
   params: Promise<{
@@ -131,10 +132,10 @@ const page = async ({ params }: PageProps) => {
             src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${blogData.image}`}
             alt={blogData.title}
             width={1920}
-            height={1800}
+            height={1080}
             blurDataURL={blurDataURL}
             placeholder="blur"
-            className="w-full h-full object-cover absolute object-bottom"
+            className="w-full h-full object-cover absolute object-center"
           />
           <div className="bg-gradient-to-b from-transparent via-transparent to-black/80 absolute w-full h-full z-10"></div>
           <PaddingContainer className="relative h-full w-full">
@@ -181,19 +182,16 @@ const page = async ({ params }: PageProps) => {
     console.error("Error rendering blog post:", error);
 
     return (
-      <div className="h-[60vh] flex flex-col justify-center items-center text-center">
-        <h2 className="text-2xl font-bold text-red-600">
-          Something went wrong!
+      <div className="h-[60vh] space-y-10 flex flex-col justify-center items-center text-center">
+        <h2 className="text-5xl font-bold uppercase text-red-600">
+          Page Not Found
         </h2>
         <p className="text-gray-500">
-          We could not load this blog post. Please try again later.
+          We could not load this service post. Please try again later.
         </p>
-        <Link
-          href="/blog"
-          className="mt-4 px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
+        <CustomButton invert href="/blog" className="">
           Go Back to Blog
-        </Link>
+        </CustomButton>
       </div>
     );
   }

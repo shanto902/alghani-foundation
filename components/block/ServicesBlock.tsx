@@ -2,6 +2,7 @@ import CustomButton from "@/components/common/CustomButton";
 import { DynamicFaIcon } from "@/components/DynamicFaIcon";
 import PaddingContainer from "@/components/layout/PaddingContainer";
 import { TServiceBlock } from "@/interfaces";
+import Link from "next/link";
 import React from "react";
 
 const ServicesBlock = ({ block }: { block: TServiceBlock }) => {
@@ -9,16 +10,17 @@ const ServicesBlock = ({ block }: { block: TServiceBlock }) => {
     <PaddingContainer>
       <section className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-0 my-10 ">
         {block.item.services.map((service, i) => (
-          <div
+          <Link
+            href={`/services/${service.services_id.slug}`}
             key={service.services_id.id}
             className={`${
               i % 2 === 0 ? "bg-primary text-white" : "bg-white"
-            } p-10 group`}
+            } p-10 group hover:shadow-2xl group hover:z-10`}
           >
             <DynamicFaIcon
               iconName={service.services_id.icon}
               size={80}
-              className=" transition-all duration-300"
+              className=" group-hover:animate-bounce transition-all duration-300"
             />
 
             <article>
@@ -27,7 +29,7 @@ const ServicesBlock = ({ block }: { block: TServiceBlock }) => {
               </h2>
               <p className="text-pretty ">{service.services_id.description}</p>
             </article>
-          </div>
+          </Link>
         ))}
       </section>
       {block.item.info_text && (

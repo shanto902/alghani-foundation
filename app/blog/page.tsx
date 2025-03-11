@@ -1,12 +1,31 @@
+import HeaderBlock from "@/components/block/HeaderBlock";
+import VideoBlock from "@/components/block/VideoBlock";
 import BlogList from "@/components/BlogList";
+import { THeaderBlock } from "@/interfaces";
+import directus from "@/lib/directus";
+import { readSingleton } from "@directus/sdk";
 import { Metadata } from "next";
 import Link from "next/link";
 export const metadata: Metadata = {
   title: "Blog",
 };
-export default function BlogPage() {
+export default async function BlogPage() {
   try {
-    return <BlogList currentPage={1} />;
+    return (
+      <>
+        <BlogList currentPage={1} />
+        <HeaderBlock
+          block={
+            {
+              item: {
+                title: "Latest Videos",
+              },
+            } as THeaderBlock
+          }
+        />
+        <VideoBlock />
+      </>
+    );
   } catch (error) {
     console.error("Error rendering BlogPage:", error);
     return (
