@@ -1,42 +1,25 @@
-import {
-  FaGraduationCap,
-  FaChalkboardTeacher,
-  FaTshirt,
-  FaBook,
-  FaBackspace,
-  FaFootballBall,
-  FaMedkit,
-} from "react-icons/fa";
-import { FaBagShopping } from "react-icons/fa6";
-import { GiEggClutch } from "react-icons/gi";
+import directus from "@/lib/directus";
+import { readSingleton } from "@directus/sdk";
+import PostBody from "../post-body/PostBody";
+import { DynamicFaIcon } from "../DynamicFaIcon";
 
-const SponsorBenefitSection = () => {
-  const benefits = [
-    { icon: <FaGraduationCap size={40} />, label: "Quality Education" },
-    { icon: <FaChalkboardTeacher size={40} />, label: "Teacher" },
-    { icon: <FaTshirt size={40} />, label: "Uniform" },
-    { icon: <FaBook size={40} />, label: "Education Materials" },
-    { icon: <FaBagShopping size={40} />, label: "School Bag" },
-    { icon: <FaFootballBall size={40} />, label: "Co-curricular Activities" },
-    { icon: <FaMedkit size={40} />, label: "Medical Support" },
-    { icon: <GiEggClutch size={40} />, label: "Nutritious Food" },
-  ];
+const SponsorBenefitSection = async () => {
+  const donation = await directus.request(readSingleton("donation_page"));
 
+  console.log(donation);
   return (
     <section className="bg-primary text-white text-center py-10 px-6">
-      <h2 className="text-3xl font-bold text-white">2500 BDT</h2>
-      <p className="text-lg text-gray-300 mt-2 mb-6">
-        Your monthly contribution helps provide life-changing, essential needs
-        to your sponsored child and their community.
-      </p>
+      <PostBody body={donation.body} />
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-        {benefits?.map((item, index) => (
-          <div key={index} className="flex flex-col items-center">
-            <div className="text-white">{item.icon}</div>
-            <p className="text-sm mt-2">{item.label}</p>
-          </div>
-        ))}
+      <div className="grid grid-cols-2 mt-5 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+        {donation.sectors?.map(
+          (item: { icon: string; label: string }, index: number) => (
+            <div key={index} className="flex flex-col items-center">
+              <DynamicFaIcon size={40} iconName={item.icon} />
+              <p className="text-sm mt-2">{item.label}</p>
+            </div>
+          )
+        )}
       </div>
     </section>
   );

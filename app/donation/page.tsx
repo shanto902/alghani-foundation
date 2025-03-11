@@ -17,8 +17,7 @@ export const metadata: Metadata = {
 };
 const block = {
   item: {
-    title: "Donate",
-    subtitle: "Our Current Cause",
+    title: "Our Current Causes",
   },
 };
 const page = async () => {
@@ -48,13 +47,15 @@ const page = async () => {
               <h2 className="py-3 text-xl font-bold">{donation.title}</h2>
               <div className="flex justify-between items-center">
                 <p>{moment(donation.date_created).format("MMM DD, YYYY")}</p>
-                <CustomButton
-                  invert
-                  href={`/donation/${donation.id}`}
-                  className="text-xs py-2 px-3 "
-                >
-                  Read More
-                </CustomButton>
+                <div className="flex gap-2">
+                  <CustomButton
+                    invert
+                    href={`/donation/${donation.id}`}
+                    className="text-xs py-2 px-3 "
+                  >
+                    Read More
+                  </CustomButton>
+                </div>
               </div>
             </div>
           </div>

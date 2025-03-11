@@ -4,12 +4,13 @@ import * as FaIcons from "react-icons/fa";
 import * as RiIcons from "react-icons/ri";
 import * as GrIcons from "react-icons/gr";
 import * as MdIcons from "react-icons/md";
-
+import * as GiIcons from "react-icons/gi";
 const allIcons: Record<string, React.ElementType> = {
   ...FaIcons,
   ...RiIcons,
   ...GrIcons,
   ...MdIcons,
+  ...GiIcons,
 };
 
 export const DynamicFaIcon = ({

@@ -30,7 +30,11 @@
 }
 
 .btn {
-  @apply relative w-fit inline-block px-6 py-3 rounded-lg border-2 border-primary shadow-none hover:shadow-lg text-primary font-bold text-sm  uppercase transition-all duration-300 hover:bg-primary hover:text-white;
+  @apply relative my-5 w-fit inline-block px-6 py-3 rounded-lg border-2 border-primary shadow-none hover:shadow-lg text-primary font-bold text-sm  uppercase transition-all duration-300 hover:bg-primary hover:text-white bg-white;
+}
+
+.btn-invert {
+  @apply relative my-5 w-fit inline-block px-6 py-3 rounded-lg border-2 border-primary shadow-none hover:shadow-lg  font-bold text-sm  uppercase transition-all duration-300 hover:bg-white text-white hover:text-primary bg-primary;
 }
 
 .slider-text {
@@ -211,14 +215,14 @@ BROWSER SCROLLBAR KITS
 }
 
 ::-moz-selection {
-  background: #045857;
-  color: white;
+  background: #0ec9c5;
+  color: black;
 }
 ::-webkit-selection {
-  background: #045857;
-  color: white;
+  background: #0ec9c5;
+  color: black;
 }
 ::selection {
-  background: #045857;
-  color: white;
+  background: #0ec9c5;
+  color: black;
 }

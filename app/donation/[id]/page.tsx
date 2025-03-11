@@ -143,20 +143,8 @@ const page = async ({ params }: PageProps) => {
         <h2 className="text-center text-3xl font-bold uppercase mb-10">
           Payment method
         </h2>
-        <PaddingContainer className="flex max-w-screen flex-col md:flex-row items-start justify-between">
-          <div className="md:w-1/2 w-full">
-            <PostBody body={settings.bank_details}></PostBody>
-          </div>
-          <div className="md:w-1/2 w-full">
-            <PostBody body={settings.bkash_details}></PostBody>
-            <hr className="h-px bg-white" />
-            <div className="my-5 space-y-2">
-              <p className="text-lg font-bold">For More Details Information</p>
-              <CustomButton className="text-sm" href="/contact">
-                Contact us
-              </CustomButton>
-            </div>
-          </div>
+        <PaddingContainer className="">
+          <PostBody body={settings.payment_body}></PostBody>
         </PaddingContainer>
       </section>
     </div>
