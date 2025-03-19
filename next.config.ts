@@ -22,11 +22,6 @@ const nextConfig: NextConfig = {
         destination: "/home",
         permanent: true,
       },
-      {
-        source: "/team",
-        destination: "/about-us",
-        permanent: true,
-      },
     ];
   },
 };

@@ -29,11 +29,11 @@ const page = async () => {
     <div>
       <SponsorBenefitSection />
       <HeaderBlock block={block as THeaderBlock} />
-      <PaddingContainer className="flex max-w-screen-xl flex-wrap py-10">
+      <PaddingContainer className="grid lg:grid-cols-4 py-10 gap-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
         {donations.map((donation) => (
           <div
             key={donation.id}
-            className="p-4 border-2 w-full md:w-1/2 lg:w-1/3 rounded-lg border-primary overflow-hidden hover:shadow-xl  transition-all duration-300"
+            className="p-4 border-2 w-full rounded-lg border-primary overflow-hidden hover:shadow-xl  transition-all duration-300"
           >
             <Link href={`/donation/${donation.id}`}>
               <Image
@@ -45,7 +45,9 @@ const page = async () => {
               />
             </Link>
             <div>
-              <h2 className="py-3 text-xl font-bold">{donation.title}</h2>
+              <h2 className="py-3 text-xl line-clamp-2 font-bold">
+                {donation.title}
+              </h2>
               <div className="flex justify-between items-center">
                 <p>{moment(donation.date_created).format("MMM DD, YYYY")}</p>
                 <div className="flex gap-2">

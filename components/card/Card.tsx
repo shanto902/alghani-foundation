@@ -32,16 +32,17 @@ const Card = ({ project }: { project: TProject }) => {
         >
           {project.title}
         </Link>
+        <p className="line-clamp-2">{project.description}</p>
         <div className="py-2 gap-2 text-sm items-center flex   flex-wrap">
           <Link
             href={`/${project.foundation.slug}/${project.project_status}`}
-            className="bg-primary hover:bg-white border border-primary w-fit text-xs font-bold px-3 text-white rounded-full py-2 hover:text-primary transition-all duration-300"
+            className="bg-primary hover:bg-white border border-primary w-fit text-xs font-bold px-3 text-white rounded-lg py-2 hover:text-primary transition-all duration-300"
           >
             {formatStatus(project.project_status)} Project
           </Link>
           {project.tags.map((tag, i) => (
             <div
-              className="bg-primary text-xs w-fit border border-primary  font-bold px-3 text-white rounded-full py-2"
+              className="bg-primary text-xs w-fit border border-primary  font-bold px-3 text-white rounded-lg py-2"
               key={i}
             >
               {tag}

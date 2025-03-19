@@ -38,10 +38,7 @@ const SubscribeForm = () => {
   };
 
   return (
-    <form
-      className="flex flex-col md:flex-row items-center gap-1"
-      onSubmit={handleSubmit}
-    >
+    <form className="flex flex-row items-center gap-1" onSubmit={handleSubmit}>
       <input
         type="email"
         name="email"

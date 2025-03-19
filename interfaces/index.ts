@@ -36,9 +36,12 @@ export type TSlider = {
     image: string;
     text: string;
     position: string;
+    mobile_image: string;
     button_text: string;
+    mobile_text: string;
     button_link: string;
     button_position: "start" | "center" | "end";
+    button_style: "primary" | "inverted";
   };
 };
 
@@ -206,6 +209,7 @@ export type TProject = {
   image: string;
   slug: string;
   title: string;
+  description?: string;
   date_updated: string;
   date_created: string;
   foundation: {
@@ -327,6 +331,7 @@ export type TProjectPageBlock = {
   collection: string;
   item: {
     id: string;
+    limit: number;
     title: "enabled" | "disabled";
     show_body: "enabled" | "disabled";
     foundation: {
@@ -338,6 +343,15 @@ export type TProjectPageBlock = {
     };
   };
 };
+export type TStories = {
+  stories_id: {
+    id: number;
+    image: string;
+    story: string;
+    title: string;
+    year: string;
+  };
+};
 
 export type TTimelineBlock = {
   id: number;
@@ -345,6 +359,7 @@ export type TTimelineBlock = {
   item: {
     id: number;
     milestones: TMilestone[];
+    stories: TStories[];
   };
 };
 
@@ -409,7 +424,7 @@ export type TBlock =
   | TServiceBlock;
 
 export type TPageBlock = {
-  date_created: any;
+  date_created: string;
   last_updated: string;
   id: string;
   show_modal: "true" | "false";

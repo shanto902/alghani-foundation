@@ -8,17 +8,20 @@ const CustomButton = ({
   className,
   target,
   invert = false,
+  style,
 }: {
   children: ReactNode;
   href: string;
   className?: string;
   target?: "_blank" | "_parent" | "_self" | "_top";
   invert?: boolean;
+  style?: React.CSSProperties;
 }) => {
   return (
     <Link
       target={target}
       href={href}
+      style={style}
       className={twMerge(
         `relative inline-flex items-center gap-2 px-6 py-3 text-center tex-sm
          ${

@@ -62,14 +62,11 @@ const ZoomImage = ({
     <ErrorBoundary>
       <Zoom key={id ? id : Math.random()} wrapElement="span">
         <Image
-          className="w-full pb-5 md:pb-0 object-cover rounded-lg object-center h-auto"
+          className="w-full  md:pb-0 object-cover rounded-lg object-center h-auto"
           src={src}
           alt={alt}
           width={Number(width) || 1200}
           height={Number(height) || 700}
-          // placeholder={`data:image/svg+xml;base64,${toBase64(
-          //   shimmer(500, 500)
-          // )}`}
           placeholder={
             blurDataURL
               ? "blur"

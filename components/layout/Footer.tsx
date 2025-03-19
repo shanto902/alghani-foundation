@@ -3,10 +3,7 @@ import bgImage from "@/assets/bg/footerBG.png";
 import { TSetting } from "@/interfaces";
 import Image from "next/image";
 import Link from "next/link";
-import { FormEvent } from "react";
 import parser from "html-react-parser";
-import { FaPaperPlane } from "react-icons/fa";
-import { DynamicIcon } from "../common/DynamicIcon";
 import { DynamicFaIcon } from "../DynamicFaIcon";
 import SubscribeForm from "../form/SubscribeForm";
 const Footer = ({ settings }: { settings: TSetting }) => {
@@ -113,7 +110,7 @@ const Footer = ({ settings }: { settings: TSetting }) => {
         />
       </footer>
       <div>
-        <p className="text-center text-sm bg-textSecondary text-gray-400 py-4">
+        <p className="text-center px-5 text-sm bg-textSecondary text-gray-400 py-4">
           © 2025 Al Ghani Foundation. All Rights Reserved. Developed by{" "}
           <a
             className="hover:text-white hover:underline"

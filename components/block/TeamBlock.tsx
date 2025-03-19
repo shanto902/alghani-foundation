@@ -35,7 +35,7 @@ const TeamBlock = async ({ block }: { block: TTeamBlock }) => {
               <Image
                 alt="Team Member"
                 src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${member.team_id.image}`}
-                className=" w-1/2 object-top   aspect-square object-cover self-center md:self-end"
+                className=" w-1/2 bg-white object-top   aspect-square object-cover self-center md:self-end"
                 width={250}
                 height={250}
                 placeholder="blur"

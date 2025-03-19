@@ -92,7 +92,7 @@ const page = async ({ params }: PageProps) => {
           <Image
             alt="Team Member"
             src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${teamData.team_id.image}`}
-            className=" absolute border-8 shadow-lg border-white   size-32 md:size-56 l  top-[85%]  lg:top-12 left-5 md:left-0 md:top-[40%] lg:left-20 aspect-square object-cover object-top"
+            className=" absolute bg-white border-8 shadow-lg border-white   size-32 md:size-56 l  top-[85%]  lg:top-12 left-5 md:left-0 md:top-[40%] lg:left-20 aspect-square object-cover object-top"
             width={200}
             height={300}
           />

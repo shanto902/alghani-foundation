@@ -122,7 +122,8 @@ const page = async ({ params }: PageProps) => {
   const xShareURL = `https://twitter.com/intent/tweet?url=${currentURL}&text=${`Check out this project: ${projectsData.title}`}`;
   return (
     <main>
-      <div className="relative h-[85vh] overflow-hidden w-full">
+      {/* Desktop layout  */}
+      <div className="sm:block hidden relative h-screen overflow-hidden w-full">
         <Image
           src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${projectsData.image}`}
           alt={projectsData.title}
@@ -139,8 +140,15 @@ const page = async ({ params }: PageProps) => {
             <h2 className="text-4xl font-extrabold text-white px-5">
               {projectsData.title}
             </h2>
-            <div className="flex justify-between p-5">
-              <div className="py-5  gap-2 text-sm items-center flex flex-wrap">
+
+            {projectsData.description && (
+              <p className="!text-white py-3 max-w-screen-md text-pretty px-5">
+                {projectsData.description}
+              </p>
+            )}
+
+            <div className="flex justify-between px-5 py-3">
+              <div className="pb-5  gap-2 text-sm items-center flex flex-wrap">
                 <Link
                   href={`/${projectsData.foundation.slug}/${projectsData.project_status}`}
                   className="bg-primary hover:bg-white hover:text-primary  transition-all duration-300  w-fit font-bold px-3 text-white  rounded-full py-1"
@@ -172,6 +180,64 @@ const page = async ({ params }: PageProps) => {
                 </a>
               </div>
             </div>
+          </div>
+        </PaddingContainer>
+      </div>
+
+      {/* Mobile Layout  */}
+      <div className="sm:hidden block relative  overflow-hidden w-full">
+        <Image
+          src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${projectsData.image}`}
+          alt={projectsData.title}
+          width={1920}
+          height={1080}
+          blurDataURL={blurDataURL}
+          placeholder="blur"
+          style={{ objectPosition: "50% 50%" }}
+          className=" w-full h-full "
+        />
+        <div className=" absolute bottom-0 bg-gradient-to-b from-transparent via-transparent to-black/80  w-full h-full indent-0 z-10" />
+        <PaddingContainer className="absolute bottom-0 left-0 z-20  h-full w-full">
+          <div className=" flex flex-col justify-end   items-start h-full  w-full pb-5">
+            <h2 className=" text-2xl pb-1 font-extrabold text-white ">
+              {projectsData.title}
+            </h2>
+            {projectsData.description && (
+              <p className=" text-white  text-sm">{projectsData.description}</p>
+            )}
+            {/* <div className="flex justify-between">
+              <div className="pb-5  gap-2 text-sm items-center flex flex-wrap">
+                <Link
+                  href={`/${projectsData.foundation.slug}/${projectsData.project_status}`}
+                  className="bg-primary hover:bg-white hover:text-primary  transition-all duration-300  w-fit font-bold px-3 text-white  rounded-full py-1"
+                >
+                  {formatStatus(projectsData.project_status)} Projects
+                </Link>
+                {projectsData.tags.map((tag, i) => (
+                  <div
+                    className="bg-primary  w-fit font-bold px-3 text-white  rounded-full py-1"
+                    key={i}
+                  >
+                    {tag}
+                  </div>
+                ))}
+                <p className="text-white text-sm">{`Updated: ${
+                  projectsData?.date_updated
+                    ? moment(projectsData.date_updated).format("MMM DD, YYYY")
+                    : moment(projectsData.date_created).format("MMM DD, YYYY")
+                }`}</p>
+              </div>
+              <div className="text-white text-sm md:flex items-center gap-2 hidden ">
+                <p className=" text-white text-sm">Share On: </p>
+
+                <a target="_blank" href={facebookShareURL}>
+                  <FaFacebookF className="bg-primary hover:bg-white hover:text-primary h-8 w-8 p-2 rounded-full transition-all duration-300" />
+                </a>
+                <a target="_blank" href={xShareURL}>
+                  <FaXTwitter className="bg-primary hover:bg-white hover:text-primary h-8 w-8 p-2 rounded-full transition-all duration-300" />
+                </a>
+              </div>
+            </div> */}
           </div>
         </PaddingContainer>
       </div>

@@ -90,7 +90,12 @@ export const fetchPage = cache(
                     ],
                     block_about_us: ["*"],
                     block_team: ["*", { team: [{ team_id: ["*"] }] }],
-                    block_timeline: ["*"],
+                    block_timeline: [
+                      "*",
+                      {
+                        stories: ["*", { stories_id: ["*"] }],
+                      },
+                    ],
                     block_product_showcase: [
                       "*",
                       {
@@ -102,6 +107,7 @@ export const fetchPage = cache(
                               "title",
                               "slug",
                               "image",
+                              "description",
                               "project_status",
                               "date_created",
                               "date_updated",
@@ -224,6 +230,7 @@ export const getAllProjects = cache(
             "id",
             "sort",
             "title",
+            "description",
             "foundation.slug",
             "date_created",
             "tags",

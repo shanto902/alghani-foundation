@@ -11,7 +11,9 @@ import { getPlaceholderImage } from "@/lib/getBlurData";
 
 const ProjectBlock = async ({ block }: { block: TProjectPageBlock }) => {
   const projects = await getAllProjects(block.item.foundation.slug);
-  const displayedProjects: TProject[] = projects.slice(-6).reverse(); // Reverse only the last 6 projects
+  const displayedProjects: TProject[] = projects
+    .slice(-block.item.limit || -6)
+    .reverse(); // Reverse only the last 6 projects
 
   // Extract images safely from body content
   const imageSources = block?.item?.foundation?.body

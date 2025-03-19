@@ -127,7 +127,8 @@ const page = async ({ params }: PageProps) => {
 
     return (
       <main>
-        <div className="relative h-[85vh] overflow-hidden w-full">
+        {/* desktop layout  */}
+        <div className="hidden sm:block relative h-[85vh] overflow-hidden w-full">
           <Image
             src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${blogData.image}`}
             alt={blogData.title}
@@ -140,11 +141,16 @@ const page = async ({ params }: PageProps) => {
           <div className="bg-gradient-to-b from-transparent via-transparent to-black/80 absolute w-full h-full z-10"></div>
           <PaddingContainer className="relative h-full w-full">
             <div className="absolute left-0 bottom-0 z-20 w-full">
-              <h2 className="text-4xl font-extrabold text-white px-5">
+              <h2 className="text-4xl max-w-screen-md  text-pretty  font-extrabold text-white px-5">
                 {blogData.title}
               </h2>
+              {blogData.description && (
+                <p className=" text-pretty text-white px-5 mt-3 max-w-screen-md">
+                  {blogData.description}
+                </p>
+              )}
               <div className="flex justify-between p-5">
-                <div className="py-5 gap-2 text-sm items-center flex flex-wrap">
+                <div className="pb-5 gap-2 text-sm items-center flex flex-wrap">
                   {blogData.tags.map((tag, i) => (
                     <div
                       className="bg-primary w-fit font-bold px-3 text-white rounded-full py-1"
@@ -171,6 +177,58 @@ const page = async ({ params }: PageProps) => {
               </div>
             </div>
           </PaddingContainer>
+        </div>
+
+        {/* mobile layout  */}
+        <div className="block sm:hidden relative  overflow-hidden w-full">
+          <div className="bg-gradient-to-b from-transparent via-transparent to-black/80 absolute w-full h-full z-10"></div>
+          <PaddingContainer className="absolute h-full w-full">
+            <div className="absolute left-0 bottom-0 z-20 w-full">
+              <h2 className="text-2xl font-extrabold text-white px-5 pb-2">
+                {blogData.title}
+              </h2>
+              {blogData.description && (
+                <p className="text-white text-sm px-5 pb-5">
+                  {blogData.description}
+                </p>
+              )}
+              {/* <div className="flex justify-between p-5">
+                <div className="py-5 gap-2 text-sm items-center flex flex-wrap">
+                  {blogData.tags.map((tag, i) => (
+                    <div
+                      className="bg-primary w-fit font-bold px-3 text-white rounded-full py-1"
+                      key={i}
+                    >
+                      {tag}
+                    </div>
+                  ))}
+                  <p className="text-white text-sm">{`Updated: ${
+                    blogData?.date_updated
+                      ? moment(blogData.date_updated).format("MMM DD, YYYY")
+                      : moment(blogData.date_created).format("MMM DD, YYYY")
+                  }`}</p>
+                </div>
+                <div className="text-white text-sm md:flex items-center gap-2 hidden">
+                  <p className="text-white text-sm">Share On:</p>
+                  <a target="_blank" href={facebookShareURL}>
+                    <FaFacebookF className="bg-primary hover:bg-white hover:text-primary h-8 w-8 p-2 rounded-full transition-all duration-300" />
+                  </a>
+                  <a target="_blank" href={xShareURL}>
+                    <FaXTwitter className="bg-primary hover:bg-white hover:text-primary h-8 w-8 p-2 rounded-full transition-all duration-300" />
+                  </a>
+                </div>
+              </div> */}
+            </div>
+          </PaddingContainer>
+          <Image
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URL}${blogData.image}`}
+            alt={blogData.title}
+            width={1920}
+            height={1080}
+            blurDataURL={blurDataURL}
+            placeholder="blur"
+            className="w-full h-full object-cover  object-center"
+          />
         </div>
 
         <article className="relative max-w-screen-xl mx-auto px-5 py-10">
