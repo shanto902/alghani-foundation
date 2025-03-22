@@ -1,6 +1,7 @@
 import HeaderBlock from "@/components/block/HeaderBlock";
 import VideoBlock from "@/components/block/VideoBlock";
 import BlogList from "@/components/BlogList";
+import PaddingContainer from "@/components/layout/PaddingContainer";
 import { THeaderBlock } from "@/interfaces";
 import directus from "@/lib/directus";
 import { readSingleton } from "@directus/sdk";
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
   title: "Blog",
 };
 export default async function BlogPage() {
+  const latest_videos = await directus.request(readSingleton("latest_videos"));
   try {
     return (
       <>
@@ -23,7 +25,8 @@ export default async function BlogPage() {
             } as THeaderBlock
           }
         />
-        <VideoBlock />
+
+        <VideoBlock latest_videos={latest_videos} />
       </>
     );
   } catch (error) {

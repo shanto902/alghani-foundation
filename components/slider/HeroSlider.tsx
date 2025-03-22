@@ -17,14 +17,14 @@ const HeroSlider = ({ block }: { block: TSliderBlurData[] }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 10000,
+    autoplaySpeed: 5000,
   };
   return (
     <Slider {...settings} className="overflow-hidden h-full ">
       {block.map((slide) => (
         <div key={slide.src.sliders_id.id}>
           {/* desktop view  */}
-          <div className=" hidden sm:block relative h-screen ">
+          <div className=" hidden sm:block relative h-[calc(100vh-150px)] ">
             <Image
               priority
               fill
@@ -98,7 +98,7 @@ const HeroSlider = ({ block }: { block: TSliderBlurData[] }) => {
           </div>
 
           {/* mobile view  */}
-          <div className=" block sm:hidden relative h-screen ">
+          <div className=" block sm:hidden relative h-[calc(100vh-100px)] ">
             <Image
               priority
               fill

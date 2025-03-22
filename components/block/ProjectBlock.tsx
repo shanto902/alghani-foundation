@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import CustomButton from "../common/CustomButton";
 import { getPlaceholderImage } from "@/lib/getBlurData";
+import ExpandablePanel from "../ExpendablePanel";
 
 const ProjectBlock = async ({ block }: { block: TProjectPageBlock }) => {
   const projects = await getAllProjects(block.item.foundation.slug);
@@ -63,14 +64,17 @@ const ProjectBlock = async ({ block }: { block: TProjectPageBlock }) => {
       ) : (
         <></>
       )}
+
       {block.item.foundation.body && block.item.show_body === "enabled" && (
-        <article className="max-w-screen-xl mx-auto">
+        <ExpandablePanel>
           <PostBody
             body={block.item.foundation.body}
             blurDataMap={blurDataMap}
           />
-        </article>
+        </ExpandablePanel>
       )}
+
+      <h2 className="text-center text-3xl font-bold my-5">Latest Projects</h2>
       <div className="grid gap-5 pb-20 md:px-5 max-w-screen-xl mx-auto grid-cols-1 md:grid-cols-2 w-full">
         {blurDataMapProjects.length > 0 ? (
           blurDataMapProjects.map((project) => (

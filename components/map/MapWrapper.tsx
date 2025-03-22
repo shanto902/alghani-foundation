@@ -17,7 +17,7 @@ const MapWrapper = ({
   return (
     <MapContainer
       center={mapCenter}
-      zoom={7}
+      zoom={2.4}
       scrollWheelZoom={false}
       className="w-full z-0 h-full rounded-lg"
     >

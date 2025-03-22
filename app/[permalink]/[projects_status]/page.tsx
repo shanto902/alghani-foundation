@@ -19,7 +19,7 @@ import React from "react";
 interface PageProps {
   params: Promise<{
     permalink: string;
-    project_status: string;
+    projects_status: string;
   }>;
 }
 
@@ -28,7 +28,7 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   try {
-    const { permalink, project_status } = await params;
+    const { permalink, projects_status } = await params;
     const project = await directus.request(
       readItems("projects", {
         filter: {
@@ -37,7 +37,9 @@ export async function generateMetadata(
               _eq: permalink,
             },
           },
-          project_status,
+          project_status: {
+            _eq: projects_status,
+          },
         },
         sort: ["sort"],
         fields: ["title", { foundation: ["name"] }],
@@ -102,10 +104,10 @@ export const generateStaticParams = async () => {
 };
 
 const page = async ({ params }: PageProps) => {
-  const { permalink, project_status } = await params;
+  const { permalink, projects_status } = await params;
 
   const projectType =
-    project_status === "all-projects" ? "all-projects" : project_status;
+    projects_status === "all-projects" ? "all-projects" : projects_status;
   const project = await getAllProjectsBasedOnFoundation(projectType, permalink);
 
   // ✅ Fetch blurDataURL for each project image before rendering
@@ -153,9 +155,9 @@ const page = async ({ params }: PageProps) => {
                 htmlFor="dropdown-toggle"
                 className=" font-bold text-lg flex  items-center gap-2 cursor-pointer"
               >
-                {project_status === "all-projects"
+                {projects_status === "all-projects"
                   ? "All Published Projects"
-                  : project_status?.length > 0 &&
+                  : projects_status?.length > 0 &&
                     formatStatus(project[0]?.project_status) + " Projects"}
                 <ChevronDown
                   size={16}

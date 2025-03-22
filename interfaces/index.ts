@@ -112,6 +112,7 @@ export type TPartner = {
     logo: string;
     name: string;
     link: string;
+    description: string;
   };
 };
 
